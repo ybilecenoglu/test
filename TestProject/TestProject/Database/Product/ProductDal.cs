@@ -24,6 +24,7 @@ namespace TestProject.Database.Product
             }
         }
 
+
         public void Delete(Models.Product product)
         {
             using (NorthwindContext context = new NorthwindContext() )
@@ -43,6 +44,27 @@ namespace TestProject.Database.Product
             using (NorthwindContext context = new NorthwindContext())
             {
                 return context.Products.ToList();
+            }
+        }
+
+        public List<string> GetCategories()
+        {
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                var categories = new List<string>();
+                foreach (var category in context.Categories)
+                {
+                    categories.Add(category.CategoryName);
+                }
+                return categories;
+            }
+        }
+
+        public List<Supplier> GetSuppliers()
+        {
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                return context.Suppliers.ToList();
             }
         }
 

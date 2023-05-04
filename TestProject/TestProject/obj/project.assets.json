@@ -3467,11 +3467,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\.git\\test\\TestProject\\TestProject\\TestProject.csproj",
+      "projectUniqueName": "E:\\git\\test\\TestProject\\TestProject\\TestProject.csproj",
       "projectName": "TestProject",
-      "projectPath": "F:\\.git\\test\\TestProject\\TestProject\\TestProject.csproj",
+      "projectPath": "E:\\git\\test\\TestProject\\TestProject\\TestProject.csproj",
       "packagesPath": "C:\\Users\\yigit\\.nuget\\packages\\",
-      "outputPath": "F:\\.git\\test\\TestProject\\TestProject\\obj\\",
+      "outputPath": "E:\\git\\test\\TestProject\\TestProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yigit\\AppData\\Roaming\\NuGet\\NuGet.Config",
