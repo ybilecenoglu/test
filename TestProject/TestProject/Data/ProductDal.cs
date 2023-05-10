@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TestProject.Models;
 
-namespace TestProject.Database.Product
+namespace TestProject.Database
 {
     public class ProductDal : IProductDal
     {
@@ -13,30 +14,28 @@ namespace TestProject.Database.Product
         {
             using (NorthwindContext context = new NorthwindContext())
             {
-                TestProject.Models.Product product = new Models.Product();
-                product.ProductName = entity.ProductName;
-                product.UnitPrice = entity.UnitPrice;
-                product.QuantityPerUnit = entity.QuantityPerUnit;
-                product.UnitsInStock = entity.UnitsInStock;
-
-                context.Products.Add(product);
+                context.Products.Add(entity);
                 context.SaveChanges();
             }
         }
 
 
-        public void Delete(Models.Product product)
+        public void Delete(Models.Product entity)
         {
-            using (NorthwindContext context = new NorthwindContext() )
+            using (NorthwindContext context = new NorthwindContext())
             {
-                context.Products.Remove(product);
+                context.Products.Remove(entity);
                 context.SaveChanges();
             }
         }
 
-        public Models.Product Get(Models.Product product)
+        public Models.Product Get(int Id)
         {
-            throw new NotImplementedException();
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                var product = context.Products.FirstOrDefault(x => x.ProductId == Id);
+                return product;
+            }
         }
 
         public List<Models.Product> GetAll()
@@ -47,19 +46,14 @@ namespace TestProject.Database.Product
             }
         }
 
-        public List<string> GetCategories()
+        public List<Category> GetCategories()
         {
             using (NorthwindContext context = new NorthwindContext())
             {
-                var categories = new List<string>();
-                foreach (var category in context.Categories)
-                {
-                    categories.Add(category.CategoryName);
-                }
-                return categories;
+
+                return context.Categories.ToList();
             }
         }
-
         public List<Supplier> GetSuppliers()
         {
             using (NorthwindContext context = new NorthwindContext())
@@ -70,7 +64,11 @@ namespace TestProject.Database.Product
 
         public void Update(Models.Product entity)
         {
-            throw new NotImplementedException();
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                context.Update(entity);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
-using TestProject.Database.Product;
 using TestProject.Product;
 
 namespace TestProject

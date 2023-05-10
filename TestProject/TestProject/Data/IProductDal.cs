@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TestProject.Models;
 
-namespace TestProject.Database.Product
+namespace TestProject.Database
 {
-    interface IProductDal : IRepository<TestProject.Models.Product>
+    interface IProductDal : IRepository<Models.Product>
     {
-        public List<string> GetCategories();
+        public List<Category> GetCategories();
         public List<Supplier> GetSuppliers();
     }
 }
