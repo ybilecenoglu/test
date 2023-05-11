@@ -33,15 +33,17 @@ namespace TestProject.Product
 
                 //Combo box genericList configuration
                 cbxCategories.DataSource = productDal.GetCategories();
+                cbxCategories.Text = "Seçiniz...";
                 cbxCategories.DisplayMember = "CategoryName";
                 cbxCategories.ValueMember = "CategoryID";
 
                 //Combo box genericList configuration
                 cbxSuppliers.DataSource = productDal.GetSuppliers();
+                cbxSuppliers.SelectedIndex = -1;
                 cbxSuppliers.DisplayMember = "CompanyName";
                 cbxSuppliers.ValueMember = "SupplierID";
             });
-            
+
 
         }
 
@@ -96,8 +98,10 @@ namespace TestProject.Product
                 if (product != null)
                 {
                     tbxProductName.Text = gdwProduct.CurrentRow.Cells[1].Value != null ? gdwProduct.CurrentRow.Cells[1].Value.ToString() : "";
-                    cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(gdwProduct.CurrentRow.Cells[2].Value != null ? gdwProduct.CurrentRow.Cells[2].Value.ToString() : "");
-                    cbxCategories.SelectedIndex = cbxCategories.FindString(gdwProduct.CurrentRow.Cells[3].Value != null ? gdwProduct.CurrentRow.Cells[3].Value.ToString() : "");
+                    var supplier = productDal.GetSuppliers().FirstOrDefault(x => x.SupplierId == Convert.ToInt16(gdwProduct.CurrentRow.Cells[2].Value));
+                    cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(supplier.CompanyName);
+                    var category = productDal.GetCategories().FirstOrDefault(x => x.CategoryId == Convert.ToInt16(gdwProduct.CurrentRow.Cells[3].Value));
+                    cbxCategories.SelectedIndex = cbxCategories.FindString(category.CategoryName);
                     tbxQuantityPerUnit.Text = gdwProduct.CurrentRow.Cells[4].Value != null ? gdwProduct.CurrentRow.Cells[4].Value.ToString() : "";
                     tbxUnitPrice.Text = gdwProduct.CurrentRow.Cells[5].Value != null ? gdwProduct.CurrentRow.Cells[5].Value.ToString() : "";
                     tbxUnitInStock.Text = gdwProduct.CurrentRow.Cells[6].Value != null ? gdwProduct.CurrentRow.Cells[6].Value.ToString() : "";
@@ -118,38 +122,9 @@ namespace TestProject.Product
                     MessageBox.Show("Record is not found...");
             });
         }
-        public void gdwDataSource() {
-
-            gdwProduct.Rows.Clear();
-            gdwProduct.Columns.Add("ProductID", "Id");
-            gdwProduct.Columns.Add("ProductName", "Product Name");
-            gdwProduct.Columns.Add("Supplier", "Supplier");
-            gdwProduct.Columns.Add("Category", "Category");
-            gdwProduct.Columns.Add("QuantityPerUnit", "QuantityPerUnit");
-            gdwProduct.Columns.Add("UnitPrice", "UnitPrice");
-            gdwProduct.Columns.Add("UnitsInStock", "UnitsInStock");
-            gdwProduct.Columns.Add("UnitsOnOrder", "UnitsOnOrder");
-            gdwProduct.Columns.Add("ReorderLevel", "ReorderLevel");
-            gdwProduct.Columns.Add("Discontinued", "Discontinued");
-
-            exception.returnExc(() =>
-            {
-                using (NorthwindContext context = new NorthwindContext())
-                {
-                    var products = productDal.GetAll();
-
-                    foreach (var product in products)
-                    {
-                        var category = context.Categories.FirstOrDefault(x => x.CategoryId == product.CategoryId);
-                        var supplier = context.Suppliers.FirstOrDefault(x => x.SupplierId == product.SupplierId);
-
-                        gdwProduct.Rows.Add(product.ProductId, product.ProductName, supplier.CompanyName, category.CategoryName, product.QuantityPerUnit, product.UnitPrice, product.UnitsInStock, product.UnitsOnOrder, product.ReorderLevel, product.Discontinued);
-                    }
-                }
-
-
-
-            });
+        public void gdwDataSource()
+        {
+            gdwProduct.DataSource = productDal.GetAll();
         }
         public void clearFormItem()
         {
