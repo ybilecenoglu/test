@@ -25,6 +25,8 @@ public partial class NorthwindContext : DbContext, IDisposable
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<AppLog> AppLogs { get; set; }
+
     public virtual DbSet<CustomerAndSuppliersByCity> CustomerAndSuppliersByCities { get; set; }
 
     public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }

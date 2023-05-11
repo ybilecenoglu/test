@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TestProject.Database;
@@ -10,30 +11,27 @@ namespace TestProject.Data
 {
     public class CategoryDal : ICategoryDal
     {
-        public void Add(Category entity)
+        public void AddAsync(Category entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Category entity)
+        public void DeleteAsync(Category entity)
         {
             throw new NotImplementedException();
         }
 
-        public Category Get(int Id)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                return context.Categories.FirstOrDefault(x => x.CategoryId == Id);
-            }
-        }
-
-        public List<Category> GetAll()
+        public Task<List<Category>> GetAllAsync(Expression<Func<Models.Category,bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Category entity)
+        public Task<Category> GetAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateAsync(Category entity)
         {
             throw new NotImplementedException();
         }
