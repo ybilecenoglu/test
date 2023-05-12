@@ -19,16 +19,16 @@ namespace TestProject
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-
-        }
-
         private void productToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormProduct product = new FormProduct();
             product.ShowDialog(this);
+        }
+
+        private void categoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCategories categories = new FormCategories();
+            categories.ShowDialog(this);
         }
     }
 }

@@ -17,13 +17,12 @@ namespace TestProject.Product
 {
     public partial class FormProduct : Form
     {
+        private ProductDal productDal = new ProductDal();
+        private Utilities utilities = new Utilities();
         public FormProduct()
         {
             InitializeComponent();
         }
-        private ProductDal productDal = new ProductDal();
-        private Utilities utilities = new Utilities();
-
         private void FormProduct_Load(object sender, EventArgs e)
         {
 
