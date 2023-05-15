@@ -56,21 +56,21 @@ namespace TestProject.Business
 
         public Image byteToImage(byte[] bytes)
         {
-            using (var ms = new MemoryStream(bytes))
+            using (var ms = new MemoryStream(bytes,0,bytes.Length))
             {
-                int offSet = 78;
-                ms.Write(bytes,offSet,bytes.Length-offSet);
-                Image img = Image.FromStream(ms);
-                return img;
+                Image image =Image.FromStream(ms,true);
+                return image;
             }
         }
 
-        public byte[] imageToByte(Image img)
+        public byte[] imageToByte(Image image, ImageFormat format)
         {
-            using (var ms = new MemoryStream())
+            using (MemoryStream ms = new MemoryStream())
             {
-                img.Save(ms, ImageFormat.Jpeg);
-                return ms.ToArray();
+                image.Save(ms, format);
+                byte[] imageBytes =ms.ToArray();
+
+                return imageBytes;
             }
         }
     }

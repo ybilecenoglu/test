@@ -29,11 +29,11 @@ namespace TestProject.Product
             utilities.returnExc(async () =>
             {
                 gdwProduct.DataSource = await productDal.GetAllAsync();
+
                 cbxCategories.DataSource = await productDal.GetCategoriesAsync();
-                
                 cbxCategories.DisplayMember = "CategoryName";
                 cbxCategories.ValueMember = "CategoryID";
-                
+
                 cbxSuppliers.DataSource = await productDal.GetSuppliersAsync();
                 cbxSuppliers.DisplayMember = "CompanyName";
                 cbxSuppliers.ValueMember = "SupplierID";

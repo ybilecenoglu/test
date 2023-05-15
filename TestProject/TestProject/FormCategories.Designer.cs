@@ -74,6 +74,7 @@
             this.buttonUpdate.TabIndex = 20;
             this.buttonUpdate.Text = "Update";
             this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // btnRemove
             // 
@@ -84,10 +85,11 @@
             this.btnRemove.TabIndex = 19;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnChoose
             // 
-            this.btnChoose.Location = new System.Drawing.Point(148, 297);
+            this.btnChoose.Location = new System.Drawing.Point(148, 338);
             this.btnChoose.Name = "btnChoose";
             this.btnChoose.Size = new System.Drawing.Size(93, 23);
             this.btnChoose.TabIndex = 2;
@@ -108,10 +110,10 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Image = global::TestProject.Properties.Resources.e8WsyC;
-            this.pictureBox.Location = new System.Drawing.Point(76, 211);
+            this.pictureBox.Image = global::TestProject.Properties.Resources._1967356;
+            this.pictureBox.Location = new System.Drawing.Point(76, 202);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(165, 80);
+            this.pictureBox.Size = new System.Drawing.Size(165, 121);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;

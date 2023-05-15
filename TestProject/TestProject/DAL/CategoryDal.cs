@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using TestProject.Business;
 using TestProject.Database;
 using TestProject.Models;
 
@@ -12,6 +13,7 @@ namespace TestProject.Data
 {
     public class CategoryDal : ICategoryDal
     {
+       
         public async void AddAsync(Category entity)
         {
             using (NorthwindContext context = new NorthwindContext())
@@ -21,12 +23,17 @@ namespace TestProject.Data
             }
         }
 
-        public void DeleteAsync(Category entity)
+        public async void DeleteAsync(Category entity)
         {
-            throw new NotImplementedException();
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                context.Categories.Remove(entity);
+                await context.SaveChangesAsync();
+            }
+
         }
 
-        public async Task<List<Category>> GetAllAsync(Expression<Func<Models.Category,bool>> filter = null)
+        public async Task<List<Category>> GetAllAsync(Expression<Func<Models.Category, bool>> filter = null)
         {
             using (NorthwindContext context = new NorthwindContext())
             {
@@ -42,9 +49,13 @@ namespace TestProject.Data
             }
         }
 
-        public void UpdateAsync(Category entity)
+        public async void UpdateAsync(Category entity)
         {
-            throw new NotImplementedException();
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                context.Update(entity);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
