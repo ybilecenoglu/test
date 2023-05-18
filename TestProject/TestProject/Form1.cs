@@ -30,5 +30,11 @@ namespace TestProject
             FormCategories categories = new FormCategories();
             categories.ShowDialog(this);
         }
+
+        private void employeesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormEmployess formEmployess = new FormEmployess();
+            formEmployess.ShowDialog(this);
+        }
     }
 }

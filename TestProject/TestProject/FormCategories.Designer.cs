@@ -41,6 +41,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gdwCategories = new System.Windows.Forms.DataGridView();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.tbxSearch = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gdwCategories)).BeginInit();
@@ -60,7 +63,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 405);
+            this.groupBox1.Size = new System.Drawing.Size(250, 473);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Categori Info";
@@ -163,10 +166,10 @@
             // gdwCategories
             // 
             this.gdwCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gdwCategories.Location = new System.Drawing.Point(277, 40);
+            this.gdwCategories.Location = new System.Drawing.Point(288, 69);
             this.gdwCategories.Name = "gdwCategories";
             this.gdwCategories.RowTemplate.Height = 25;
-            this.gdwCategories.Size = new System.Drawing.Size(623, 377);
+            this.gdwCategories.Size = new System.Drawing.Size(623, 416);
             this.gdwCategories.TabIndex = 1;
             this.gdwCategories.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdwCategories_CellClick);
             // 
@@ -174,11 +177,39 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // tbxSearch
+            // 
+            this.tbxSearch.Location = new System.Drawing.Point(779, 40);
+            this.tbxSearch.Name = "tbxSearch";
+            this.tbxSearch.Size = new System.Drawing.Size(132, 23);
+            this.tbxSearch.TabIndex = 22;
+            this.tbxSearch.TextChanged += new System.EventHandler(this.tbxSearch_TextChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(673, 43);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 15);
+            this.label3.TabIndex = 21;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(728, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 15);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "Search:";
+            // 
             // FormCategories
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 497);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tbxSearch);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.gdwCategories);
             this.Controls.Add(this.groupBox1);
             this.Name = "FormCategories";
@@ -189,6 +220,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gdwCategories)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -207,5 +239,8 @@
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox tbxSearch;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
-using TestProject.Data;
+using TestProject.DAL.Category;
 using TestProject.Models;
 
 namespace TestProject
@@ -29,18 +30,24 @@ namespace TestProject
 
         private async void FormCategories_Load(object sender, EventArgs e)
         {
-            gdwCategories.DataSource = await _categoryDal.GetAllAsync();
+            gdwCategories.DataSource = await _categoryDal.BindingList();
         }
 
-        private async void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var categories = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-            if (categories != null)
-            {
-                tbxCategoryName.Text = categories.CategoryName;
-                rtbxDescripton.Text = categories.Description;
-                pictureBox.Image = utilities.byteToImage(categories.Picture);
-            }
+            utilities.returnExc(async() => {
+
+                if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
+                {
+                    var categories = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
+                    if (categories != null)
+                    {
+                        tbxCategoryName.Text = categories.CategoryName;
+                        rtbxDescripton.Text = categories.Description;
+                        pictureBox.Image = utilities.byteToImage(categories.Picture);
+                    }
+                }
+            });
         }
 
         private void btnChoose_Click(object sender, EventArgs e)
@@ -68,7 +75,9 @@ namespace TestProject
                     Picture = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg)
                 });
                 
-                gdwCategories.DataSource= await _categoryDal.GetAllAsync();
+                gdwCategories.DataSource = await _categoryDal.GetAllAsync();
+                utilities.clearTextBox(tbxCategoryName);
+                utilities.clearRichTextBox(rtbxDescripton);
             });
         }
 
@@ -76,19 +85,28 @@ namespace TestProject
         {
             utilities.returnExc(async () =>
             {
-                DialogResult dialogResult = new DialogResult();
-                var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-                dialogResult = MessageBox.Show(String.Format("{0} choose product has been deleted ?", category.CategoryName), "Record Deleted", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
+                if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
                 {
-                    if (category != null)
+                    DialogResult dialogResult = new DialogResult();
+                    var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
+                    dialogResult = MessageBox.Show(String.Format("{0} choose product has been deleted ?", category.CategoryName), "Record Deleted", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
                     {
-                        _categoryDal.DeleteAsync(category);
-                        gdwCategories.DataSource = await _categoryDal.GetAllAsync();
-                        MessageBox.Show(String.Format("{0} category has been removed.", category.CategoryName));
+                        if (category != null)
+                        {
+                            _categoryDal.DeleteAsync(category);
+                            gdwCategories.DataSource = await _categoryDal.GetAllAsync();
+                            utilities.clearTextBox(tbxCategoryName);
+                            utilities.clearRichTextBox(rtbxDescripton);
+                            MessageBox.Show(String.Format("{0} category has been removed.", category.CategoryName));
+                        }
+                        else
+                            MessageBox.Show("Record is not found...");
                     }
-                    else
-                        MessageBox.Show("Record is not found...");
+                }
+                else
+                {
+                    MessageBox.Show("Category has been selected...");
                 }
             });
         }
@@ -97,19 +115,31 @@ namespace TestProject
         {
             utilities.returnExc(async () =>
             {
-                var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-                if (category != null)
+                if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
                 {
-                    category.CategoryName = tbxCategoryName.Text;
-                    category.Description = rtbxDescripton.Text;
-                    category.Picture = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
-                    _categoryDal.UpdateAsync(category);
-                    gdwCategories.DataSource = await _categoryDal.GetAllAsync();
-                    MessageBox.Show(String.Format("{0} Id's category has been updated.", category.CategoryId));
+                    var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
+                    if (category != null)
+                    {
+                        category.CategoryName = tbxCategoryName.Text;
+                        category.Description = rtbxDescripton.Text;
+                        category.Picture = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                        _categoryDal.UpdateAsync(category);
+                        gdwCategories.DataSource = await _categoryDal.GetAllAsync();
+                        utilities.clearTextBox(tbxCategoryName);
+                        utilities.clearRichTextBox(rtbxDescripton);
+                        MessageBox.Show(String.Format("{0} Id's category has been updated.", category.CategoryId));
+                    }
+                    else
+                        MessageBox.Show("Record is not found...");
                 }
                 else
-                    MessageBox.Show("Record is not found...");
+                    MessageBox.Show("Category has been selected");
             });
+
+        }
+        private async void tbxSearch_TextChanged(object sender, EventArgs e)
+        {
+            gdwCategories.DataSource = await _categoryDal.BindingList(x => x.CategoryName.Contains(tbxSearch.Text));
         }
     }
 }

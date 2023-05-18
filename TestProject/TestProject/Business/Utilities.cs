@@ -14,12 +14,11 @@ namespace TestProject.Business
 {
     internal class Utilities
     {
-        public List<T> buildList<T>(params T[] values)
-        {
-            return new List<T>(values);
-        }
+
+        //Hata döndüren global try catch method
         public async void returnExc(Action action)
         {
+           
             try
             {
                 action.Invoke();
@@ -38,7 +37,7 @@ namespace TestProject.Business
                 }
             }
         }
-
+        
         public void clearTextBox(params TextBox[] textBoxes)
         {
             foreach (var item in textBoxes)
@@ -54,6 +53,15 @@ namespace TestProject.Business
             }
         }
 
+        public void clearRichTextBox(params RichTextBox[] richTextBoxes)
+        {
+            foreach (var item in richTextBoxes)
+            {
+                item.Clear();
+            }
+        }
+
+        //Byte tipini image dönüştüren method
         public Image byteToImage(byte[] bytes)
         {
             using (var ms = new MemoryStream(bytes,0,bytes.Length))
@@ -63,6 +71,7 @@ namespace TestProject.Business
             }
         }
 
+        //Imagelari byte dönüştüren method
         public byte[] imageToByte(Image image, ImageFormat format)
         {
             using (MemoryStream ms = new MemoryStream())
