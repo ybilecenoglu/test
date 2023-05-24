@@ -15,7 +15,7 @@ namespace TestProject
         EmployeeDal _employeeDAL = new EmployeeDal();
         Utilities utilities = new Utilities();
 
-        public FormEmployess(ILogger<FormEmployess> logger)
+        public FormEmployess()
         {
             InitializeComponent();
         }

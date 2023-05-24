@@ -76,7 +76,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1161, 15);
+            this.label4.Location = new System.Drawing.Point(527, 511);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 15);
             this.label4.TabIndex = 25;
@@ -84,7 +84,7 @@
             // 
             // tbxSearch
             // 
-            this.tbxSearch.Location = new System.Drawing.Point(1212, 12);
+            this.tbxSearch.Location = new System.Drawing.Point(578, 508);
             this.tbxSearch.Name = "tbxSearch";
             this.tbxSearch.Size = new System.Drawing.Size(132, 23);
             this.tbxSearch.TabIndex = 27;
@@ -100,10 +100,10 @@
             // gdwEmployee
             // 
             this.gdwEmployee.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gdwEmployee.Location = new System.Drawing.Point(721, 41);
+            this.gdwEmployee.Location = new System.Drawing.Point(19, 537);
             this.gdwEmployee.Name = "gdwEmployee";
             this.gdwEmployee.RowTemplate.Height = 25;
-            this.gdwEmployee.Size = new System.Drawing.Size(623, 444);
+            this.gdwEmployee.Size = new System.Drawing.Size(691, 361);
             this.gdwEmployee.TabIndex = 24;
             this.gdwEmployee.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdwEmployee_CellClick);
             // 
@@ -388,7 +388,7 @@
             // buttonUpdate
             // 
             this.buttonUpdate.BackColor = System.Drawing.Color.DarkOrange;
-            this.buttonUpdate.Location = new System.Drawing.Point(88, 444);
+            this.buttonUpdate.Location = new System.Drawing.Point(536, 444);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
             this.buttonUpdate.TabIndex = 20;
@@ -399,7 +399,7 @@
             // btnRemove
             // 
             this.btnRemove.BackColor = System.Drawing.Color.Red;
-            this.btnRemove.Location = new System.Drawing.Point(169, 444);
+            this.btnRemove.Location = new System.Drawing.Point(617, 444);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 19;
@@ -410,7 +410,7 @@
             // buttonAdd
             // 
             this.buttonAdd.BackColor = System.Drawing.Color.Chartreuse;
-            this.buttonAdd.Location = new System.Drawing.Point(7, 444);
+            this.buttonAdd.Location = new System.Drawing.Point(455, 444);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 18;
@@ -450,7 +450,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1356, 537);
+            this.ClientSize = new System.Drawing.Size(734, 909);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbxSearch);
             this.Controls.Add(this.label3);
