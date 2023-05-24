@@ -35,7 +35,7 @@ namespace TestProject
 
         private void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            utilities.returnExc(async() => {
+            utilities.exceptionHandler(async() => {
 
                 if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -66,7 +66,7 @@ namespace TestProject
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 _categoryDal.AddAsync(new Models.Category
                 {
@@ -83,7 +83,7 @@ namespace TestProject
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -113,7 +113,7 @@ namespace TestProject
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
                 {

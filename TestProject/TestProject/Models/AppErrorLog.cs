@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace TestProject.Models
 {
-    public  class AppLog
+    public class AppErrorLog
     {
         [Key]
         public int Id { get; set; }
         public string Message { get; set; }
+        public string Action { get; set; }
+        public string Target { get; set; }
         public DateTime? Date { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -16,28 +17,28 @@ namespace TestProject.Business
     {
 
         //Hata döndüren global try catch method
-        public async void returnExc(Action action)
+        public void exceptionHandler(Action action)
         {
-           
             try
             {
                 action.Invoke();
             }
-            catch (Exception exception)
+            catch (DbUpdateConcurrencyException exception)
             {
-                System.Windows.Forms.MessageBox.Show(exception.Message);
                 using (NorthwindContext context = new NorthwindContext())
                 {
-                    AppLog log = new AppLog();
+                    AppErrorLog log = new AppErrorLog();
                     log.Message = exception.Message;
                     log.Date = DateTime.Now;
-
-                    context.AppLogs.Add(log);
-                    await context.SaveChangesAsync();
+                    log.Action = action.Method.Name;
+                    log.Target = action.Target.ToString();
+                    context.AppErrorLogs.Add(log);
+                    context.SaveChanges();
+                    System.Windows.Forms.MessageBox.Show(exception.Message);
                 }
             }
         }
-        
+
         public void clearTextBox(params TextBox[] textBoxes)
         {
             foreach (var item in textBoxes)
@@ -76,7 +77,9 @@ namespace TestProject.Business
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                image.Save(ms, format);
+                var bitMap = new Bitmap(image);
+                bitMap.Save(ms, format);
+                //image.Save(ms, format); || Generic GDI+ error when saving an image
                 byte[] imageBytes =ms.ToArray();
 
                 return imageBytes;

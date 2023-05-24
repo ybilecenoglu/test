@@ -16,7 +16,7 @@ namespace TestProject.DAL.Category
         private Utilities utilities = new Utilities();
         public void AddAsync(Models.Category entity)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async ()=>
             {
                 using (NorthwindContext context = new NorthwindContext())
                 {
@@ -46,7 +46,7 @@ namespace TestProject.DAL.Category
         }
         public void DeleteAsync(Models.Category entity)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 using (NorthwindContext context = new NorthwindContext())
                 {

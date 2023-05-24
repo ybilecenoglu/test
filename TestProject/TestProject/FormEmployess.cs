@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using TestProject.Business;
 using TestProject.DAL.Employee;
@@ -13,15 +15,14 @@ namespace TestProject
         EmployeeDal _employeeDAL = new EmployeeDal();
         Utilities utilities = new Utilities();
 
-
-        public FormEmployess()
+        public FormEmployess(ILogger<FormEmployess> logger)
         {
             InitializeComponent();
         }
 
         private void FormEmployess_Load(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 gdwEmployee.DataSource = await _employeeDAL.BindingList();
 
@@ -38,7 +39,7 @@ namespace TestProject
 
         private void gdwEmployee_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 if (gdwEmployee.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwEmployee.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -52,7 +53,7 @@ namespace TestProject
                     tbxAdress.Text = employee.Address;
                     cbxCity.SelectedIndex = cbxCity.FindString(employee.City);
                     cbxRegion.SelectedIndex = cbxRegion.FindString(employee.Region);
-                    tbxPostalCode.Text =employee.PostalCode;
+                    tbxPostalCode.Text = employee.PostalCode;
                     cbxCountry.SelectedIndex = cbxCountry.FindString(employee.Country != null ? employee.Country : "");
                     tbxPhone.Text = employee.HomePhone;
                     tbxExtension.Text = employee.Extension;
@@ -63,40 +64,37 @@ namespace TestProject
             });
         }
 
-        private void buttonUpdate_Click(object sender, EventArgs e)
+        private async void buttonUpdate_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+
+            if (gdwEmployee.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwEmployee.CurrentRow.Cells[0].Value.ToString()))
             {
-                if (gdwEmployee.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwEmployee.CurrentRow.Cells[0].Value.ToString()))
+                var employee = await _employeeDAL.GetAsync(gdwEmployee.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwEmployee.CurrentRow.Cells[0].Value) : 0);
+                if (employee != null)
                 {
-                    var employee = await _employeeDAL.GetAsync(gdwEmployee.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwEmployee.CurrentRow.Cells[0].Value) : 0);
-                    if (employee != null)
-                    {
 
-                        employee.LastName = tbxLastName.Text;
-                        employee.FirstName = tbxFirstName.Text;
-                        employee.Notes = rtbNote.Text;
-                        employee.Title = tbxTitle.Text;
-                        employee.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
-                        employee.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
-                        employee.HireDate = Convert.ToDateTime(dtpHireDate.Text);
-                        employee.Region = cbxRegion.Text;
-                        employee.City = cbxCity.Text;
-                        employee.Country = cbxCountry.Text;
-                        employee.PostalCode = tbxPostalCode.Text;
-                        employee.HomePhone = tbxPhone.Text;
-                        employee.Extension = tbxExtension.Text;
-                        employee.Photo = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                    employee.LastName = tbxLastName.Text;
+                    employee.FirstName = tbxFirstName.Text;
+                    employee.Notes = rtbNote.Text;
+                    employee.Title = tbxTitle.Text;
+                    employee.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
+                    employee.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
+                    employee.HireDate = Convert.ToDateTime(dtpHireDate.Text);
+                    employee.Region = cbxRegion.Text;
+                    employee.City = cbxCity.Text;
+                    employee.Country = cbxCountry.Text;
+                    employee.PostalCode = tbxPostalCode.Text;
+                    employee.HomePhone = tbxPhone.Text;
+                    employee.Extension = tbxExtension.Text;
+                    employee.Photo = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
 
-                        _employeeDAL.UpdateAsync(employee);
-                        gdwEmployee.DataSource = await _employeeDAL.BindingList();
-                        MessageBox.Show(String.Format("{0} Id's employee has been updated.", employee.EmployeeId));
-                    }
-                    else
-                        MessageBox.Show("Record is not found...");
+                    _employeeDAL.UpdateAsync(employee);
+                    gdwEmployee.DataSource = await _employeeDAL.BindingList();
+                    MessageBox.Show(String.Format("{0} Id's employee has been updated.", employee.EmployeeId));
                 }
-
-            });
+                else
+                    MessageBox.Show("Record is not found...");
+            }
         }
 
         private void btnChoose_Click(object sender, EventArgs e)
@@ -124,6 +122,22 @@ namespace TestProject
             }
         }
 
-
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            utilities.exceptionHandler(async () =>
+            {
+                var employee = await _employeeDAL.GetAsync(Convert.ToInt32(gdwEmployee.CurrentRow.Cells[0].Value != null ? gdwEmployee.CurrentRow.Cells[0].Value : 0));
+                if (employee != null)
+                {
+                    _employeeDAL.DeleteAsync(employee);
+                    gdwEmployee.DataSource = await _employeeDAL.BindingList();
+                    MessageBox.Show(String.Format("{0} Id's employee has been removed.", employee.EmployeeId));
+                }
+                else
+                {
+                    MessageBox.Show("Record is not found...");
+                }
+            });
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace TestProject.DAL.Product
         public void AddAsync(Models.Product entity)
         {
             //Global hata döndüren fonksiyonumuzun çağırdık
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 using (NorthwindContext context = new NorthwindContext())
                 {
@@ -33,7 +33,7 @@ namespace TestProject.DAL.Product
         }
         public void DeleteAsync(Models.Product entity)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 using (NorthwindContext context = new NorthwindContext())
                 {
@@ -73,7 +73,7 @@ namespace TestProject.DAL.Product
         }
         public void UpdateAsync(Models.Product entity)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 using (NorthwindContext context = new NorthwindContext())
                 {

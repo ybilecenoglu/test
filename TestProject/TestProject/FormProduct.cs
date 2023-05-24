@@ -26,7 +26,7 @@ namespace TestProject.Product
         private void FormProduct_Load(object sender, EventArgs e)
         {
 
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 gdwProduct.AutoGenerateColumns = true;
                 gdwProduct.DataSource = await productDal.BindingList();
@@ -45,7 +45,7 @@ namespace TestProject.Product
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                     productDal.AddAsync(new Models.Product
                     {
@@ -69,7 +69,7 @@ namespace TestProject.Product
 
         private void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -105,7 +105,7 @@ namespace TestProject.Product
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async() =>
+            utilities.exceptionHandler(async() =>
             {
                 DialogResult dialogResult = new DialogResult();
                 var product = await productDal.GetAsync(gdwProduct.CurrentRow.Cells[0].Value != null ? Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value):0);
@@ -135,7 +135,7 @@ namespace TestProject.Product
         }
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            utilities.returnExc(async () =>
+            utilities.exceptionHandler(async () =>
             {
                 var product = await productDal.GetAsync(gdwProduct.CurrentRow.Cells[0].Value != null ? Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value) : 0);
                 if (product == null)

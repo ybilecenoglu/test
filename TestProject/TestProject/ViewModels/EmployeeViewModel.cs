@@ -36,8 +36,6 @@ namespace TestProject.ViewModels
 
         public string HomePhone { get; set; }
 
-        public byte[] Photo { get; set; }
-
         public string Notes { get; set; }
     }
 }

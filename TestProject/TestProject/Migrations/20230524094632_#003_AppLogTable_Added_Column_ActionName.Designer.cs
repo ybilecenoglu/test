@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestProject.Models;
 
@@ -11,9 +12,11 @@ using TestProject.Models;
 namespace TestProject.Migrations
 {
     [DbContext(typeof(NorthwindContext))]
-    partial class NorthwindContextModelSnapshot : ModelSnapshot
+    [Migration("20230524094632_#003_AppLogTable_Added_Column_ActionName")]
+    partial class _003_AppLogTable_Added_Column_ActionName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,7 +116,7 @@ namespace TestProject.Migrations
                     b.ToView("Alphabetical list of products", (string)null);
                 });
 
-            modelBuilder.Entity("TestProject.Models.AppErrorLog", b =>
+            modelBuilder.Entity("TestProject.Models.AppLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,12 +133,9 @@ namespace TestProject.Migrations
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Target")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("AppErrorLogs");
+                    b.ToTable("AppLogs");
                 });
 
             modelBuilder.Entity("TestProject.Models.Category", b =>
