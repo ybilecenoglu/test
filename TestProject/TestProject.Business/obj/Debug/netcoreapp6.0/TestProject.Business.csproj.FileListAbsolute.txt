@@ -1,0 +1,17 @@
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Business.deps.json
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Business.dll
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Business.pdb
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.DataAccess.dll
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Entities.dll
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.DataAccess.pdb
+D:\git\test\TestProject\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Entities.pdb
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.csproj.AssemblyReference.cache
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.GeneratedMSBuildEditorConfig.editorconfig
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.AssemblyInfoInputs.cache
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.AssemblyInfo.cs
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.csproj.CoreCompileInputs.cache
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.csproj.CopyComplete
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.dll
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\refint\TestProject.Business.dll
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\TestProject.Business.pdb
+D:\git\test\TestProject\TestProject.Business\obj\Debug\netcoreapp6.0\ref\TestProject.Business.dll

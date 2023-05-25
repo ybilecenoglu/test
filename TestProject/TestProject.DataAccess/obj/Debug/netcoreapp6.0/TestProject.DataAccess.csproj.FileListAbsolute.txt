@@ -1,0 +1,17 @@
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.csproj.AssemblyReference.cache
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.AssemblyInfoInputs.cache
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.AssemblyInfo.cs
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.csproj.CoreCompileInputs.cache
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.DataAccess.deps.json
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.DataAccess.runtimeconfig.json
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.DataAccess.dll
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.DataAccess.pdb
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.Entities.dll
+D:\git\test\TestProject\TestProject.DataAccess\bin\Debug\netcoreapp6.0\TestProject.Entities.pdb
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.csproj.CopyComplete
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.dll
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\refint\TestProject.DataAccess.dll
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.pdb
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\TestProject.DataAccess.genruntimeconfig.cache
+D:\git\test\TestProject\TestProject.DataAccess\obj\Debug\netcoreapp6.0\ref\TestProject.DataAccess.dll

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestProject.DataAccess\TestProject.DataAccess.csproj" />
+    <ProjectReference Include="..\TestProject.Entities\TestProject.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
