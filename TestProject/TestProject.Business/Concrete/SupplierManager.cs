@@ -16,9 +16,15 @@ namespace TestProject.Business.Concrete
         public SupplierManager(ISupplierDal supplierDal) { 
             SupplierDal = supplierDal;
         }
-        public Task<List<Supplier>> GetSuppliers(Expression<Func<Supplier, bool>> filter)
+        public async Task<List<Supplier>> GetSuppliers(Expression<Func<Supplier, bool>> filter)
         {
-            return filter != null ? SupplierDal.GetAllAsync(filter) : SupplierDal.GetAllAsync();
+            var result = filter != null ? await SupplierDal.GetAllAsync(filter) : await  SupplierDal.GetAllAsync();
+            if (result.Success == true)
+            {
+                return result.Data;
+            }
+            else
+                return null;
         }
     }
 }

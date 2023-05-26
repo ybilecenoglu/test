@@ -55,6 +55,8 @@
             this.gdwProduct = new System.Windows.Forms.DataGridView();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.cbxShortByCategory = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gdwProduct)).BeginInit();
             this.SuspendLayout();
@@ -321,11 +323,31 @@
             this.label10.TabIndex = 17;
             this.label10.Text = "Search:";
             // 
+            // cbxShortByCategory
+            // 
+            this.cbxShortByCategory.FormattingEnabled = true;
+            this.cbxShortByCategory.Location = new System.Drawing.Point(730, 33);
+            this.cbxShortByCategory.Name = "cbxShortByCategory";
+            this.cbxShortByCategory.Size = new System.Drawing.Size(131, 23);
+            this.cbxShortByCategory.TabIndex = 19;
+            this.cbxShortByCategory.SelectedIndexChanged += new System.EventHandler(this.cbxShortByCategory_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(616, 36);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(98, 15);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Sort By Category:";
+            // 
             // FormProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1078, 678);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.cbxShortByCategory);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.buttonRemove);
@@ -371,5 +393,7 @@
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.ComboBox cbxShortByCategory;
+        private System.Windows.Forms.Label label11;
     }
 }

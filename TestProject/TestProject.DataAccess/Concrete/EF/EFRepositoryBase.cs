@@ -13,51 +13,121 @@ namespace TestProject.DataAccess.Concrete.EF
         where TEntity : class, IEntity, new() //Generic Kısıtı: Nesne olacak, IEntity tip olacak ve newlenecek
         where TContext : DbContext, new()
     {
-        public async void AddAsync(TEntity entity)
+        
+        public async Task<Result> AddAsync(TEntity entity)
         {
-            using (TContext context = new TContext())
+            var result = new Result { Success = false };
+            try
             {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                await context.SaveChangesAsync();
+                using (TContext context = new TContext())
+                {
+                    var addedEntity = context.Entry(entity);
+                    addedEntity.State = EntityState.Added;
+                    await context.SaveChangesAsync();
+                    result.Success = true;
+                    result.Message = "Success";
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+
+                return result;
             }
         }
 
-        public async void DeleteAsync(TEntity entity)
+        public async Task<Result> DeleteAsync(TEntity entity)
         {
-            using (TContext context = new TContext())
+            var result = new Result { Success = false };
+            try
             {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                await context.SaveChangesAsync();
+                using (TContext context = new TContext())
+                {
+                    var deletedEntity = context.Entry(entity);
+                    deletedEntity.State = EntityState.Deleted;
+                    await context.SaveChangesAsync();
+                    result.Success = true;
+                    result.Message = "Success";
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
+            }
+
+        }
+
+        public async Task<Result<List<TEntity>>> GetAllAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            Result<List<TEntity>> result = new Result<List<TEntity>> { Success = false };
+            try
+            {
+                using (TContext context = new TContext())
+                {
+                    result.Data = filter != null ?
+                         await context.Set<TEntity>().Where(filter).ToListAsync() :
+                         await context.Set<TEntity>().ToListAsync();
+                    result.Success = true;
+                    result.Message = "Success";
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
             }
         }
 
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
+        public async Task<Result<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
-            using (TContext context = new TContext())
+            Result<TEntity> result = new Result<TEntity> { Success = false };
+            try
             {
-                return filter != null ? 
-                    await context.Set<TEntity>().Where(filter).ToListAsync() : 
-                    await context.Set<TEntity>().ToListAsync();
+                using (TContext context = new TContext())
+                {
+                    result.Data =  await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+                    result.Success = true;
+                    result.Message = "Başarılı";
+                    return result;
+                }
             }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
+            }
+            
         }
 
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
+        public async Task<Result> UpdateAsync(TEntity entity)
         {
-            using (TContext context = new TContext())
+            var result = new Result<TEntity>() { Success = false };
+            try
             {
-                return await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+                using (TContext context = new TContext())
+                {
+                    var updatedEntity = context.Entry(entity);
+                    updatedEntity.State = EntityState.Modified;
+                    await context.SaveChangesAsync();
+                    result.Success = true;
+                    result.Message = "Success";
+                    return result;
+                }
             }
-        }
-
-        public async void UpdateAsync(TEntity entity)
-        {
-            using (TContext context = new TContext())
+            catch (Exception ex)
             {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                await context.SaveChangesAsync();
+                result.Success = false;
+                result.Message = ex.Message;
+                return result;
             }
         }
     }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
+using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.EF;
 using TestProject.Entities.Concrete;
 namespace TestProject.Product
@@ -9,33 +11,64 @@ namespace TestProject.Product
     public partial class FormProduct : Form
     {
 
-        private IProductService ProductService;
-        private ICategoryService CategoryService;
-        private ISupplierService SupplierService;
+        private IProductService _productService;
+        private ICategoryService _categoryService;
+        private ISupplierService _supplierService;
         public FormProduct()
         {
             InitializeComponent();
-            ProductService = new ProductManager(new EFProductDal());
-            CategoryService = new CategoryManager(new EFCategoryDal());
-            SupplierService = new SupplierManager(new EFSupplierDal());
+            _productService = new ProductManager(new EFProductDal());
+            _categoryService = new CategoryManager(new EFCategoryDal());
+            _supplierService = new SupplierManager(new EFSupplierDal());
         }
-        private async void FormProduct_Load(object sender, EventArgs e)
+        private void FormProduct_Load(object sender, EventArgs e)
         {
-            gdwProduct.DataSource = await ProductService.GetProducts();
+            LoadProduct();
+            LoadCategories();
+            LoadSuppliers();
+        }
 
-            cbxCategories.DataSource = await CategoryService.GetCategories();
-            cbxCategories.DisplayMember = "CategoryName";
-            cbxCategories.ValueMember = "CategoryID";
+        public async Task LoadProduct()
+        {
+            var result = await _productService.GetProducts();
+            if (result.Success == true)
+            {
+                gdwProduct.DataSource = result.Data;
+            }
+            else
+            {
+                MessageBox.Show(result.Message);
+            }
+        }
 
-            cbxSuppliers.DataSource = await SupplierService.GetSuppliers();
+        public async void LoadCategories()
+        {
+            var result = await _categoryService.GetCategories();
+            if (result.Success == true)
+            {
+                cbxCategories.DataSource = result.Data;
+                cbxCategories.DisplayMember = "CategoryName";
+                cbxCategories.ValueMember = "CategoryID";
+
+                cbxShortByCategory.DataSource = result.Data;
+                cbxShortByCategory.DisplayMember = "CategoryName";
+                cbxShortByCategory.ValueMember = "CategoryID";
+            }
+            else
+                MessageBox.Show(result.Message);
+
+        }
+
+        public async void LoadSuppliers()
+        {
+            cbxSuppliers.DataSource = await _supplierService.GetSuppliers();
             cbxSuppliers.DisplayMember = "CompanyName";
             cbxSuppliers.ValueMember = "SupplierID";
-
         }
 
         private async void buttonAdd_Click(object sender, EventArgs e)
         {
-            ProductService.AddProduct(new Entities.Concrete.Product
+            var result = await _productService.AddProduct(new Entities.Concrete.Product
             {
                 ProductName = tbxProductName.Text,
                 SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
@@ -48,104 +81,147 @@ namespace TestProject.Product
                 ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
             });
 
-            MessageBox.Show("Product is added");
-            gdwProduct.DataSource = await ProductService.GetProducts();
-            
+            if (result.Success == true)
+            {
+                MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                gdwProduct.DataSource = LoadProduct();
+            }
+            else
+                MessageBox.Show(result.Message);
         }
 
-        private void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
             if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
             {
-                //var product = await ProductService.GetProduct(p => p.ProductId == Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value));
-                //if (product != null)
-                //{
+                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                var product = await GetProductById(productID);
+                if (product != null)
+                {
+                    tbxProductName.Text = product.ProductName;
+                    cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(gdwProduct.CurrentRow.Cells[2].Value != null ? gdwProduct.CurrentRow.Cells[2].Value.ToString() : "");
+                    cbxCategories.SelectedIndex = cbxCategories.FindString(gdwProduct.CurrentRow.Cells[3].Value != null ? gdwProduct.CurrentRow.Cells[3].Value.ToString() : "");
+                    tbxQuantityPerUnit.Text = product.QuantityPerUnit;
+                    tbxUnitPrice.Text = product.UnitPrice != null ? product.UnitPrice.ToString() : "";
+                    tbxUnitInStock.Text = product.UnitsInStock != null ? product.UnitsInStock.ToString() : "";
+                    tbxUnitsOnOrder.Text = product.UnitsOnOrder != null ? product.UnitsOnOrder.ToString() : "";
+                    tbxReorderLevel.Text = product.ReorderLevel != null ? product.ReorderLevel.ToString() : "";
 
-                //    tbxProductName.Text = gdwProduct.CurrentRow.Cells[1].Value != null ? gdwProduct.CurrentRow.Cells[1].Value.ToString() : "";
-                //    cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(gdwProduct.CurrentRow.Cells[2].Value != null ? gdwProduct.CurrentRow.Cells[2].Value.ToString() : "");
-                //    cbxCategories.SelectedIndex = cbxCategories.FindString(gdwProduct.CurrentRow.Cells[3].Value != null ? gdwProduct.CurrentRow.Cells[3].Value.ToString() : "");
-                //    tbxQuantityPerUnit.Text = gdwProduct.CurrentRow.Cells[4].Value != null ? gdwProduct.CurrentRow.Cells[4].Value.ToString() : "";
-                //    tbxUnitPrice.Text = gdwProduct.CurrentRow.Cells[5].Value != null ? gdwProduct.CurrentRow.Cells[5].Value.ToString() : "";
-                //    tbxUnitInStock.Text = gdwProduct.CurrentRow.Cells[6].Value != null ? gdwProduct.CurrentRow.Cells[6].Value.ToString() : "";
-                //    tbxUnitsOnOrder.Text = gdwProduct.CurrentRow.Cells[7].Value != null ? gdwProduct.CurrentRow.Cells[7].Value.ToString() : "";
-                //    tbxReorderLevel.Text = gdwProduct.CurrentRow.Cells[8].Value != null ? gdwProduct.CurrentRow.Cells[8].Value.ToString() : "";
+                    if (product.Discontinued == true)
+                    {
+                        rdbOnSale.Checked = true;
 
-                //    if (product.Discontinued == true)
-                //    {
-                //        rdbOnSale.Checked = true;
-
-                //    }
-                //    else
-                //    {
-                //        rdbNotForSeal.Checked = true;
-                //    }
-                //}
-                //else
-                //    MessageBox.Show("Record is not found...");
+                    }
+                    else
+                    {
+                        rdbNotForSeal.Checked = true;
+                    }
+                }
+                else
+                    MessageBox.Show("Seçili kayıt bulunamadı.");
             }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private async void btnRemove_Click(object sender, EventArgs e)
         {
-            //utilities.exceptionHandler(async() =>
-            //{
-            //    DialogResult dialogResult = new DialogResult();
-            //    var product = await productDal.GetAsync(gdwProduct.CurrentRow.Cells[0].Value != null ? Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value):0);
+            if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+            {
+                DialogResult dialogResult = new DialogResult();
+                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                var product = await GetProductById(productID);
 
-            //    dialogResult = MessageBox.Show(String.Format("{0} choose product has been deleted ?",product.ProductName),"Record Deleted",MessageBoxButtons.YesNo);
-            //    if (dialogResult == DialogResult.Yes)
-            //    {
-            //        if (product != null)
-            //        {
-            //            productDal.DeleteAsync(product);
-            //            MessageBox.Show(String.Format("{0} product is deleted",product.ProductName));
-            //            gdwProduct.DataSource = await productDal.BindingList();
-            //            utilities.clearTextBox(tbxProductName, tbxQuantityPerUnit, tbxReorderLevel, tbxUnitInStock, tbxUnitPrice, tbxUnitsOnOrder);
-            //            utilities.unCheckedRadioBtn(rdbOnSale, rdbNotForSeal);
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Record is not found...");
-            //        }
-            //    }
-            //});
+                dialogResult = MessageBox.Show(String.Format("{0} silinsin mi ?", product.ProductName), "Ürün Silme", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (product != null)
+                    {
+                        var result = await _productService.DeleteProduct(product);
+                        if (result.Success == true)
+                        {
+                            MessageBox.Show("Ürün silme işlemi başarılı bir şekilde gerçekleşti.");
+                            await LoadProduct();
+                        }
+                        else
+                            MessageBox.Show(result.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kayıt bulunamadı.");
+                    }
+                }
+            }
         }
-
+        public async Task<TestProject.Entities.Concrete.Product> GetProductById(int id)
+        {
+            var product = await _productService.GetProduct(p => p.ProductId == id);
+            return product.Data;
+        }
         private async void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            gdwProduct.DataSource = await ProductService.GetProducts(x => x.ProductName.Contains(textBoxSearch.Text.ToLower()));
+            var result = await _productService.GetProducts(x => x.ProductName.Contains(textBoxSearch.Text.ToLower()));
+            if (result.Success == true)
+            {
+                gdwProduct.DataSource = result.Data;
+            }
+            else
+                MessageBox.Show(result.Message);
         }
-        private void buttonUpdate_Click(object sender, EventArgs e)
+        private async void buttonUpdate_Click(object sender, EventArgs e)
         {
-            //utilities.exceptionHandler(async () =>
-            //{
-            //    var product = await productDal.GetAsync(gdwProduct.CurrentRow.Cells[0].Value != null ? Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value) : 0);
-            //    if (product == null)
-            //    {
-            //        MessageBox.Show("Record is not found...");
-            //    }
-            //    else
-            //    {
-            //        productDal.UpdateAsync(new Models.Product
-            //        {
-            //            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
-            //            ProductName = tbxProductName.Text,
-            //            SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
-            //            CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
-            //            UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
-            //            UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
-            //            UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
-            //            QuantityPerUnit = tbxQuantityPerUnit.Text,
-            //            Discontinued = rdbOnSale.Checked == true ? true : false,
-            //            ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
-            //        });
-            //    }
-            //    MessageBox.Show(String.Format("{0} Id's product updated...",product.ProductId));
-            //    gdwProduct.DataSource = await productDal.BindingList();
-            //    utilities.clearTextBox(tbxProductName, tbxQuantityPerUnit, tbxReorderLevel, tbxUnitInStock, tbxUnitPrice, tbxUnitsOnOrder);
-            //    utilities.unCheckedRadioBtn(rdbOnSale, rdbNotForSeal);
-            //});
+            if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+            {
+                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                var product = await _productService.GetProduct(p => p.ProductId == productID);
+
+                if (product == null)
+                {
+                    MessageBox.Show("Kayıt bulunamadı.");
+                }
+                else
+                {
+                    if (product.Success == true)
+                    {
+                        var result = await _productService.UpdateProduct(new Entities.Concrete.Product
+                        {
+                            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                            ProductName = tbxProductName.Text,
+                            SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
+                            CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
+                            UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
+                            UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
+                            UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
+                            QuantityPerUnit = tbxQuantityPerUnit.Text,
+                            Discontinued = rdbOnSale.Checked == true ? true : false,
+                            ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
+                        });
+                        if (result.Success == true)
+                        {
+                            MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                            gdwProduct.DataSource = LoadProduct();
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void cbxShortByCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int categoryID = Convert.ToInt32(cbxShortByCategory.SelectedValue);
+                var result = await _productService.GetProducts(p => p.CategoryId == categoryID);
+                if (result.Success == true)
+                {
+                    gdwProduct.DataSource = result.Data;
+                }
+                else
+                    MessageBox.Show(result.Message);
+            }
+            catch
+            {
+
+            }
         }
     }
 }

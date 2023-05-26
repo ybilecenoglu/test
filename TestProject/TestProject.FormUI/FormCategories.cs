@@ -1,38 +1,64 @@
 ﻿using System;
 using System.Windows.Forms;
+using TestProject.Business.Abstract;
+using TestProject.Business.Concrete;
+using TestProject.DataAccess.Abstract;
+using TestProject.DataAccess.Concrete.EF;
 
 namespace TestProject
 {
     public partial class FormCategories : Form
     {
-        
+
+        private ICategoryService _categoryService;
         private string filePath;
         private string fileName;
         public FormCategories()
         {
             InitializeComponent();
+            _categoryService = new CategoryManager(new EFCategoryDal());
         }
 
-        private async void FormCategories_Load(object sender, EventArgs e)
+        private void FormCategories_Load(object sender, EventArgs e)
         {
-            //gdwCategories.DataSource = await _categoryDal.BindingList();
+            LoadCategories();
         }
 
-        private void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
+        public async void LoadCategories()
         {
-            //utilities.exceptionHandler(async() => {
+            var result = await _categoryService.GetCategories();
+            if (result.Success == true)
+            {
+                gdwCategories.DataSource= result.Data;
+            }
+            else
+                MessageBox.Show(result.Message);
+        }
+        private async void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (gdwCategories.CurrentRow.Cells[0].Value != null)
+            {
+                int categoryID = Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value);
+                var result = await _categoryService.GetCategory(c => c.CategoryId == categoryID);
+                if (result.Success == true)
+                {
+                    if (result.Data != null)
+                    {
+                        tbxCategoryName.Text = result.Data.CategoryName;
+                        rtbxDescripton.Text = result.Data.Description;
+                        var imageResult = _categoryService.ByteToImage(result.Data.Picture);
+                        if (imageResult.Success == true)
+                        {
+                            pictureBox.Image = imageResult.Data;
+                        }
+                        else
+                            MessageBox.Show(imageResult.Message);
 
-            //    if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
-            //    {
-            //        var categories = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-            //        if (categories != null)
-            //        {
-            //            tbxCategoryName.Text = categories.CategoryName;
-            //            rtbxDescripton.Text = categories.Description;
-            //            pictureBox.Image = utilities.byteToImage(categories.Picture);
-            //        }
-            //    }
-            //});
+                    }
+                }
+                else
+                    MessageBox.Show(result.Message);
+            }
         }
 
         private void btnChoose_Click(object sender, EventArgs e)
