@@ -49,10 +49,6 @@ namespace TestProject.Product
                 cbxCategories.DataSource = result.Data;
                 cbxCategories.DisplayMember = "CategoryName";
                 cbxCategories.ValueMember = "CategoryID";
-
-                cbxShortByCategory.DataSource = result.Data;
-                cbxShortByCategory.DisplayMember = "CategoryName";
-                cbxShortByCategory.ValueMember = "CategoryID";
             }
             else
                 MessageBox.Show(result.Message);
@@ -66,28 +62,9 @@ namespace TestProject.Product
             cbxSuppliers.ValueMember = "SupplierID";
         }
 
-        private async void buttonAdd_Click(object sender, EventArgs e)
+        private void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            var result = await _productService.AddProduct(new Entities.Concrete.Product
-            {
-                ProductName = tbxProductName.Text,
-                SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
-                CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
-                UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
-                UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
-                UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
-                QuantityPerUnit = tbxQuantityPerUnit.Text,
-                Discontinued = rdbOnSale.Checked == true ? true : false,
-                ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
-            });
-
-            if (result.Success == true)
-            {
-                MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
-                gdwProduct.DataSource = LoadProduct();
-            }
-            else
-                MessageBox.Show(result.Message);
+            AddOrUpdate();
         }
 
         private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -99,6 +76,7 @@ namespace TestProject.Product
                 var product = await GetProductById(productID);
                 if (product != null)
                 {
+                    tbxProductID.Text = product.ProductId.ToString();
                     tbxProductName.Text = product.ProductName;
                     cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(gdwProduct.CurrentRow.Cells[2].Value != null ? gdwProduct.CurrentRow.Cells[2].Value.ToString() : "");
                     cbxCategories.SelectedIndex = cbxCategories.FindString(gdwProduct.CurrentRow.Cells[3].Value != null ? gdwProduct.CurrentRow.Cells[3].Value.ToString() : "");
@@ -167,60 +145,58 @@ namespace TestProject.Product
             else
                 MessageBox.Show(result.Message);
         }
-        private async void buttonUpdate_Click(object sender, EventArgs e)
+        
+        public async void AddOrUpdate()
         {
-            if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+            if (tbxProductID.Text != string.Empty)
             {
                 int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
                 var product = await _productService.GetProduct(p => p.ProductId == productID);
 
-                if (product == null)
+                if (product.Success == true)
                 {
-                    MessageBox.Show("Kayıt bulunamadı.");
-                }
-                else
-                {
-                    if (product.Success == true)
+                    var result = await _productService.UpdateProduct(new Entities.Concrete.Product
                     {
-                        var result = await _productService.UpdateProduct(new Entities.Concrete.Product
-                        {
-                            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
-                            ProductName = tbxProductName.Text,
-                            SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
-                            CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
-                            UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
-                            UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
-                            UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
-                            QuantityPerUnit = tbxQuantityPerUnit.Text,
-                            Discontinued = rdbOnSale.Checked == true ? true : false,
-                            ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
-                        });
-                        if (result.Success == true)
-                        {
-                            MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
-                            gdwProduct.DataSource = LoadProduct();
-                        }
+                        ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                        ProductName = tbxProductName.Text,
+                        SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
+                        CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
+                        UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
+                        UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
+                        UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
+                        QuantityPerUnit = tbxQuantityPerUnit.Text,
+                        Discontinued = rdbOnSale.Checked == true ? true : false,
+                        ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
+                    });
+                    if (result.Success == true)
+                    {
+                        MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                        gdwProduct.DataSource = LoadProduct();
                     }
                 }
             }
-        }
-
-        private async void cbxShortByCategory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
+            else
             {
-                int categoryID = Convert.ToInt32(cbxShortByCategory.SelectedValue);
-                var result = await _productService.GetProducts(p => p.CategoryId == categoryID);
+                var result = await _productService.AddProduct(new Entities.Concrete.Product
+                {
+                    ProductName = tbxProductName.Text,
+                    SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
+                    CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
+                    UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
+                    UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
+                    UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
+                    QuantityPerUnit = tbxQuantityPerUnit.Text,
+                    Discontinued = rdbOnSale.Checked == true ? true : false,
+                    ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
+                });
+
                 if (result.Success == true)
                 {
-                    gdwProduct.DataSource = result.Data;
+                    MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                    gdwProduct.DataSource = LoadProduct();
                 }
                 else
                     MessageBox.Show(result.Message);
-            }
-            catch
-            {
-
             }
         }
     }
