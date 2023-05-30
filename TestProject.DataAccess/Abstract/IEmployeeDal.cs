@@ -8,7 +8,7 @@ using TestProject.DataAccess.ViewModels;
 
 namespace TestProject.DataAccess.Abstract
 {
-    internal interface IEmployeeDal : IEntityRepository<Employee>
+    public interface IEmployeeDal : IEntityRepository<Employee>
     {
 
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestProject.DataAccess.ViewModels
 {
-    internal class EmployeeViewModel
+    public class EmployeeViewModel
     {
         public int EmployeeId { get; set; }
 

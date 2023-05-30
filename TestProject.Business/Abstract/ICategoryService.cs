@@ -19,7 +19,6 @@ namespace TestProject.Business.Abstract
         Task<Result> AddCategory(Category category);
         Task<Result> DeleteCategory(Category category);
         Task<Result> UpdateCategory(Category category);
-        Result<Image> ByteToImage(byte[] bytes);
-        Result<byte[]> ImageToByte(Image image, ImageFormat imageFormat);
+        
     }
 }

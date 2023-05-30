@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.EF;
+using TestProject.Entities.Concrete;
+using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {
@@ -11,25 +18,27 @@ namespace TestProject
     {
 
         private ICategoryService _categoryService;
+        private IUtilitiesServices _utilitiesService;
         private string filePath;
         private string fileName;
         public FormCategories()
         {
             InitializeComponent();
             _categoryService = new CategoryManager(new EFCategoryDal());
+            _utilitiesService = new UtilitiesManager();
         }
 
-        private void FormCategories_Load(object sender, EventArgs e)
+        private async void FormCategories_Load(object sender, EventArgs e)
         {
-            LoadCategories();
+            await LoadCategories();
         }
 
-        public async void LoadCategories()
+        public async Task LoadCategories()
         {
             var result = await _categoryService.GetCategories();
             if (result.Success == true)
             {
-                gdwCategories.DataSource= result.Data;
+                gdwCategories.DataSource = result.Data;
             }
             else
                 MessageBox.Show(result.Message);
@@ -42,11 +51,12 @@ namespace TestProject
                 var result = await _categoryService.GetCategory(c => c.CategoryId == categoryID);
                 if (result.Success == true)
                 {
-                    if (result.Data != null)
+                    if (result.Data != null && result.Data !=null)
                     {
+                        tbxCategoryID.Text = result.Data.CategoryId.ToString();
                         tbxCategoryName.Text = result.Data.CategoryName;
-                        rtbxDescripton.Text = result.Data.Description;
-                        var imageResult = _categoryService.ByteToImage(result.Data.Picture);
+                        tbxDescripton.Text = result.Data.Description;
+                        var imageResult = _utilitiesService.ByteToImage(result.Data.Picture);
                         if (imageResult.Success == true)
                         {
                             pictureBox.Image = imageResult.Data;
@@ -63,94 +73,117 @@ namespace TestProject
 
         private void btnChoose_Click(object sender, EventArgs e)
         {
-            //openFileDialog1.Filter = "Picture files |*.jpg; *.jpeg; *.png";
-            //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //     filePath= openFileDialog1.FileName;
-            //     fileName= openFileDialog1.SafeFileName;
-            //}
-            //if (filePath != null)
-            //{
-            //    pictureBox.Image = Image.FromFile(filePath);
-            //}
+            openFileDialog1.Filter = "Pictures |*.jpg; *.jpeg; *.png";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filePath = openFileDialog1.FileName;
+                fileName = openFileDialog1.SafeFileName;
+            }
+            if (filePath != null)
+            {
+                pictureBox.Image = Image.FromFile(filePath);
+            }
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            //utilities.exceptionHandler(async () =>
-            //{
-            //    _categoryDal.AddAsync(new Models.Category
-            //    {
-            //        CategoryName = tbxCategoryName.Text,
-            //        Description = rtbxDescripton.Text,
-            //        Picture = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg)
-            //    });
-                
-            //    gdwCategories.DataSource = await _categoryDal.GetAllAsync();
-            //    utilities.clearTextBox(tbxCategoryName);
-            //    utilities.clearRichTextBox(rtbxDescripton);
-            //});
+            if (tbxCategoryID.Text != string.Empty)
+            {
+                int categoryID = Convert.ToInt32(tbxCategoryID.Text);
+                var getCategoryResult = await _categoryService.GetCategory(c => c.CategoryId == categoryID);
+                if (getCategoryResult.Success == true && getCategoryResult.Data != null)
+                {
+                    getCategoryResult.Data.CategoryName = tbxCategoryName.Text;
+                    getCategoryResult.Data.Description = tbxDescripton.Text;
+                    var imageToByteResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                    if (imageToByteResult.Success == true && imageToByteResult.Data != null)
+                    {
+                        getCategoryResult.Data.Picture = imageToByteResult.Data;
+                    }
+                    else { MessageBox.Show(imageToByteResult.Message); }
+
+                    var updateCategoryResult = await _categoryService.UpdateCategory(getCategoryResult.Data);
+                    if (updateCategoryResult.Success == true)
+                    {
+                        MessageBox.Show("Kategori güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                        await LoadCategories();
+                    }
+                    else
+                    {
+                        MessageBox.Show(updateCategoryResult.Message);
+                    }
+                }
+                else
+                    MessageBox.Show(getCategoryResult.Message);
+            }
+            else
+            {
+
+                var imageToByteResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                Category category = new Category();
+                category.CategoryName = tbxCategoryName.Text;
+                category.Description = tbxDescripton.Text;
+
+                if (imageToByteResult.Success == true && imageToByteResult.Data != null)
+                {
+                    category.Picture = imageToByteResult.Data;
+                }
+                else { MessageBox.Show(imageToByteResult.Message); }
+
+                var addCategoryResult = await _categoryService.AddCategory(category);
+                if (addCategoryResult.Success == true)
+                {
+                    MessageBox.Show("Kategori ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                    await LoadCategories();
+                }
+                else
+                {
+                    MessageBox.Show(addCategoryResult.Message);
+                }
+            }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private async void btnRemove_Click(object sender, EventArgs e)
         {
-            //utilities.exceptionHandler(async () =>
-            //{
-            //    if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
-            //    {
-            //        DialogResult dialogResult = new DialogResult();
-            //        var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-            //        dialogResult = MessageBox.Show(String.Format("{0} choose product has been deleted ?", category.CategoryName), "Record Deleted", MessageBoxButtons.YesNo);
-            //        if (dialogResult == DialogResult.Yes)
-            //        {
-            //            if (category != null)
-            //            {
-            //                _categoryDal.DeleteAsync(category);
-            //                gdwCategories.DataSource = await _categoryDal.GetAllAsync();
-            //                utilities.clearTextBox(tbxCategoryName);
-            //                utilities.clearRichTextBox(rtbxDescripton);
-            //                MessageBox.Show(String.Format("{0} category has been removed.", category.CategoryName));
-            //            }
-            //            else
-            //                MessageBox.Show("Record is not found...");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Category has been selected...");
-            //    }
-            //});
-        }
-
-        private void buttonUpdate_Click(object sender, EventArgs e)
-        {
-            //utilities.exceptionHandler(async () =>
-            //{
-            //    if (gdwCategories.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwCategories.CurrentRow.Cells[0].Value.ToString()))
-            //    {
-            //        var category = await _categoryDal.GetAsync(gdwCategories.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwCategories.CurrentRow.Cells[0].Value) : 0);
-            //        if (category != null)
-            //        {
-            //            category.CategoryName = tbxCategoryName.Text;
-            //            category.Description = rtbxDescripton.Text;
-            //            category.Picture = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
-            //            _categoryDal.UpdateAsync(category);
-            //            gdwCategories.DataSource = await _categoryDal.GetAllAsync();
-            //            utilities.clearTextBox(tbxCategoryName);
-            //            utilities.clearRichTextBox(rtbxDescripton);
-            //            MessageBox.Show(String.Format("{0} Id's category has been updated.", category.CategoryId));
-            //        }
-            //        else
-            //            MessageBox.Show("Record is not found...");
-            //    }
-            //    else
-            //        MessageBox.Show("Category has been selected");
-            //});
+            if (tbxCategoryID.Text != string.Empty)
+            {
+                int categoryID = Convert.ToInt32(tbxCategoryID.Text);
+                var getCategoryResult = await _categoryService.GetCategory(c => c.CategoryId == categoryID);
+                if (getCategoryResult.Success == true && getCategoryResult.Data !=null)
+                {
+                    var deleteCategoryResult = await _categoryService.DeleteCategory(getCategoryResult.Data);
+                    if (deleteCategoryResult.Success == true)
+                    {
+                        MessageBox.Show("Kategori silme işlemi başarılı bir şekilde gerçekleşti.");
+                        await LoadCategories();
+                    }
+                    else
+                        MessageBox.Show(deleteCategoryResult.Message);
+                }
+                else
+                    MessageBox.Show(getCategoryResult.Message);
+            }
+            else
+                MessageBox.Show("Seçili kategori bulunamadı...");
 
         }
+
         private async void tbxSearch_TextChanged(object sender, EventArgs e)
         {
-            //gdwCategories.DataSource = await _categoryDal.BindingList(x => x.CategoryName.Contains(tbxSearch.Text));
+            var result = await _categoryService.GetCategories(c => c.CategoryName.Contains(tbxSearch.Text));
+            if (result.Success == true && result.Data != null)
+            {
+                gdwCategories.DataSource = result.Data;
+            }
+            else
+                MessageBox.Show(result.Message);
+        }
+
+        private void btnChooseClear_Click(object sender, EventArgs e)
+        {
+            _utilitiesService.TextBoxClear(tbxCategoryID, tbxCategoryName, tbxDescripton);
+            gdwCategories.ClearSelection();
+            pictureBox.Image= null;
         }
     }
 }

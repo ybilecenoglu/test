@@ -29,16 +29,18 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.buttonUpdate = new System.Windows.Forms.Button();
+            this.tbxCategoryID = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbxDescripton = new System.Windows.Forms.TextBox();
             this.btnRemove = new System.Windows.Forms.Button();
             this.btnChoose = new System.Windows.Forms.Button();
-            this.buttonAdd = new System.Windows.Forms.Button();
+            this.buttonAddOrUpdate = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.label = new System.Windows.Forms.Label();
-            this.rtbxDescripton = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbxCategoryName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnChooseClear = new System.Windows.Forms.Button();
             this.gdwCategories = new System.Windows.Forms.DataGridView();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tbxSearch = new System.Windows.Forms.TextBox();
@@ -51,40 +53,54 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.buttonUpdate);
+            this.groupBox1.Controls.Add(this.tbxCategoryID);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.tbxDescripton);
             this.groupBox1.Controls.Add(this.btnRemove);
             this.groupBox1.Controls.Add(this.btnChoose);
-            this.groupBox1.Controls.Add(this.buttonAdd);
+            this.groupBox1.Controls.Add(this.buttonAddOrUpdate);
             this.groupBox1.Controls.Add(this.pictureBox);
             this.groupBox1.Controls.Add(this.label);
-            this.groupBox1.Controls.Add(this.rtbxDescripton);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tbxCategoryName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 473);
+            this.groupBox1.Size = new System.Drawing.Size(250, 441);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Categori Info";
             // 
-            // buttonUpdate
+            // tbxCategoryID
             // 
-            this.buttonUpdate.BackColor = System.Drawing.Color.DarkOrange;
-            this.buttonUpdate.Location = new System.Drawing.Point(85, 376);
-            this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
-            this.buttonUpdate.TabIndex = 20;
-            this.buttonUpdate.Text = "Update";
-            this.buttonUpdate.UseVisualStyleBackColor = false;
-            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            this.tbxCategoryID.Location = new System.Drawing.Point(6, 40);
+            this.tbxCategoryID.Name = "tbxCategoryID";
+            this.tbxCategoryID.ReadOnly = true;
+            this.tbxCategoryID.Size = new System.Drawing.Size(235, 23);
+            this.tbxCategoryID.TabIndex = 23;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 15);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Category ID";
+            // 
+            // tbxDescripton
+            // 
+            this.tbxDescripton.Location = new System.Drawing.Point(6, 148);
+            this.tbxDescripton.Name = "tbxDescripton";
+            this.tbxDescripton.Size = new System.Drawing.Size(235, 23);
+            this.tbxDescripton.TabIndex = 21;
             // 
             // btnRemove
             // 
             this.btnRemove.BackColor = System.Drawing.Color.Red;
             this.btnRemove.Location = new System.Drawing.Point(166, 376);
             this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnRemove.Size = new System.Drawing.Size(75, 35);
             this.btnRemove.TabIndex = 19;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = false;
@@ -100,16 +116,16 @@
             this.btnChoose.UseVisualStyleBackColor = true;
             this.btnChoose.Click += new System.EventHandler(this.btnChoose_Click);
             // 
-            // buttonAdd
+            // buttonAddOrUpdate
             // 
-            this.buttonAdd.BackColor = System.Drawing.Color.Chartreuse;
-            this.buttonAdd.Location = new System.Drawing.Point(4, 376);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdd.TabIndex = 18;
-            this.buttonAdd.Text = "Add";
-            this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.buttonAddOrUpdate.BackColor = System.Drawing.Color.Chartreuse;
+            this.buttonAddOrUpdate.Location = new System.Drawing.Point(76, 376);
+            this.buttonAddOrUpdate.Name = "buttonAddOrUpdate";
+            this.buttonAddOrUpdate.Size = new System.Drawing.Size(84, 35);
+            this.buttonAddOrUpdate.TabIndex = 18;
+            this.buttonAddOrUpdate.Text = "Add/Update";
+            this.buttonAddOrUpdate.UseVisualStyleBackColor = false;
+            this.buttonAddOrUpdate.Click += new System.EventHandler(this.buttonAddOrUpdate_Click);
             // 
             // pictureBox
             // 
@@ -130,18 +146,10 @@
             this.label.TabIndex = 5;
             this.label.Text = "Picture";
             // 
-            // rtbxDescripton
-            // 
-            this.rtbxDescripton.Location = new System.Drawing.Point(6, 100);
-            this.rtbxDescripton.Name = "rtbxDescripton";
-            this.rtbxDescripton.Size = new System.Drawing.Size(235, 96);
-            this.rtbxDescripton.TabIndex = 2;
-            this.rtbxDescripton.Text = "";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 82);
+            this.label2.Location = new System.Drawing.Point(6, 130);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 15);
             this.label2.TabIndex = 4;
@@ -149,7 +157,7 @@
             // 
             // tbxCategoryName
             // 
-            this.tbxCategoryName.Location = new System.Drawing.Point(6, 46);
+            this.tbxCategoryName.Location = new System.Drawing.Point(6, 93);
             this.tbxCategoryName.Name = "tbxCategoryName";
             this.tbxCategoryName.Size = new System.Drawing.Size(235, 23);
             this.tbxCategoryName.TabIndex = 3;
@@ -157,11 +165,22 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Location = new System.Drawing.Point(6, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Category Name";
+            // 
+            // btnChooseClear
+            // 
+            this.btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
+            this.btnChooseClear.Location = new System.Drawing.Point(288, 28);
+            this.btnChooseClear.Name = "btnChooseClear";
+            this.btnChooseClear.Size = new System.Drawing.Size(91, 35);
+            this.btnChooseClear.TabIndex = 20;
+            this.btnChooseClear.Text = "Choose Clear";
+            this.btnChooseClear.UseVisualStyleBackColor = false;
+            this.btnChooseClear.Click += new System.EventHandler(this.btnChooseClear_Click);
             // 
             // gdwCategories
             // 
@@ -208,6 +227,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 497);
             this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnChooseClear);
             this.Controls.Add(this.tbxSearch);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.gdwCategories);
@@ -231,16 +251,18 @@
         private System.Windows.Forms.Button btnChoose;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label label;
-        private System.Windows.Forms.RichTextBox rtbxDescripton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxCategoryName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.Button btnChooseClear;
         private System.Windows.Forms.Button btnRemove;
-        private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button buttonAddOrUpdate;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox tbxSearch;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbxDescripton;
+        private System.Windows.Forms.TextBox tbxCategoryID;
+        private System.Windows.Forms.Label label5;
     }
 }

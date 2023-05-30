@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.EF;
 using TestProject.Entities.Concrete;
+using TestProject.FormUI.Utilities;
+
 namespace TestProject.Product
 {
     public partial class FormProduct : Form
@@ -14,12 +17,14 @@ namespace TestProject.Product
         private IProductService _productService;
         private ICategoryService _categoryService;
         private ISupplierService _supplierService;
+        private IUtilitiesServices _utilitiesServices;
         public FormProduct()
         {
             InitializeComponent();
             _productService = new ProductManager(new EFProductDal());
             _categoryService = new CategoryManager(new EFCategoryDal());
             _supplierService = new SupplierManager(new EFSupplierDal());
+            _utilitiesServices = new UtilitiesManager();
         }
         private void FormProduct_Load(object sender, EventArgs e)
         {
@@ -171,7 +176,7 @@ namespace TestProject.Product
                     if (result.Success == true)
                     {
                         MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
-                        gdwProduct.DataSource = LoadProduct();
+                        await LoadProduct();
                     }
                 }
             }
@@ -198,6 +203,20 @@ namespace TestProject.Product
                 else
                     MessageBox.Show(result.Message);
             }
+        }
+
+        private void btnChooseClear_Click(object sender, EventArgs e)
+        {
+            _utilitiesServices.TextBoxClear(
+                tbxProductID,
+                tbxProductName,
+                tbxQuantityPerUnit,
+                tbxReorderLevel,
+                tbxUnitInStock,
+                tbxUnitPrice,
+                tbxUnitsOnOrder
+                );
+            gdwProduct.ClearSelection();
         }
     }
 }

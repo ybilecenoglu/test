@@ -1,32 +1,25 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestProject.Business.Abstract;
+using TestProject.Business.Concrete;
+using TestProject.DataAccess.Concrete.EF;
 
 namespace TestProject
 {
     public partial class FormEmployess : Form
     {
-        
 
+        private IEmployeeService _employeeService;
         public FormEmployess()
         {
             InitializeComponent();
+            _employeeService = new EmployeeManager(new EFEmployeeDal());
         }
 
-        private void FormEmployess_Load(object sender, EventArgs e)
+        private async void FormEmployess_Load(object sender, EventArgs e)
         {
-            //utilities.exceptionHandler(async () =>
-            //{
-            //    gdwEmployee.DataSource = await _employeeDAL.BindingList();
-
-            //    cbxRegion.DataSource = await _employeeDAL.GetRegions();
-            //    cbxRegion.SelectedIndex = -1;
-            //    cbxRegion.DisplayMember = "RegionDescription";
-            //    cbxRegion.ValueMember = "RegionID";
-
-            //    cbxCity.DataSource = await _employeeDAL.GetTerritories();
-            //    cbxCity.DisplayMember = "TerritoryDescription";
-            //    cbxCity.ValueMember = "TerritoryID";
-            //});
+            await LoadEmployee();
         }
 
         private void gdwEmployee_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -131,5 +124,19 @@ namespace TestProject
             //    }
             //});
         }
+
+        public async Task LoadEmployee()
+        {
+            var result = await _employeeService.GetEmployees();
+            if (result.Success == true)
+            {
+                gdwEmployee.DataSource = result.Data;
+            }
+            else
+            {
+                MessageBox.Show(result.Message);
+            }
+        }
+
     }
 }

@@ -56,6 +56,7 @@
             this.gdwProduct = new System.Windows.Forms.DataGridView();
             this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.btnChooseClear = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gdwProduct)).BeginInit();
             this.SuspendLayout();
@@ -329,11 +330,23 @@
             this.label10.TabIndex = 17;
             this.label10.Text = "Search:";
             // 
+            // btnChooseClear
+            // 
+            this.btnChooseClear.BackColor = System.Drawing.Color.Orange;
+            this.btnChooseClear.Location = new System.Drawing.Point(289, 24);
+            this.btnChooseClear.Name = "btnChooseClear";
+            this.btnChooseClear.Size = new System.Drawing.Size(87, 35);
+            this.btnChooseClear.TabIndex = 20;
+            this.btnChooseClear.Text = "Choose Clear";
+            this.btnChooseClear.UseVisualStyleBackColor = false;
+            this.btnChooseClear.Click += new System.EventHandler(this.btnChooseClear_Click);
+            // 
             // FormProduct
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1078, 795);
+            this.Controls.Add(this.btnChooseClear);
             this.Controls.Add(this.textBoxSearch);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.buttonRemove);
@@ -380,5 +393,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tbxProductID;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnChooseClear;
     }
 }

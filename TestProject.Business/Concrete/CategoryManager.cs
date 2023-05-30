@@ -26,9 +26,9 @@ namespace TestProject.Business.Concrete
             var result = await _categoryDal.AddAsync(category);
             return result;
         }
-        public Task<Result> UpdateCategory(Category category)
+        public async Task<Result> UpdateCategory(Category category)
         {
-            var result = _categoryDal.UpdateAsync(category);
+            var result = await _categoryDal.UpdateAsync(category);
             return result;
 
         }
@@ -65,54 +65,6 @@ namespace TestProject.Business.Concrete
         {
             var result = await _categoryDal.GetAsync(filter);
             return result;
-        }
-        //Image convert to byte method
-        public Result<byte[]> ImageToByte(Image image, ImageFormat imageFormat)
-        {
-            var result = new Result<byte[]>() { Success = false};
-            try
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    var bitMap = new Bitmap(image);
-                    bitMap.Save(ms, imageFormat);
-                    result.Success = true;
-                    result.Message = "Success";
-                    result.Data = ms.ToArray();
-
-                    return result;
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message+= ex.Message;
-                return result;
-            }
-        }
-        //Byte convert to image method
-        public Result<Image> ByteToImage(byte[] bytes)
-        {
-            var result = new Result<Image>() { Success = false };
-            try
-            {
-                using (MemoryStream ms = new MemoryStream(bytes, 0, bytes.Length))
-                {
-                    Image image = Image.FromStream(ms, true);
-                    result.Success = true;
-                    result.Message = "Success";
-                    result.Data = image;
-
-                    return result;
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.Message = ex.Message;
-
-                return result;
-            }
         }
 
     }
