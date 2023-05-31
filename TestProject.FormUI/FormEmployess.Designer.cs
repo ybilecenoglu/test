@@ -76,7 +76,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(527, 511);
+            this.label4.Location = new System.Drawing.Point(1224, 17);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 15);
             this.label4.TabIndex = 25;
@@ -84,7 +84,7 @@
             // 
             // tbxSearch
             // 
-            this.tbxSearch.Location = new System.Drawing.Point(578, 508);
+            this.tbxSearch.Location = new System.Drawing.Point(1275, 14);
             this.tbxSearch.Name = "tbxSearch";
             this.tbxSearch.Size = new System.Drawing.Size(132, 23);
             this.tbxSearch.TabIndex = 27;
@@ -100,10 +100,10 @@
             // gdwEmployee
             // 
             this.gdwEmployee.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gdwEmployee.Location = new System.Drawing.Point(19, 537);
+            this.gdwEmployee.Location = new System.Drawing.Point(716, 43);
             this.gdwEmployee.Name = "gdwEmployee";
             this.gdwEmployee.RowTemplate.Height = 25;
-            this.gdwEmployee.Size = new System.Drawing.Size(691, 361);
+            this.gdwEmployee.Size = new System.Drawing.Size(691, 442);
             this.gdwEmployee.TabIndex = 24;
             this.gdwEmployee.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdwEmployee_CellClick);
             // 
@@ -450,7 +450,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 909);
+            this.ClientSize = new System.Drawing.Size(1504, 516);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbxSearch);
             this.Controls.Add(this.label3);
