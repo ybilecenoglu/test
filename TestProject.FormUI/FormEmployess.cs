@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
@@ -22,14 +23,12 @@ namespace TestProject
             _employeeService = new EmployeeManager(new EFEmployeeDal());
             _utilitiesService = new UtilitiesManager();
         }
-
         private async void FormEmployess_Load(object sender, EventArgs e)
         {
             await LoadEmployee();
             await LoadRegion();
             await LoadTerritories();
         }
-
         private async void gdwEmployee_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -39,6 +38,7 @@ namespace TestProject
                 var employeeResult = await _employeeService.GetEmployee(e => e.EmployeeId == employeeID);
                 if (employeeResult.Success == true)
                 {
+                    tbxEmployeeId.Text = employeeResult.Data.EmployeeId.ToString();
                     tbxLastName.Text = employeeResult.Data.LastName;
                     tbxFirstName.Text = employeeResult.Data.FirstName;
                     tbxTitle.Text = employeeResult.Data.Title;
@@ -62,43 +62,8 @@ namespace TestProject
                 }
                 else
                     MessageBox.Show(employeeResult.Message);
-
             }
         }
-
-        private async void buttonUpdate_Click(object sender, EventArgs e)
-        {
-
-            //if (gdwEmployee.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwEmployee.CurrentRow.Cells[0].Value.ToString()))
-            //{
-            //    var employee = await _employeeDAL.GetAsync(gdwEmployee.CurrentRow.Cells[0].Value != null ? Convert.ToInt32(gdwEmployee.CurrentRow.Cells[0].Value) : 0);
-            //    if (employee != null)
-            //    {
-
-            //        employee.LastName = tbxLastName.Text;
-            //        employee.FirstName = tbxFirstName.Text;
-            //        employee.Notes = rtbNote.Text;
-            //        employee.Title = tbxTitle.Text;
-            //        employee.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
-            //        employee.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
-            //        employee.HireDate = Convert.ToDateTime(dtpHireDate.Text);
-            //        employee.Region = cbxRegion.Text;
-            //        employee.City = cbxCity.Text;
-            //        employee.Country = cbxCountry.Text;
-            //        employee.PostalCode = tbxPostalCode.Text;
-            //        employee.HomePhone = tbxPhone.Text;
-            //        employee.Extension = tbxExtension.Text;
-            //        employee.Photo = utilities.imageToByte(pictureBox.Image, ImageFormat.Jpeg);
-
-            //        _employeeDAL.UpdateAsync(employee);
-            //        gdwEmployee.DataSource = await _employeeDAL.BindingList();
-            //        MessageBox.Show(String.Format("{0} Id's employee has been updated.", employee.EmployeeId));
-            //    }
-            //    else
-            //        MessageBox.Show("Record is not found...");
-            //}
-        }
-
         private void btnChoose_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Picture files |*.jpg; *.jpeg; *.png";
@@ -112,7 +77,6 @@ namespace TestProject
                 pictureBox.Image = Image.FromFile(filePath);
             }
         }
-
         private async void cbxRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
             //comboBox form ilk yüklemede object döndürdüğü bug type kontrolü ile çözüldü.
@@ -128,22 +92,27 @@ namespace TestProject
                     MessageBox.Show(result.Message);
             }
         }
-
-        private void btnRemove_Click(object sender, EventArgs e)
+        private async void btnRemove_Click(object sender, EventArgs e)
         {
-             //var employee = await _employeeDAL.GetAsync(Convert.ToInt32(gdwEmployee.CurrentRow.Cells[0].Value != null ? gdwEmployee.CurrentRow.Cells[0].Value : 0));
-            //    if (employee != null)
-            //    {
-            //        _employeeDAL.DeleteAsync(employee);
-            //        gdwEmployee.DataSource = await _employeeDAL.BindingList();
-            //        MessageBox.Show(String.Format("{0} Id's employee has been removed.", employee.EmployeeId));
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Record is not found...");
-            //    }
+            if (tbxEmployeeId.Text != string.Empty)
+            {
+                int employeeId = Convert.ToInt32(tbxEmployeeId.Text);
+                var employeeResult = await _employeeService.GetEmployee(e => e.EmployeeId == employeeId);
+                if (employeeResult.Success == true)
+                {
+                    var deleteResult = await _employeeService.DeleteEmployee(employeeResult.Data);
+                    if (deleteResult.Success == true)
+                    {
+                        MessageBox.Show("Çalışan silme işlemi başarıyla gerçekleşti");
+                        await LoadEmployee();
+                    }
+                    else
+                        MessageBox.Show(deleteResult.Message);
+                }
+            }
+            else
+                MessageBox.Show("Kayıt bulunamadı...");
         }
-
         public async Task LoadEmployee()
         {
             var result = await _employeeService.GetEmployees();
@@ -156,7 +125,6 @@ namespace TestProject
                 MessageBox.Show(result.Message);
             }
         }
-
         public async Task LoadRegion()
         {
             var result = await _employeeService.GetAllRegion(null);
@@ -169,7 +137,6 @@ namespace TestProject
             else
                 MessageBox.Show(result.Message);
         }
-
         public async Task LoadTerritories()
         {
             var result = await _employeeService.GetAllTerritories(null);
@@ -182,6 +149,94 @@ namespace TestProject
             else
                 MessageBox.Show(result.Message);
         }
+        private async void tbxSearch_TextChanged(object sender, EventArgs e)
+        {
+            var result = await _employeeService.GetEmployees(e => e.FirstName.Contains(tbxSearch.Text.ToLower()));
+            if (result.Success == true)
+            {
+                gdwEmployee.DataSource = result.Data;
+            }
+            else
+                MessageBox.Show(result.Message);
+        }
+        private async void btnAddOrUpdate_Click(object sender, EventArgs e)
+        {
+            if (tbxEmployeeId.Text != string.Empty)
+            {
+                int employeeID = Convert.ToInt32(tbxEmployeeId.Text);
+                var employeeResult = await _employeeService.GetEmployee(e => e.EmployeeId == employeeID);
+                if (employeeResult.Success == true)
+                {
+                    employeeResult.Data.LastName = tbxLastName.Text;
+                    employeeResult.Data.FirstName = tbxFirstName.Text;
+                    employeeResult.Data.Address = tbxAdress.Text;
+                    employeeResult.Data.Notes = rtbNote.Text;
+                    employeeResult.Data.Title = tbxTitle.Text;
+                    employeeResult.Data.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
+                    employeeResult.Data.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
+                    employeeResult.Data.HireDate = Convert.ToDateTime(dtpHireDate.Text);
+                    employeeResult.Data.Region = cbxRegion.Text;
+                    employeeResult.Data.City = cbxCity.Text;
+                    employeeResult.Data.Country = cbxCountry.Text;
+                    employeeResult.Data.PostalCode = tbxPostalCode.Text;
+                    employeeResult.Data.HomePhone = tbxPhone.Text;
+                    employeeResult.Data.Extension = tbxExtension.Text;
+                    var imageResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                    if (imageResult.Success == true)
+                    {
+                        employeeResult.Data.Photo = imageResult.Data;
+                    }
 
+                    var updateResult = await _employeeService.UpdateEmployee(employeeResult.Data);
+                    if (updateResult.Success == true)
+                    {
+                        MessageBox.Show("Çalışan güncelleme başarıyla tamamlandı.");
+                        await LoadEmployee();
+                    }
+                    else
+                        MessageBox.Show(updateResult.Message);
+                }
+            }
+            else
+            {
+                Employee employee = new Employee();
+
+                employee.LastName = tbxLastName.Text;
+                employee.FirstName = tbxFirstName.Text;
+                employee.Address = tbxAdress.Text;
+                employee.Notes = rtbNote.Text;
+                employee.Title = tbxTitle.Text;
+                employee.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
+                employee.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
+                employee.HireDate = Convert.ToDateTime(dtpHireDate.Text);
+                employee.Region = cbxRegion.Text;
+                employee.City = cbxCity.Text;
+                employee.Country = cbxCountry.Text;
+                employee.PostalCode = tbxPostalCode.Text;
+                employee.HomePhone = tbxPhone.Text;
+                employee.Extension = tbxExtension.Text;
+                var imageResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                if (imageResult.Success == true)
+                {
+                    employee.Photo = imageResult.Data;
+                }
+
+                var addResult = await _employeeService.AddEmployee(employee);
+                if (addResult.Success == true)
+                {
+                    MessageBox.Show("Çalışan kaydı ekleme başarıyla gerçekleşti.");
+                    await LoadEmployee();
+                }
+                else
+                    MessageBox.Show(addResult.Message);
+            }
+        }
+        private void btnChooseClear_Click(object sender, EventArgs e)
+        {
+            _utilitiesService.TextBoxClear(tbxEmployeeId, tbxAdress, tbxExtension, tbxFirstName, tbxLastName, tbxPhone, tbxPostalCode, tbxTitle, tbxTitleOfCourtesy);
+            _utilitiesService.RichTextBoxClear(rtbNote);
+            pictureBox.Image = null;
+            gdwEmployee.ClearSelection();
+        }
     }
 }

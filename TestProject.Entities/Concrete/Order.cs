@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using TestProject.Entities.Abstract;
 
 namespace TestProject.Entities.Concrete
 {
 
-    public partial class Order
+    public partial class Order : IEntity
     {
         public int OrderId { get; set; }
 

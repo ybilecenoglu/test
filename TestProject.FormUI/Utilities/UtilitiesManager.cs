@@ -63,6 +63,14 @@ namespace TestProject.Business
             }
         }
 
+        public void RichTextBoxClear(params RichTextBox[] richTextBoxes)
+        {
+            foreach (var richTextBox in richTextBoxes)
+            {
+                richTextBox.Clear();
+            }
+        }
+
         //Hata döndüren global try catch method
         //    public void exceptionHandler(Action action)
         //    {
@@ -92,5 +100,6 @@ namespace TestProject.Business
                 textbox.Clear();
             }
         }
+
     }
 }

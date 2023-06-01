@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TestProject.FormUI;
 using TestProject.Product;
 
 namespace TestProject
@@ -27,6 +28,12 @@ namespace TestProject
         {
             FormEmployess formEmployess = new FormEmployess();
             formEmployess.ShowDialog(this);
+        }
+
+        private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormOrders formOrders = new FormOrders();
+            formOrders.ShowDialog(this);
         }
     }
 }

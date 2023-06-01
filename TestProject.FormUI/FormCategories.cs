@@ -170,7 +170,7 @@ namespace TestProject
 
         private async void tbxSearch_TextChanged(object sender, EventArgs e)
         {
-            var result = await _categoryService.GetCategories(c => c.CategoryName.Contains(tbxSearch.Text));
+            var result = await _categoryService.GetCategories(c => c.CategoryName.Contains(tbxSearch.Text.ToLower()));
             if (result.Success == true && result.Data != null)
             {
                 gdwCategories.DataSource = result.Data;

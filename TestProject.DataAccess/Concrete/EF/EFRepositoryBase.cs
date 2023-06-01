@@ -9,7 +9,7 @@ using TestProject.Entities.Abstract;
 
 namespace TestProject.DataAccess.Concrete.EF
 {
-    public class EFRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
+    public class EFRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> 
         where TEntity : class, IEntity, new() //Generic Kısıtı: Nesne olacak, IEntity tip olacak ve newlenecek
         where TContext : DbContext, new()
     {
@@ -76,6 +76,7 @@ namespace TestProject.DataAccess.Concrete.EF
                     result.Success = true;
                     result.Message = "Success";
                     return result;
+                    
                 }
             }
             catch (Exception ex)

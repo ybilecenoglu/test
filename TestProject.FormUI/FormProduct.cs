@@ -26,13 +26,12 @@ namespace TestProject.Product
             _supplierService = new SupplierManager(new EFSupplierDal());
             _utilitiesServices = new UtilitiesManager();
         }
-        private void FormProduct_Load(object sender, EventArgs e)
+        private async void FormProduct_Load(object sender, EventArgs e)
         {
-            LoadProduct();
-            LoadCategories();
-            LoadSuppliers();
+            await LoadProduct();
+            await LoadCategories();
+            await LoadSuppliers();
         }
-
         public async Task LoadProduct()
         {
             var result = await _productService.GetProducts();
@@ -45,8 +44,7 @@ namespace TestProject.Product
                 MessageBox.Show(result.Message);
             }
         }
-
-        public async void LoadCategories()
+        public async Task LoadCategories()
         {
             var result = await _categoryService.GetCategories();
             if (result.Success == true)
@@ -59,19 +57,16 @@ namespace TestProject.Product
                 MessageBox.Show(result.Message);
 
         }
-
-        public async void LoadSuppliers()
+        public async Task LoadSuppliers()
         {
             cbxSuppliers.DataSource = await _supplierService.GetSuppliers();
             cbxSuppliers.DisplayMember = "CompanyName";
             cbxSuppliers.ValueMember = "SupplierID";
         }
-
         private void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
             AddOrUpdate();
         }
-
         private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -105,7 +100,6 @@ namespace TestProject.Product
                     MessageBox.Show("Seçili kayıt bulunamadı.");
             }
         }
-
         private async void btnRemove_Click(object sender, EventArgs e)
         {
             if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
@@ -150,7 +144,6 @@ namespace TestProject.Product
             else
                 MessageBox.Show(result.Message);
         }
-        
         public async void AddOrUpdate()
         {
             if (tbxProductID.Text != string.Empty)
@@ -204,7 +197,6 @@ namespace TestProject.Product
                     MessageBox.Show(result.Message);
             }
         }
-
         private void btnChooseClear_Click(object sender, EventArgs e)
         {
             _utilitiesServices.TextBoxClear(

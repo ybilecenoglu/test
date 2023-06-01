@@ -304,6 +304,7 @@
             // 
             // gdwProduct
             // 
+            this.gdwProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gdwProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gdwProduct.Location = new System.Drawing.Point(289, 62);
             this.gdwProduct.MultiSelect = false;

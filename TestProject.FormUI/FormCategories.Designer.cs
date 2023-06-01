@@ -184,6 +184,7 @@
             // 
             // gdwCategories
             // 
+            this.gdwCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gdwCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gdwCategories.Location = new System.Drawing.Point(288, 69);
             this.gdwCategories.Name = "gdwCategories";
