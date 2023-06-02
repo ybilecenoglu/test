@@ -9,6 +9,7 @@ using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
 using TestProject.Entities.Concrete;
+using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {
@@ -16,14 +17,14 @@ namespace TestProject
     {
 
         private ICategoryService _categoryService;
-        private IUtilitiesServices _utilitiesService;
+        private IConvertImageService _convertImageService;
+        private IFormItemClearService _formItemClearService;
         private string filePath;
-        private string fileName;
         public FormCategories()
         {
             InitializeComponent();
             _categoryService = InstanceFactory.GetInstance<CategoryManager>();
-            _utilitiesService = InstanceFactory.GetInstance<UtilitiesManager>();
+            _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
         }
 
         private async void FormCategories_Load(object sender, EventArgs e)
@@ -54,7 +55,7 @@ namespace TestProject
                         tbxCategoryID.Text = result.Data.CategoryId.ToString();
                         tbxCategoryName.Text = result.Data.CategoryName;
                         tbxDescripton.Text = result.Data.Description;
-                        var imageResult = _utilitiesService.ByteToImage(result.Data.Picture);
+                        var imageResult = _convertImageService.ByteToImage(result.Data.Picture);
                         if (imageResult.Success == true)
                         {
                             pictureBox.Image = imageResult.Data;
@@ -75,7 +76,6 @@ namespace TestProject
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 filePath = openFileDialog1.FileName;
-                fileName = openFileDialog1.SafeFileName;
             }
             if (filePath != null)
             {
@@ -93,7 +93,7 @@ namespace TestProject
                 {
                     getCategoryResult.Data.CategoryName = tbxCategoryName.Text;
                     getCategoryResult.Data.Description = tbxDescripton.Text;
-                    var imageToByteResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                    var imageToByteResult = _convertImageService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
                     if (imageToByteResult.Success == true && imageToByteResult.Data != null)
                     {
                         getCategoryResult.Data.Picture = imageToByteResult.Data;
@@ -117,7 +117,7 @@ namespace TestProject
             else
             {
 
-                var imageToByteResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                var imageToByteResult = _convertImageService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
                 Category category = new Category();
                 category.CategoryName = tbxCategoryName.Text;
                 category.Description = tbxDescripton.Text;
@@ -179,9 +179,10 @@ namespace TestProject
 
         private void btnChooseClear_Click(object sender, EventArgs e)
         {
-            _utilitiesService.TextBoxClear(tbxCategoryID, tbxCategoryName, tbxDescripton);
+            _formItemClearService.TextBoxClear(tbxCategoryID, tbxCategoryName, tbxDescripton);
+            _formItemClearService.PictureBoxClear(pictureBox);
             gdwCategories.ClearSelection();
-            pictureBox.Image= null;
+            
         }
     }
 }

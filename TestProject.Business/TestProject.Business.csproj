@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
   </ItemGroup>
@@ -13,12 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TestProject.DataAccess\TestProject.DataAccess.csproj" />
     <ProjectReference Include="..\TestProject.Entities\TestProject.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>C:\Users\yigit.bilecenoglu\Desktop\System.Windows.Forms.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

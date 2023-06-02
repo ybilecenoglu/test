@@ -2,13 +2,12 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Forms;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Concrete;
 
 namespace TestProject.Business
 {
-    public class UtilitiesManager : IUtilitiesServices
+    public class ConvertImageManager : IConvertImageService
     {
         public Result<Image> ByteToImage(byte[] bytes)
         {
@@ -55,44 +54,6 @@ namespace TestProject.Business
                 result.Success = false;
                 result.Message += ex.Message;
                 return result;
-            }
-        }
-
-        public void RichTextBoxClear(params RichTextBox[] richTextBoxes)
-        {
-            foreach (var richTextBox in richTextBoxes)
-            {
-                richTextBox.Clear();
-            }
-        }
-
-        //Hata döndüren global try catch method
-        //    public void exceptionHandler(Action action)
-        //    {
-        //        try
-        //        {
-        //            action.Invoke();
-        //        }
-        //        catch (DbUpdateConcurrencyException exception)
-        //        {
-        //            using (NorthwindContext context = new NorthwindContext())
-        //            {
-        //                AppErrorLog log = new AppErrorLog();
-        //                log.Message = exception.Message;
-        //                log.Date = DateTime.Now;
-        //                log.Action = action.Method.Name;
-        //                log.Target = action.Target.ToString();
-        //                context.AppErrorLogs.Add(log);
-        //                context.SaveChanges();
-        //                System.Windows.Forms.MessageBox.Show(exception.Message);
-        //            }
-        //        }
-        //    }
-        public void TextBoxClear(params TextBox[] textBoxes)
-        {
-            foreach (var textbox in textBoxes)
-            {
-                textbox.Clear();
             }
         }
 

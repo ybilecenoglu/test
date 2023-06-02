@@ -15,8 +15,11 @@ namespace TestProject.Business.IoC.Ninject
             Bind<ICategoryService>().To<CategoryManager>().InSingletonScope();
             Bind<IOrderService>().To<OrderManager>().InSingletonScope();
             Bind<IEmployeeService>().To<EmployeeManager>().InSingletonScope();
-            Bind<IUtilitiesServices>().To<UtilitiesManager>().InSingletonScope();
+            Bind<ISupplierService>().To<SupplierManager>().InSingletonScope();
+            Bind<IExceptionHandlerService>().To<ExceptionHandlerManager>().InSingletonScope();
+            Bind<IConvertImageService>().To<ConvertImageManager>().InSingletonScope();
 
+            Bind<ISupplierDal>().To<EFSupplierDal>().InSingletonScope();
             Bind<IProductDal>().To<EFProductDal>().InSingletonScope();
             Bind<ICategoryDal>().To<EFCategoryDal>().InSingletonScope();
             Bind<IEmployeeDal>().To<EFEmployeeDal>().InSingletonScope();

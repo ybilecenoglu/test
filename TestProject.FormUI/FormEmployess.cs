@@ -6,9 +6,10 @@ using System.Windows.Forms;
 using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
+using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
-using TestProject.DataAccess.Concrete.EF;
 using TestProject.Entities.Concrete;
+using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {
@@ -16,12 +17,14 @@ namespace TestProject
     {
 
         private IEmployeeService _employeeService;
-        private IUtilitiesServices _utilitiesService;
+        private IConvertImageService _convertImageService;
+        private IFormItemClearService _formItemClearService;
         public FormEmployess()
         {
             InitializeComponent();
-            _employeeService = new EmployeeManager(new EFEmployeeDal());
-            _utilitiesService = new UtilitiesManager();
+            _employeeService = InstanceFactory.GetInstance<EmployeeManager>();
+            _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
+            _formItemClearService = new FormItemClearManager();
         }
         private async void FormEmployess_Load(object sender, EventArgs e)
         {
@@ -52,7 +55,7 @@ namespace TestProject
                     cbxCountry.SelectedIndex = cbxCountry.FindString(employeeResult.Data.Country != null ? employeeResult.Data.Country : "");
                     tbxPhone.Text = employeeResult.Data.HomePhone;
                     tbxExtension.Text = employeeResult.Data.Extension;
-                    var imageResult = _utilitiesService.ByteToImage(employeeResult.Data.Photo);
+                    var imageResult = _convertImageService.ByteToImage(employeeResult.Data.Photo);
                     if (imageResult.Success == true)
                     {
                         pictureBox.Image = imageResult.Data;
@@ -181,7 +184,7 @@ namespace TestProject
                     employeeResult.Data.PostalCode = tbxPostalCode.Text;
                     employeeResult.Data.HomePhone = tbxPhone.Text;
                     employeeResult.Data.Extension = tbxExtension.Text;
-                    var imageResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                    var imageResult = _convertImageService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
                     if (imageResult.Success == true)
                     {
                         employeeResult.Data.Photo = imageResult.Data;
@@ -215,7 +218,7 @@ namespace TestProject
                 employee.PostalCode = tbxPostalCode.Text;
                 employee.HomePhone = tbxPhone.Text;
                 employee.Extension = tbxExtension.Text;
-                var imageResult = _utilitiesService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
+                var imageResult = _convertImageService.ImageToByte(pictureBox.Image, ImageFormat.Jpeg);
                 if (imageResult.Success == true)
                 {
                     employee.Photo = imageResult.Data;
@@ -233,9 +236,9 @@ namespace TestProject
         }
         private void btnChooseClear_Click(object sender, EventArgs e)
         {
-            _utilitiesService.TextBoxClear(tbxEmployeeId, tbxAdress, tbxExtension, tbxFirstName, tbxLastName, tbxPhone, tbxPostalCode, tbxTitle, tbxTitleOfCourtesy);
-            _utilitiesService.RichTextBoxClear(rtbNote);
-            pictureBox.Image = null;
+            _formItemClearService.TextBoxClear(tbxEmployeeId, tbxAdress, tbxExtension, tbxFirstName, tbxLastName, tbxPhone, tbxPostalCode, tbxTitle, tbxTitleOfCourtesy);
+            _formItemClearService.RichTextBoxClear(rtbNote);
+            _formItemClearService.PictureBoxClear(pictureBox);
             gdwEmployee.ClearSelection();
         }
     }

@@ -4,8 +4,10 @@ using System.Windows.Forms;
 using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
+using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Concrete.EF;
+using TestProject.FormUI.Utilities;
 
 namespace TestProject.Product
 {
@@ -15,14 +17,15 @@ namespace TestProject.Product
         private IProductService _productService;
         private ICategoryService _categoryService;
         private ISupplierService _supplierService;
-        private IUtilitiesServices _utilitiesService;
+        private IFormItemClearService _formItemClearService;
         public FormProduct()
         {
             InitializeComponent();
-            _productService = new ProductManager(new EFProductDal());
-            _categoryService = new CategoryManager(new EFCategoryDal());
-            _supplierService = new SupplierManager(new EFSupplierDal());
-            _utilitiesService = new UtilitiesManager();
+            _productService = InstanceFactory.GetInstance<ProductManager>();
+            _categoryService = InstanceFactory.GetInstance<CategoryManager>();
+            _supplierService = InstanceFactory.GetInstance<SupplierManager>();
+            //_exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
+            _formItemClearService = new FormItemClearManager();
             
         }
         private async void FormProduct_Load(object sender, EventArgs e)
@@ -51,6 +54,7 @@ namespace TestProject.Product
                 cbxCategories.DataSource = result.Data;
                 cbxCategories.DisplayMember = "CategoryName";
                 cbxCategories.ValueMember = "CategoryID";
+                cbxCategories.SelectedIndex = -1;
             }
             else
                 MessageBox.Show(result.Message);
@@ -61,6 +65,7 @@ namespace TestProject.Product
             cbxSuppliers.DataSource = await _supplierService.GetSuppliers();
             cbxSuppliers.DisplayMember = "CompanyName";
             cbxSuppliers.ValueMember = "SupplierID";
+            cbxSuppliers.SelectedIndex = -1;
         }
         private void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
@@ -145,16 +150,38 @@ namespace TestProject.Product
         }
         public async void AddOrUpdate()
         {
-            if (tbxProductID.Text != string.Empty)
-            {
-                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
-                var product = await _productService.GetProduct(p => p.ProductId == productID);
-
-                if (product.Success == true)
+            
+                if (tbxProductID.Text != string.Empty)
                 {
-                    var result = await _productService.UpdateProduct(new Entities.Concrete.Product
+                    int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                    var product = await _productService.GetProduct(p => p.ProductId == productID);
+
+                    if (product.Success == true)
                     {
-                        ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                        var result = await _productService.UpdateProduct(new Entities.Concrete.Product
+                        {
+                            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                            ProductName = tbxProductName.Text,
+                            SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
+                            CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
+                            UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
+                            UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
+                            UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
+                            QuantityPerUnit = tbxQuantityPerUnit.Text,
+                            Discontinued = rdbOnSale.Checked == true ? true : false,
+                            ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
+                        });
+                        if (result.Success == true)
+                        {
+                            MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                            await LoadProduct();
+                        }
+                    }
+                }
+                else
+                {
+                    var result = await _productService.AddProduct(new Entities.Concrete.Product
+                    {
                         ProductName = tbxProductName.Text,
                         SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
                         CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
@@ -165,40 +192,19 @@ namespace TestProject.Product
                         Discontinued = rdbOnSale.Checked == true ? true : false,
                         ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
                     });
+
                     if (result.Success == true)
                     {
-                        MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
-                        await LoadProduct();
+                        MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                        gdwProduct.DataSource = LoadProduct();
                     }
+                    else
+                        MessageBox.Show(result.Message);
                 }
-            }
-            else
-            {
-                var result = await _productService.AddProduct(new Entities.Concrete.Product
-                {
-                    ProductName = tbxProductName.Text,
-                    SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
-                    CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
-                    UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
-                    UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
-                    UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
-                    QuantityPerUnit = tbxQuantityPerUnit.Text,
-                    Discontinued = rdbOnSale.Checked == true ? true : false,
-                    ReorderLevel = Convert.ToInt16(tbxReorderLevel.Text)
-                });
-
-                if (result.Success == true)
-                {
-                    MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
-                    gdwProduct.DataSource = LoadProduct();
-                }
-                else
-                    MessageBox.Show(result.Message);
-            }
         }
         private void btnChooseClear_Click(object sender, EventArgs e)
         {
-            _utilitiesService.TextBoxClear(
+            _formItemClearService.TextBoxClear(
                 tbxProductID,
                 tbxProductName,
                 tbxQuantityPerUnit,
@@ -207,6 +213,8 @@ namespace TestProject.Product
                 tbxUnitPrice,
                 tbxUnitsOnOrder
                 );
+            _formItemClearService.RadioButtonClear(rdbOnSale, rdbNotForSeal);
+            _formItemClearService.ComboBoxClear(cbxCategories, cbxSuppliers);
             gdwProduct.ClearSelection();
         }
     }

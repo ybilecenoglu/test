@@ -30,10 +30,10 @@ namespace TestProject.DataAccess.Concrete.EF
                     return result;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 result.Success = false;
-                result.Message = ex.Message;
+                result.Message = "Hata oluştu";
 
                 return result;
             }
@@ -54,10 +54,10 @@ namespace TestProject.DataAccess.Concrete.EF
                     return result;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 result.Success = false;
-                result.Message = ex.Message;
+                result.Message = "Hata oluştu.";
                 return result;
             }
 
@@ -79,10 +79,10 @@ namespace TestProject.DataAccess.Concrete.EF
                     
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 result.Success = false;
-                result.Message = ex.Message;
+                result.Message = "Hata oluştu.";
                 return result;
             }
         }
@@ -100,10 +100,10 @@ namespace TestProject.DataAccess.Concrete.EF
                     return result;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 result.Success = false;
-                result.Message = ex.Message;
+                result.Message = "Hata oluştu";
                 return result;
             }
             
@@ -124,10 +124,10 @@ namespace TestProject.DataAccess.Concrete.EF
                     return result;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 result.Success = false;
-                result.Message = ex.Message;
+                result.Message = "Hata oluştu.";
                 return result;
             }
         }
