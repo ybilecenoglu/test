@@ -6,9 +6,9 @@ using System.Windows.Forms;
 using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
+using TestProject.Business.Utilities;
 using TestProject.DataAccess.Concrete.EF;
 using TestProject.Entities.Concrete;
-using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {

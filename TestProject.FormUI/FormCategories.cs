@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
-using TestProject.DataAccess.Abstract;
-using TestProject.DataAccess.Concrete.EF;
+using TestProject.Business.IoC.Ninject;
+using TestProject.Business.Utilities;
 using TestProject.Entities.Concrete;
-using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {
@@ -24,8 +22,8 @@ namespace TestProject
         public FormCategories()
         {
             InitializeComponent();
-            _categoryService = new CategoryManager(new EFCategoryDal());
-            _utilitiesService = new UtilitiesManager();
+            _categoryService = InstanceFactory.GetInstance<CategoryManager>();
+            _utilitiesService = InstanceFactory.GetInstance<UtilitiesManager>();
         }
 
         private async void FormCategories_Load(object sender, EventArgs e)

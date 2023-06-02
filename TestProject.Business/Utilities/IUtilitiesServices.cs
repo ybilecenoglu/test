@@ -1,14 +1,15 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.DataAccess.Concrete;
 
-namespace TestProject.FormUI.Utilities
+namespace TestProject.Business.Utilities
 {
-    internal interface IUtilitiesServices
+    public interface IUtilitiesServices
     {
-        void TextBoxClear(params TextBox[] textBoxes);
         void RichTextBoxClear(params RichTextBox[] richTextBoxes);
+        void TextBoxClear(params TextBox[] textBoxes);
         Result<Image> ByteToImage(byte[] bytes);
         Result<byte[]> ImageToByte(Image image, ImageFormat imageFormat);
     }
