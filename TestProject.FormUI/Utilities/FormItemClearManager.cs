@@ -9,6 +9,19 @@ namespace TestProject.FormUI.Utilities
 {
     public class FormItemClearManager : IFormItemClearService
     {
+        
+        private static FormItemClearManager _FormItemClearManager;
+
+        private FormItemClearManager()
+        {
+
+        }
+
+        //Create singleton method
+        public static FormItemClearManager CreateAsFormItemClearManager()
+        {
+            return _FormItemClearManager ?? (_FormItemClearManager = new FormItemClearManager());
+        }
         public void ComboBoxClear(params ComboBox[] comboBoxes)
         {
             try

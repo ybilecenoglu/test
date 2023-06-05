@@ -24,7 +24,7 @@ namespace TestProject
             InitializeComponent();
             _employeeService = InstanceFactory.GetInstance<EmployeeManager>();
             _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
-            _formItemClearService = new FormItemClearManager();
+            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
         }
         private async void FormEmployess_Load(object sender, EventArgs e)
         {

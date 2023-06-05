@@ -25,8 +25,8 @@ namespace TestProject.Product
             _categoryService = InstanceFactory.GetInstance<CategoryManager>();
             _supplierService = InstanceFactory.GetInstance<SupplierManager>();
             //_exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
-            _formItemClearService = new FormItemClearManager();
-            
+            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
+
         }
         private async void FormProduct_Load(object sender, EventArgs e)
         {

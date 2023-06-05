@@ -25,8 +25,9 @@ namespace TestProject
             InitializeComponent();
             _categoryService = InstanceFactory.GetInstance<CategoryManager>();
             _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
+            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager();//Singleton implement
         }
-
+        
         private async void FormCategories_Load(object sender, EventArgs e)
         {
             await LoadCategories();
