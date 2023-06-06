@@ -4,6 +4,8 @@ using TestProject.Business.Concrete;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.EF;
+using TestProject.DataAccess.Concrete.NHibernate;
+using TestProject.DataAccess.Concrete.NHibernate.Helper;
 
 namespace TestProject.Business.IoC.Ninject
 {
@@ -18,6 +20,7 @@ namespace TestProject.Business.IoC.Ninject
             Bind<ISupplierService>().To<SupplierManager>().InSingletonScope();
             Bind<IExceptionHandlerService>().To<ExceptionHandlerManager>().InSingletonScope();
             Bind<IConvertImageService>().To<ConvertImageManager>().InSingletonScope();
+            
 
             Bind<ISupplierDal>().To<EFSupplierDal>().InSingletonScope();
             Bind<IProductDal>().To<EFProductDal>().InSingletonScope();

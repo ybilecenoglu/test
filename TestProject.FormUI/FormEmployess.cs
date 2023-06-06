@@ -8,6 +8,7 @@ using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
+using TestProject.DataAccess.Abstract;
 using TestProject.Entities.Concrete;
 using TestProject.FormUI.Utilities;
 
@@ -17,6 +18,7 @@ namespace TestProject
     {
 
         private IEmployeeService _employeeService;
+        
         private IConvertImageService _convertImageService;
         private IFormItemClearService _formItemClearService;
         public FormEmployess()
