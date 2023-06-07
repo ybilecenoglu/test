@@ -21,49 +21,52 @@ namespace TestProject.Business.Concrete
     {
 
         //private IProductDal _productDal;
-        private IProductDal _productDal;
-        public ProductManager(IProductDal ProductDal)
+        private NHProductDal _nhProductDal;
+        public ProductManager(NHProductDal NHProductDal)
         {
-            _productDal = ProductDal;
+            _nhProductDal = NHProductDal;
         }
         public async Task<Result> AddProduct(Product product)
         {
             var result = new Result { Success = false };
-            ProductValidator validations = new ProductValidator();
-            var erors_result = validations.Validate(product);
-            if (erors_result.Errors.Count > 0)
-            {
-                foreach (var error in erors_result.Errors)
-                {
-                    result.Message += error.ErrorMessage + ", ";
-                }
+            result = await _nhProductDal.AddAsync(product);
+            return result;
 
-                return result;
-            }
-            else
-            {
-                result = await _productDal.AddAsync(product);
-                return result;
-            }
+            //ProductValidator validations = new ProductValidator();
+            //var erors_result = validations.Validate(product);
+            //if (erors_result.Errors.Count > 0)
+            //{
+            //    foreach (var error in erors_result.Errors)
+            //    {
+            //        result.Message += error.ErrorMessage + ", ";
+            //    }
+
+            //    return result;
+            //}
+            //else
+            //{
+            //    result = await _nhProductDal.AddAsync(product);
+            //    return result;
+            //}
         }
         public async Task<Result> DeleteProduct(Product product)
         {
-            var result = await _productDal.DeleteAsync(product);
+            var result = await _nhProductDal.DeleteAsync(product);
             return result;
         }
         public async Task<Result<List<Category>>> GetCategories(Expression<Func<Category, bool>> filter = null)
         {
-            var result = await _productDal.GetCategories();
+            var result = await _nhProductDal.GetCategories();
             return result;
         }
         public async Task<Result<List<Supplier>>> GetSuppliers(Expression<Func<Supplier, bool>> filter = null)
         {
-            var result = await _productDal.GetSuppliers();
+            var result = await _nhProductDal.GetSuppliers();
             return result;
         }
         public async Task<Result<Product>> GetProduct(Expression<Func<Product, bool>> filter)
         {
-            var result = await _productDal.GetAsync(filter);
+            var result = await _nhProductDal.GetAsync(filter);
             return result;
 
         }
@@ -71,41 +74,38 @@ namespace TestProject.Business.Concrete
         {
             Result<List<ProductViewModel>> result = new Result<List<ProductViewModel>> { Success = false };
 
-            var productResult = filter != null ? await _productDal.GetAllAsync(filter) : await _productDal.GetAllAsync();
+            var productResult = filter != null ? await _nhProductDal.GetAllAsync(filter) : await _nhProductDal.GetAllAsync();
 
             if (productResult.Success)
             {
-                using (NorthwindContext context = new NorthwindContext())
+                result.Data = productResult.Data.Select(p => new ProductViewModel
                 {
-                    result.Data = productResult.Data.Select(p => new ProductViewModel
-                    {
-                        ProductId = p.ProductId,
-                        ProductName = p.ProductName,
-                        UnitPrice = p.UnitPrice,
-                        QuantityPerUnit = p.QuantityPerUnit,
-                        UnitsInStock = p.UnitsInStock,
-                        UnitsOnOrder = p.UnitsOnOrder,
-                        ReorderLevel = p.ReorderLevel,
-                        Discontinued = p.Discontinued,
-                        CategoryName = context.Categories.SingleOrDefault(c => c.CategoryId == p.CategoryId).CategoryName,
-                        SupplierName = context.Suppliers.SingleOrDefault(s => s.SupplierId == p.SupplierId).CompanyName
+                    ProductId = p.ProductId,
+                    ProductName = p.ProductName,
+                    UnitPrice = p.UnitPrice,
+                    QuantityPerUnit = p.QuantityPerUnit,
+                    UnitsInStock = p.UnitsInStock,
+                    UnitsOnOrder = p.UnitsOnOrder,
+                    ReorderLevel = p.ReorderLevel,
+                    Discontinued = p.Discontinued,
+                    CategoryName = _nhProductDal.GetCategory(x => x.CategoryId == p.CategoryId).Result.Data.CategoryName,
+                    CompanyName = _nhProductDal.GetSupplier(s => s.SupplierId == p.SupplierId).Result.Data.CompanyName
+                })
+               .OrderBy(x => x.ProductId)
+               .ToList();
 
-                    })
-                   .OrderBy(x => x.ProductId)
-                   .ToList();
+                result.Success = true;
+                result.Message = "Success";
 
-                    result.Success = true;
-                    result.Message = "Success";
+                return result;
 
-                    return result;
-                }
             }
             else { return result; }
 
         }
         public async Task<Result> UpdateProduct(Product product)
         {
-            var result = await _productDal.UpdateAsync(product);
+            var result = await _nhProductDal.UpdateAsync(product);
             return result;
         }
     }

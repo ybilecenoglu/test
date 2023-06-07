@@ -8,35 +8,35 @@ namespace TestProject.Entities.Concrete
 
     public partial class Product : IEntity
     {
-        [DisplayName("Id")]
-        public int ProductId { get; set; }
+        
+        public virtual int ProductId { get; set; }
 
-        [DisplayName("Product Name")]
-        public string ProductName { get; set; }
+        
+        public virtual string ProductName { get; set; }
 
-        [DisplayName("Supplier Id ")]
-        public int? SupplierId { get; set; }
+        
+        public virtual int? SupplierId { get; set; }
 
-        [DisplayName("Category Id")]
-        public int? CategoryId { get; set; }
+      
+        public virtual int? CategoryId { get; set; }
 
-        [DisplayName("Quantity Per Unit")]
-        public string QuantityPerUnit { get; set; }
+      
+        public virtual string QuantityPerUnit { get; set; }
 
-        [DisplayName("Unit Price")]
-        public decimal? UnitPrice { get; set; }
+    
+        public virtual decimal? UnitPrice { get; set; }
 
-        [DisplayName("Units In Stock")]
-        public short? UnitsInStock { get; set; }
+      
+        public virtual short? UnitsInStock { get; set; }
 
-        [DisplayName("Units On Order")]
-        public short? UnitsOnOrder { get; set; }
+      
+        public virtual short? UnitsOnOrder { get; set; }
 
-        [DisplayName("Reorder Level")]
-        public short? ReorderLevel { get; set; }
+       
+        public virtual short? ReorderLevel { get; set; }
 
-        [DisplayName("Discontinued")]
-        public bool Discontinued { get; set; }
+       
+        public virtual bool Discontinued { get; set; }
 
         public virtual Category Category { get; set; }
 

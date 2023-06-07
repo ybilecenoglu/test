@@ -28,340 +28,340 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonRemove = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbxProductID = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.btnRemove = new System.Windows.Forms.Button();
-            this.rdbNotForSeal = new System.Windows.Forms.RadioButton();
-            this.rdbOnSale = new System.Windows.Forms.RadioButton();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tbxReorderLevel = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tbxUnitsOnOrder = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbxSuppliers = new System.Windows.Forms.ComboBox();
-            this.cbxCategories = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnAddOrUpdate = new System.Windows.Forms.Button();
-            this.tbxQuantityPerUnit = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbxUnitInStock = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbxUnitPrice = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbxProductName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.gdwProduct = new System.Windows.Forms.DataGridView();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnChooseClear = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gdwProduct)).BeginInit();
-            this.SuspendLayout();
+            buttonRemove = new System.Windows.Forms.Button();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            tbxProductID = new System.Windows.Forms.TextBox();
+            label12 = new System.Windows.Forms.Label();
+            btnRemove = new System.Windows.Forms.Button();
+            rdbNotForSeal = new System.Windows.Forms.RadioButton();
+            rdbOnSale = new System.Windows.Forms.RadioButton();
+            label9 = new System.Windows.Forms.Label();
+            tbxReorderLevel = new System.Windows.Forms.TextBox();
+            label8 = new System.Windows.Forms.Label();
+            tbxUnitsOnOrder = new System.Windows.Forms.TextBox();
+            label7 = new System.Windows.Forms.Label();
+            cbxSuppliers = new System.Windows.Forms.ComboBox();
+            cbxCategories = new System.Windows.Forms.ComboBox();
+            label6 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            btnAddOrUpdate = new System.Windows.Forms.Button();
+            tbxQuantityPerUnit = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            tbxUnitInStock = new System.Windows.Forms.TextBox();
+            label3 = new System.Windows.Forms.Label();
+            tbxUnitPrice = new System.Windows.Forms.TextBox();
+            label2 = new System.Windows.Forms.Label();
+            tbxProductName = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            gdwProduct = new System.Windows.Forms.DataGridView();
+            textBoxSearch = new System.Windows.Forms.TextBox();
+            label10 = new System.Windows.Forms.Label();
+            btnChooseClear = new System.Windows.Forms.Button();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gdwProduct).BeginInit();
+            SuspendLayout();
             // 
             // buttonRemove
             // 
-            this.buttonRemove.Location = new System.Drawing.Point(243, -43);
-            this.buttonRemove.Name = "buttonRemove";
-            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemove.TabIndex = 5;
-            this.buttonRemove.Text = "Remove";
-            this.buttonRemove.UseVisualStyleBackColor = true;
+            buttonRemove.Location = new System.Drawing.Point(243, -43);
+            buttonRemove.Name = "buttonRemove";
+            buttonRemove.Size = new System.Drawing.Size(75, 23);
+            buttonRemove.TabIndex = 5;
+            buttonRemove.Text = "Remove";
+            buttonRemove.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tbxProductID);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.btnRemove);
-            this.groupBox1.Controls.Add(this.rdbNotForSeal);
-            this.groupBox1.Controls.Add(this.rdbOnSale);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.tbxReorderLevel);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.tbxUnitsOnOrder);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.cbxSuppliers);
-            this.groupBox1.Controls.Add(this.cbxCategories);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.btnAddOrUpdate);
-            this.groupBox1.Controls.Add(this.tbxQuantityPerUnit);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.tbxUnitInStock);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tbxUnitPrice);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.tbxProductName);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(249, 636);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Product Info";
+            groupBox1.Controls.Add(tbxProductID);
+            groupBox1.Controls.Add(label12);
+            groupBox1.Controls.Add(btnRemove);
+            groupBox1.Controls.Add(rdbNotForSeal);
+            groupBox1.Controls.Add(rdbOnSale);
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(tbxReorderLevel);
+            groupBox1.Controls.Add(label8);
+            groupBox1.Controls.Add(tbxUnitsOnOrder);
+            groupBox1.Controls.Add(label7);
+            groupBox1.Controls.Add(cbxSuppliers);
+            groupBox1.Controls.Add(cbxCategories);
+            groupBox1.Controls.Add(label6);
+            groupBox1.Controls.Add(label5);
+            groupBox1.Controls.Add(btnAddOrUpdate);
+            groupBox1.Controls.Add(tbxQuantityPerUnit);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(tbxUnitInStock);
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(tbxUnitPrice);
+            groupBox1.Controls.Add(label2);
+            groupBox1.Controls.Add(tbxProductName);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Location = new System.Drawing.Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(249, 636);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Product Info";
             // 
             // tbxProductID
             // 
-            this.tbxProductID.Location = new System.Drawing.Point(6, 50);
-            this.tbxProductID.Name = "tbxProductID";
-            this.tbxProductID.ReadOnly = true;
-            this.tbxProductID.Size = new System.Drawing.Size(237, 23);
-            this.tbxProductID.TabIndex = 19;
+            tbxProductID.Location = new System.Drawing.Point(6, 50);
+            tbxProductID.Name = "tbxProductID";
+            tbxProductID.ReadOnly = true;
+            tbxProductID.Size = new System.Drawing.Size(237, 23);
+            tbxProductID.TabIndex = 19;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 32);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(63, 15);
-            this.label12.TabIndex = 18;
-            this.label12.Text = "Product ID";
+            label12.AutoSize = true;
+            label12.Location = new System.Drawing.Point(6, 32);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(63, 15);
+            label12.TabIndex = 18;
+            label12.Text = "Product ID";
             // 
             // btnRemove
             // 
-            this.btnRemove.BackColor = System.Drawing.Color.Red;
-            this.btnRemove.Location = new System.Drawing.Point(168, 581);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(75, 35);
-            this.btnRemove.TabIndex = 16;
-            this.btnRemove.Text = "Remove";
-            this.btnRemove.UseVisualStyleBackColor = false;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            btnRemove.BackColor = System.Drawing.Color.Red;
+            btnRemove.Location = new System.Drawing.Point(168, 581);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new System.Drawing.Size(75, 35);
+            btnRemove.TabIndex = 16;
+            btnRemove.Text = "Remove";
+            btnRemove.UseVisualStyleBackColor = false;
+            btnRemove.Click += btnRemove_Click;
             // 
             // rdbNotForSeal
             // 
-            this.rdbNotForSeal.AutoSize = true;
-            this.rdbNotForSeal.Location = new System.Drawing.Point(6, 547);
-            this.rdbNotForSeal.Name = "rdbNotForSeal";
-            this.rdbNotForSeal.Size = new System.Drawing.Size(89, 19);
-            this.rdbNotForSeal.TabIndex = 7;
-            this.rdbNotForSeal.TabStop = true;
-            this.rdbNotForSeal.Text = "Not For Seal";
-            this.rdbNotForSeal.UseVisualStyleBackColor = true;
+            rdbNotForSeal.AutoSize = true;
+            rdbNotForSeal.Location = new System.Drawing.Point(6, 547);
+            rdbNotForSeal.Name = "rdbNotForSeal";
+            rdbNotForSeal.Size = new System.Drawing.Size(89, 19);
+            rdbNotForSeal.TabIndex = 7;
+            rdbNotForSeal.TabStop = true;
+            rdbNotForSeal.Text = "Not For Seal";
+            rdbNotForSeal.UseVisualStyleBackColor = true;
             // 
             // rdbOnSale
             // 
-            this.rdbOnSale.AutoSize = true;
-            this.rdbOnSale.Location = new System.Drawing.Point(6, 522);
-            this.rdbOnSale.Name = "rdbOnSale";
-            this.rdbOnSale.Size = new System.Drawing.Size(65, 19);
-            this.rdbOnSale.TabIndex = 6;
-            this.rdbOnSale.TabStop = true;
-            this.rdbOnSale.Text = "On Sale";
-            this.rdbOnSale.UseVisualStyleBackColor = true;
+            rdbOnSale.AutoSize = true;
+            rdbOnSale.Location = new System.Drawing.Point(6, 522);
+            rdbOnSale.Name = "rdbOnSale";
+            rdbOnSale.Size = new System.Drawing.Size(65, 19);
+            rdbOnSale.TabIndex = 6;
+            rdbOnSale.TabStop = true;
+            rdbOnSale.Text = "On Sale";
+            rdbOnSale.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 504);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 15);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Discontinued";
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(6, 504);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(77, 15);
+            label9.TabIndex = 15;
+            label9.Text = "Discontinued";
             // 
             // tbxReorderLevel
             // 
-            this.tbxReorderLevel.Location = new System.Drawing.Point(6, 467);
-            this.tbxReorderLevel.Name = "tbxReorderLevel";
-            this.tbxReorderLevel.Size = new System.Drawing.Size(237, 23);
-            this.tbxReorderLevel.TabIndex = 14;
+            tbxReorderLevel.Location = new System.Drawing.Point(6, 467);
+            tbxReorderLevel.Name = "tbxReorderLevel";
+            tbxReorderLevel.Size = new System.Drawing.Size(237, 23);
+            tbxReorderLevel.TabIndex = 14;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 449);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(78, 15);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Reorder Level";
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(6, 449);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(78, 15);
+            label8.TabIndex = 13;
+            label8.Text = "Reorder Level";
             // 
             // tbxUnitsOnOrder
             // 
-            this.tbxUnitsOnOrder.Location = new System.Drawing.Point(6, 410);
-            this.tbxUnitsOnOrder.Name = "tbxUnitsOnOrder";
-            this.tbxUnitsOnOrder.Size = new System.Drawing.Size(237, 23);
-            this.tbxUnitsOnOrder.TabIndex = 12;
+            tbxUnitsOnOrder.Location = new System.Drawing.Point(6, 410);
+            tbxUnitsOnOrder.Name = "tbxUnitsOnOrder";
+            tbxUnitsOnOrder.Size = new System.Drawing.Size(237, 23);
+            tbxUnitsOnOrder.TabIndex = 12;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 392);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(86, 15);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Units On Order";
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(6, 392);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(86, 15);
+            label7.TabIndex = 11;
+            label7.Text = "Units On Order";
             // 
             // cbxSuppliers
             // 
-            this.cbxSuppliers.FormattingEnabled = true;
-            this.cbxSuppliers.Location = new System.Drawing.Point(6, 196);
-            this.cbxSuppliers.Name = "cbxSuppliers";
-            this.cbxSuppliers.Size = new System.Drawing.Size(237, 23);
-            this.cbxSuppliers.TabIndex = 10;
+            cbxSuppliers.FormattingEnabled = true;
+            cbxSuppliers.Location = new System.Drawing.Point(6, 196);
+            cbxSuppliers.Name = "cbxSuppliers";
+            cbxSuppliers.Size = new System.Drawing.Size(237, 23);
+            cbxSuppliers.TabIndex = 10;
             // 
             // cbxCategories
             // 
-            this.cbxCategories.FormattingEnabled = true;
-            this.cbxCategories.Location = new System.Drawing.Point(6, 147);
-            this.cbxCategories.Name = "cbxCategories";
-            this.cbxCategories.Size = new System.Drawing.Size(237, 23);
-            this.cbxCategories.TabIndex = 9;
+            cbxCategories.FormattingEnabled = true;
+            cbxCategories.Location = new System.Drawing.Point(6, 147);
+            cbxCategories.Name = "cbxCategories";
+            cbxCategories.Size = new System.Drawing.Size(237, 23);
+            cbxCategories.TabIndex = 9;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 129);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 15);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "Categories";
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(6, 129);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(63, 15);
+            label6.TabIndex = 8;
+            label6.Text = "Categories";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 178);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 15);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Suppliers";
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(6, 178);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(55, 15);
+            label5.TabIndex = 7;
+            label5.Text = "Suppliers";
             // 
             // btnAddOrUpdate
             // 
-            this.btnAddOrUpdate.BackColor = System.Drawing.Color.Chartreuse;
-            this.btnAddOrUpdate.Location = new System.Drawing.Point(75, 581);
-            this.btnAddOrUpdate.Name = "btnAddOrUpdate";
-            this.btnAddOrUpdate.Size = new System.Drawing.Size(87, 35);
-            this.btnAddOrUpdate.TabIndex = 6;
-            this.btnAddOrUpdate.Text = "Add/Update";
-            this.btnAddOrUpdate.UseVisualStyleBackColor = false;
-            this.btnAddOrUpdate.Click += new System.EventHandler(this.buttonAddOrUpdate_Click);
+            btnAddOrUpdate.BackColor = System.Drawing.Color.Chartreuse;
+            btnAddOrUpdate.Location = new System.Drawing.Point(75, 581);
+            btnAddOrUpdate.Name = "btnAddOrUpdate";
+            btnAddOrUpdate.Size = new System.Drawing.Size(87, 35);
+            btnAddOrUpdate.TabIndex = 6;
+            btnAddOrUpdate.Text = "Add/Update";
+            btnAddOrUpdate.UseVisualStyleBackColor = false;
+            btnAddOrUpdate.Click += buttonAddOrUpdate_Click;
             // 
             // tbxQuantityPerUnit
             // 
-            this.tbxQuantityPerUnit.Location = new System.Drawing.Point(6, 246);
-            this.tbxQuantityPerUnit.Name = "tbxQuantityPerUnit";
-            this.tbxQuantityPerUnit.Size = new System.Drawing.Size(237, 23);
-            this.tbxQuantityPerUnit.TabIndex = 3;
+            tbxQuantityPerUnit.Location = new System.Drawing.Point(6, 246);
+            tbxQuantityPerUnit.Name = "tbxQuantityPerUnit";
+            tbxQuantityPerUnit.Size = new System.Drawing.Size(237, 23);
+            tbxQuantityPerUnit.TabIndex = 3;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 228);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 15);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "Quantity Per Unit";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(6, 228);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(98, 15);
+            label4.TabIndex = 2;
+            label4.Text = "Quantity Per Unit";
             // 
             // tbxUnitInStock
             // 
-            this.tbxUnitInStock.Location = new System.Drawing.Point(6, 353);
-            this.tbxUnitInStock.Name = "tbxUnitInStock";
-            this.tbxUnitInStock.Size = new System.Drawing.Size(237, 23);
-            this.tbxUnitInStock.TabIndex = 5;
+            tbxUnitInStock.Location = new System.Drawing.Point(6, 353);
+            tbxUnitInStock.Name = "tbxUnitInStock";
+            tbxUnitInStock.Size = new System.Drawing.Size(237, 23);
+            tbxUnitInStock.TabIndex = 5;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 335);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Unit In Stock";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(6, 335);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(74, 15);
+            label3.TabIndex = 4;
+            label3.Text = "Unit In Stock";
             // 
             // tbxUnitPrice
             // 
-            this.tbxUnitPrice.Location = new System.Drawing.Point(6, 299);
-            this.tbxUnitPrice.Name = "tbxUnitPrice";
-            this.tbxUnitPrice.Size = new System.Drawing.Size(237, 23);
-            this.tbxUnitPrice.TabIndex = 3;
+            tbxUnitPrice.Location = new System.Drawing.Point(6, 299);
+            tbxUnitPrice.Name = "tbxUnitPrice";
+            tbxUnitPrice.Size = new System.Drawing.Size(237, 23);
+            tbxUnitPrice.TabIndex = 3;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 281);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "UnitPrice";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(6, 281);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(55, 15);
+            label2.TabIndex = 2;
+            label2.Text = "UnitPrice";
             // 
             // tbxProductName
             // 
-            this.tbxProductName.Location = new System.Drawing.Point(6, 99);
-            this.tbxProductName.Name = "tbxProductName";
-            this.tbxProductName.Size = new System.Drawing.Size(237, 23);
-            this.tbxProductName.TabIndex = 1;
+            tbxProductName.Location = new System.Drawing.Point(6, 99);
+            tbxProductName.Name = "tbxProductName";
+            tbxProductName.Size = new System.Drawing.Size(237, 23);
+            tbxProductName.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 81);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Product Name";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(6, 81);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(84, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Product Name";
             // 
             // gdwProduct
             // 
-            this.gdwProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gdwProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gdwProduct.Location = new System.Drawing.Point(289, 62);
-            this.gdwProduct.MultiSelect = false;
-            this.gdwProduct.Name = "gdwProduct";
-            this.gdwProduct.RowTemplate.Height = 25;
-            this.gdwProduct.Size = new System.Drawing.Size(777, 586);
-            this.gdwProduct.TabIndex = 3;
-            this.gdwProduct.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gdwProduct_CellClick);
+            gdwProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            gdwProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gdwProduct.Location = new System.Drawing.Point(289, 62);
+            gdwProduct.MultiSelect = false;
+            gdwProduct.Name = "gdwProduct";
+            gdwProduct.RowTemplate.Height = 25;
+            gdwProduct.Size = new System.Drawing.Size(777, 586);
+            gdwProduct.TabIndex = 3;
+            gdwProduct.CellClick += gdwProduct_CellClick;
             // 
             // textBoxSearch
             // 
-            this.textBoxSearch.Location = new System.Drawing.Point(944, 33);
-            this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(122, 23);
-            this.textBoxSearch.TabIndex = 18;
-            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
+            textBoxSearch.Location = new System.Drawing.Point(944, 33);
+            textBoxSearch.Name = "textBoxSearch";
+            textBoxSearch.Size = new System.Drawing.Size(122, 23);
+            textBoxSearch.TabIndex = 18;
+            textBoxSearch.TextChanged += textBoxSearch_TextChanged;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(893, 36);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 15);
-            this.label10.TabIndex = 17;
-            this.label10.Text = "Search:";
+            label10.AutoSize = true;
+            label10.Location = new System.Drawing.Point(893, 36);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(45, 15);
+            label10.TabIndex = 17;
+            label10.Text = "Search:";
             // 
             // btnChooseClear
             // 
-            this.btnChooseClear.BackColor = System.Drawing.Color.Orange;
-            this.btnChooseClear.Location = new System.Drawing.Point(289, 24);
-            this.btnChooseClear.Name = "btnChooseClear";
-            this.btnChooseClear.Size = new System.Drawing.Size(87, 35);
-            this.btnChooseClear.TabIndex = 20;
-            this.btnChooseClear.Text = "Choose Clear";
-            this.btnChooseClear.UseVisualStyleBackColor = false;
-            this.btnChooseClear.Click += new System.EventHandler(this.btnChooseClear_Click);
+            btnChooseClear.BackColor = System.Drawing.Color.Orange;
+            btnChooseClear.Location = new System.Drawing.Point(289, 24);
+            btnChooseClear.Name = "btnChooseClear";
+            btnChooseClear.Size = new System.Drawing.Size(87, 35);
+            btnChooseClear.TabIndex = 20;
+            btnChooseClear.Text = "Choose Clear";
+            btnChooseClear.UseVisualStyleBackColor = false;
+            btnChooseClear.Click += btnChooseClear_Click;
             // 
             // FormProduct
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1078, 795);
-            this.Controls.Add(this.btnChooseClear);
-            this.Controls.Add(this.textBoxSearch);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.buttonRemove);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.gdwProduct);
-            this.Name = "FormProduct";
-            this.Text = "FormProduct";
-            this.Load += new System.EventHandler(this.FormProduct_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gdwProduct)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1078, 795);
+            Controls.Add(btnChooseClear);
+            Controls.Add(textBoxSearch);
+            Controls.Add(label10);
+            Controls.Add(buttonRemove);
+            Controls.Add(groupBox1);
+            Controls.Add(gdwProduct);
+            Name = "FormProduct";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "FormProduct";
+            Load += FormProduct_Load;
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gdwProduct).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

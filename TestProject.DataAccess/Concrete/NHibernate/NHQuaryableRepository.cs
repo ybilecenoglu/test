@@ -1,9 +1,5 @@
-﻿using NHibernate.Id.Insert;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.NHibernate.Helper;
 using TestProject.Entities.Abstract;
 
@@ -21,6 +17,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
 
         public IQueryable<T> Table => this.Entities;
 
+        //Quaryable interface implementasyonu
         public virtual IQueryable<T> Entities => _entities ?? (_entities = _nHibarnateHelper.OpenSession().Query<T>());
     }
 }

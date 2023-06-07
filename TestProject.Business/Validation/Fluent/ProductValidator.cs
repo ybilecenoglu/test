@@ -13,7 +13,7 @@ namespace TestProject.Business.Validation.Fluent
         public ProductValidator()
         {
             RuleFor(p => p.ProductName).NotEmpty();
-            RuleFor(p => p.UnitPrice).Must(m => int.TryParse(m.ToString(), out var value) && value > 0).WithMessage("Sadece rakam girilmedilir.");
+            //RuleFor(p => p.UnitPrice).Must(m => int.TryParse(m.ToString(), out var value) && value > 0).WithMessage("Sadece rakam girilmedilir.");
         }
     }
 }

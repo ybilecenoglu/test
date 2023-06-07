@@ -9,10 +9,10 @@ namespace TestProject.DataAccess.Concrete.NHibernate.Helper
 {
     public abstract class NHibarnateHelper : IDisposable
     {
-        //ORM session değişkeni
-        private ISessionFactory _sessionFactory;
+        //Entitiy freamwork context benzeri kullanıcı hangi veritabanıyla geldiğini anlamak için aldığımız değişken
+        private  static ISessionFactory _sessionFactory;
 
-        //Dipendency Injection yönetmi ile _sessionFactory aldık.
+        //Dipendency Injection yönetmi ile SessionFactory aldık.
         public virtual ISessionFactory SessionFactory { get { return _sessionFactory ?? (_sessionFactory = InitializeFactory()); } }
 
         //Implement edilecek yerlerde hangi veritabanına gideleceği belli olmadığı için ezilebilir hale getirdik.
@@ -21,9 +21,10 @@ namespace TestProject.DataAccess.Concrete.NHibernate.Helper
         //Gelen session açmak için kullandığımız method
         public virtual ISession OpenSession()
         {
-            return _sessionFactory.OpenSession();
+            return SessionFactory.OpenSession();
         }
 
+        //Standart dispose işlemi using kullanmak için implement edildi
         public void Dispose()
         {
             GC.SuppressFinalize(this);

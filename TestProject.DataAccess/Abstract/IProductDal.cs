@@ -12,5 +12,8 @@ namespace TestProject.DataAccess.Abstract
     {
         Task<Result<List<Category>>> GetCategories();
         Task<Result<List<Supplier>>> GetSuppliers();
+
+        Task<Result<Category>> GetCategory(Expression<Func<Category, bool>> filter);
+        Task<Result<Supplier>> GetSupplier(Expression<Func<Supplier, bool>> filter);
     }
 }

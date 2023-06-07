@@ -1,10 +1,9 @@
-﻿using Antlr.Runtime.Misc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.NHibernate.Helper;
@@ -53,6 +52,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
                 using (var session = _nHibarneteHelper.OpenSession())
                 {
                     await session.DeleteAsync(entity);
+                    await session.FlushAsync();//Delete operasonu yapildiktan sonra değişiklikleri veritabanına yansıması için flus method çağrıldı
                     result.Success = true;
                     result.Message = "Success";
                     return result;
@@ -74,7 +74,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             {
                 using (var session = _nHibarneteHelper.OpenSession())
                 {
-                    result.Data = filter == null ? await session.Query<TEntity>().ToListAsync() : await session.Query<TEntity>().Where(filter).ToListAsync();
+                    result.Data = filter == null ? await Task.FromResult(session.Query<TEntity>().ToList()) : await Task.FromResult(session.Query<TEntity>().Where(filter).ToList());
                     result.Success = true;
                     result.Message = "Success";
 
@@ -97,7 +97,8 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             {
                 using (var session = _nHibarneteHelper.OpenSession())
                 {
-                    result.Data = await session.Query<TEntity>().SingleOrDefaultAsync(filter);
+                    result.Data = await Task.FromResult(session.Query<TEntity>().SingleOrDefault(filter));
+                    
                     result.Success = true;
                     result.Message = "Success";
 
@@ -121,6 +122,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
                 using (var session = _nHibarneteHelper.OpenSession())
                 {
                     await session.UpdateAsync(entity);
+                    await session.FlushAsync(); //Update operasonu yapildiktan sonra değişiklikleri veritabanına yansıması için flus method çağrıldı
                     result.Success = true;
                     result.Message = "Success";
 

@@ -7,6 +7,7 @@ using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Concrete.EF;
+using TestProject.DataAccess.Concrete.NHibernate;
 using TestProject.FormUI.Utilities;
 
 namespace TestProject.Product
@@ -16,6 +17,7 @@ namespace TestProject.Product
 
         private IProductService _productService;
         private IFormItemClearService _formItemClearService;
+
         public FormProduct()
         {
             InitializeComponent();
@@ -182,13 +184,13 @@ namespace TestProject.Product
             }
             else
             {
-                
+
                 var add_result = await _productService.AddProduct(new Entities.Concrete.Product
                 {
                     ProductName = tbxProductName.Text,
                     SupplierId = Convert.ToInt16(cbxSuppliers.SelectedValue),
                     CategoryId = Convert.ToInt16(cbxCategories.SelectedValue),
-                    //UnitPrice = int.TryParse(tbxUnitPrice.Text, out int sayi) == true ? Convert.ToDecimal(tbxUnitPrice.Text)
+                    UnitPrice = Convert.ToDecimal(tbxUnitPrice.Text),
                     UnitsInStock = Convert.ToInt16(tbxUnitInStock.Text),
                     UnitsOnOrder = Convert.ToInt16(tbxUnitsOnOrder.Text),
                     QuantityPerUnit = tbxQuantityPerUnit.Text,
@@ -199,7 +201,7 @@ namespace TestProject.Product
                 if (add_result.Success == true)
                 {
                     MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
-                    gdwProduct.DataSource = LoadProduct();
+                    await LoadProduct();
                 }
                 else
                     MessageBox.Show(add_result.Message, "HATA !");

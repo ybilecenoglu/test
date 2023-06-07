@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestProject.Entities.Concrete;
 
 namespace TestProject.DataAccess.ViewModels
 {
@@ -16,7 +17,7 @@ namespace TestProject.DataAccess.ViewModels
         public string ProductName { get; set; }
 
         [DisplayName("Supplier")]
-        public string SupplierName { get; set; }
+        public string CompanyName { get; set; }
 
         [DisplayName("Category")]
         public string CategoryName { get; set; }
