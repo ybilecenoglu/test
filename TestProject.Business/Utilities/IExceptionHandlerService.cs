@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TestProject.DataAccess.Concrete;
 
-namespace TestProject.FormUI.Utilities
+namespace TestProject.Business.Utilities
 {
     public interface IExceptionHandlerService
     {
-        Task ReturnException(Func<Task> action);
+        Task<Result> ReturnException(Func<Task> action);
     }
 }

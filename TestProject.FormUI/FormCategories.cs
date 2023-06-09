@@ -47,7 +47,7 @@ namespace TestProject
         }
         private async void gdwCategories_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 if (gdwCategories.CurrentRow.Cells[0].Value != null)
                 {
@@ -74,11 +74,13 @@ namespace TestProject
                         MessageBox.Show(result.Message);
                 }
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
         }
 
         private async void btnChoose_Click(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 openFileDialog1.Filter = "Pictures |*.jpg; *.jpeg; *.png";
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -90,11 +92,13 @@ namespace TestProject
                     pictureBox.Image = Image.FromFile(filePath);
                 }
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
         }
 
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
 
                 if (tbxCategoryID.Text != string.Empty)
@@ -152,11 +156,13 @@ namespace TestProject
                     }
                 }
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
         }
 
         private async void btnRemove_Click(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 if (tbxCategoryID.Text != string.Empty)
                 {
@@ -179,11 +185,13 @@ namespace TestProject
                 else
                     MessageBox.Show("Seçili kategori bulunamadı...");
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
         }
 
         private async void tbxSearch_TextChanged(object sender, EventArgs e)
         {
-           await _exceptionHandlerService.ReturnException(async () =>
+           var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 var result = await _categoryService.GetCategories(c => c.CategoryName.Contains(tbxSearch.Text.ToLower()));
                 if (result.Success == true && result.Data != null)
@@ -193,6 +201,8 @@ namespace TestProject
                 else
                     MessageBox.Show(result.Message);
             });
+            if (result.Success ==false)
+                MessageBox.Show(result.Message);
         }
 
         private void btnChooseClear_Click(object sender, EventArgs e)

@@ -74,7 +74,7 @@ namespace TestProject.Product
         }
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 if (tbxProductID.Text != string.Empty)
                 {
@@ -132,10 +132,14 @@ namespace TestProject.Product
                         MessageBox.Show(add_result.Message, "HATA !");
                 }
             });
+
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
+
         }
         private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -167,11 +171,13 @@ namespace TestProject.Product
                         MessageBox.Show("Seçili kayıt bulunamadı.");
                 }
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
 
         }
         private async void btnRemove_Click(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+           var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
                 {
@@ -200,15 +206,20 @@ namespace TestProject.Product
                     }
                 }
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
         }
         public async Task<TestProject.Entities.Concrete.Product> GetProductById(int id)
         {
-            var product = await _productService.GetProduct(p => p.ProductId == id);
-            return product.Data;
+            var result_product = await _productService.GetProduct(p => p.ProductId == id);
+            if (result_product.Success == true)
+                return result_product.Data;
+            else
+                return null;
         }
         private async void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            await _exceptionHandlerService.ReturnException(async () =>
+            var result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 var result = await _productService.GetProducts(x => x.ProductName.Contains(textBoxSearch.Text.ToLower()));
                 if (result.Success == true)
@@ -218,11 +229,12 @@ namespace TestProject.Product
                 else
                     MessageBox.Show(result.Message);
             });
+            if (result.Success == false)
+                MessageBox.Show(result.Message);
 
         }
         private void btnChooseClear_Click(object sender, EventArgs e)
         {
-
             _formItemClearService.TextBoxClear(
             tbxProductID,
             tbxProductName,
@@ -232,6 +244,7 @@ namespace TestProject.Product
             tbxUnitPrice,
             tbxUnitsOnOrder
             );
+            
             _formItemClearService.RadioButtonClear(rdbOnSale, rdbNotForSeal);
             _formItemClearService.ComboBoxClear(cbxCategories, cbxSuppliers);
             gdwProduct.ClearSelection();

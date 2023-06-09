@@ -7,41 +7,41 @@ namespace TestProject.Entities.Concrete
 
     public partial class Employee : IEntity
     {
-        public int EmployeeId { get; set; }
+        public virtual int EmployeeId { get; set; }
 
-        public string LastName { get; set; }
+        public virtual string LastName { get; set; }
 
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
 
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
-        public string TitleOfCourtesy { get; set; }
+        public virtual string TitleOfCourtesy { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public virtual DateTime? BirthDate { get; set; }
 
-        public DateTime? HireDate { get; set; }
+        public virtual DateTime? HireDate { get; set; }
 
-        public string Address { get; set; }
+        public virtual string Address { get; set; }
 
-        public string City { get; set; }
+        public virtual string City { get; set; }
 
-        public string Region { get; set; }
+        public virtual string Region { get; set; }
 
-        public string PostalCode { get; set; }
+        public virtual string PostalCode { get; set; }
 
-        public string Country { get; set; }
+        public virtual string Country { get; set; }
 
-        public string HomePhone { get; set; }
+        public virtual string HomePhone { get; set; }
 
-        public string Extension { get; set; }
+        public virtual string Extension { get; set; }
 
-        public byte[] Photo { get; set; }
+        public virtual byte[] Photo { get; set; }
 
-        public string Notes { get; set; }
+        public virtual string Notes { get; set; }
 
-        public int? ReportsTo { get; set; }
+        public virtual int? ReportsTo { get; set; }
 
-        public string PhotoPath { get; set; }
+        public virtual string PhotoPath { get; set; }
 
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; } = new List<Employee>();
 

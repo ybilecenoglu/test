@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestProject.Business.Utilities;
 
 namespace TestProject.FormUI.Utilities
 {
@@ -22,59 +23,91 @@ namespace TestProject.FormUI.Utilities
         {
             return _FormItemClearManager ?? (_FormItemClearManager = new FormItemClearManager());
         }
-        public async void ComboBoxClear(params ComboBox[] comboBoxes)
+        public void ComboBoxClear(params ComboBox[] comboBoxes)
         {
-            await _ExceptionHandlerService.ReturnException(async () =>
+            try
             {
                 foreach (var comboBox in comboBoxes)
                 {
                     comboBox.SelectedIndex = -1;
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
         }
 
-        public async void PictureBoxClear(params PictureBox[] pictureBoxes)
+        public void PictureBoxClear(params PictureBox[] pictureBoxes)
         {
-            await _ExceptionHandlerService.ReturnException(async () =>
+            try
             {
                 foreach (var pictureBox in pictureBoxes)
                 {
                     pictureBox.Image = null;
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
         }
 
-        public async void RadioButtonClear(params RadioButton[] radioButtons)
+        public void RadioButtonClear(params RadioButton[] radioButtons)
         {
-            await _ExceptionHandlerService.ReturnException(async () =>
+            try
             {
                 foreach (var radioButton in radioButtons)
                 {
                     radioButton.Checked = false;
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+            
+
         }
 
-        public async void RichTextBoxClear(params RichTextBox[] richTextBoxes)
+        public void RichTextBoxClear(params RichTextBox[] richTextBoxes)
         {
-            await _ExceptionHandlerService.ReturnException(async () =>
+
+            try
             {
                 foreach (var richTextBox in richTextBoxes)
                 {
                     richTextBox.Clear();
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
-        public async void TextBoxClear(params TextBox[] textBoxes)
+        public void TextBoxClear(params TextBox[] textBoxes)
         {
-            await _ExceptionHandlerService.ReturnException(async () =>
+            try
             {
                 foreach (var textBox in textBoxes)
                 {
                     textBox.Clear();
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
         }
 
     }

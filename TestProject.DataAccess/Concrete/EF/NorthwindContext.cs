@@ -47,7 +47,7 @@ namespace TestProject.DataAccess.Concrete.EF
 
         public virtual DbSet<OrdersQry> OrdersQries { get; set; }
 
-        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<TestProject.Entities.Concrete.Product> Products { get; set; }
 
         public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
 
@@ -451,7 +451,7 @@ namespace TestProject.DataAccess.Concrete.EF
                 entity.Property(e => e.ShippedDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<Product>(entity =>
+            modelBuilder.Entity<TestProject.Entities.Concrete.Product>(entity =>
             {
                 entity.HasIndex(e => e.CategoryId, "CategoriesProducts");
 

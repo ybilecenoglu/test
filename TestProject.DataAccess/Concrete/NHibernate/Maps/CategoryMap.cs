@@ -18,7 +18,9 @@ namespace TestProject.DataAccess.Concrete.NHibernate.Maps
 
             Map(x => x.CategoryName).Column("CategoryName");
             Map(x => x.Description).Column("Description");
-            Map(x => x.Picture).Column("Picture");
+
+            //Byte type Length çözüldü - error dehydrating property value for fluent nhibernate 
+            Map(x => x.Picture).Length(int.MaxValue).Column("Picture");
         }
     }
 }

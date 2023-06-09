@@ -6,11 +6,11 @@ namespace TestProject.Entities.Concrete
 
     public partial class Territory
     {
-        public string TerritoryId { get; set; }
+        public virtual string TerritoryId { get; set; }
 
-        public string TerritoryDescription { get; set; }
+        public virtual string TerritoryDescription { get; set; }
 
-        public int RegionId { get; set; }
+        public virtual int RegionId { get; set; }
 
         public virtual Region Region { get; set; }
 

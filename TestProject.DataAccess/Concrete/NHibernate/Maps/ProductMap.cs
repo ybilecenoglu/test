@@ -8,7 +8,7 @@ using TestProject.Entities.Concrete;
 
 namespace TestProject.DataAccess.Concrete.NHibernate.Maps
 {
-    public class ProductMap:ClassMap<Product> //FluentNhibarnate classmap implementasyonu
+    public class ProductMap:ClassMap<TestProject.Entities.Concrete.Product> //FluentNhibarnate classmap implementasyonu
     {
         public ProductMap()
         {

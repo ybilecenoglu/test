@@ -8,7 +8,7 @@ using TestProject.Entities.Concrete;
 
 namespace TestProject.DataAccess.Concrete.EF
 {
-    public class EFProductDal : EFRepositoryBase<Product, NorthwindContext>, IProductDal
+    public class EFProductDal : EFRepositoryBase<TestProject.Entities.Concrete.Product, NorthwindContext>, IProductDal
     {
         
         public async Task<Result<List<Category>>> GetCategories()

@@ -13,7 +13,7 @@ using TestProject.Entities.Concrete;
 
 namespace TestProject.DataAccess.Concrete.NHibernate
 {
-    public class NHProductDal : NHibarnateRepository<Product>, IProductDal
+    public class NHProductDal : NHibarnateRepository<TestProject.Entities.Concrete.Product>, IProductDal
     {
         private SqlNhibarnateHelper _sqlHelper;
         

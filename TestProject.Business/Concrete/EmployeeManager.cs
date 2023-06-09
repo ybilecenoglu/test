@@ -56,10 +56,10 @@ namespace TestProject.Business.Concrete
         public async Task<Result<List<EmployeeViewModel>>> GetEmployees(Expression<Func<Employee, bool>> filter = null)
         {
             Result<List<EmployeeViewModel>> employees = new Result<List<EmployeeViewModel>>();
-            var getEmployeesResult = await _NHemployeeDal.GetAllAsync(filter);
-            if (getEmployeesResult.Success == true && getEmployeesResult.Data != null)
+            var getEmployees_Result = await _NHemployeeDal.GetAllAsync(filter);
+            if (getEmployees_Result.Success == true && getEmployees_Result.Data != null)
             {
-                var columns = getEmployeesResult.Data.Select(e => new EmployeeViewModel
+                var columns = getEmployees_Result.Data.Select(e => new EmployeeViewModel
                 {
                     EmployeeId = e.EmployeeId,
                     FirstName = e.FirstName,
@@ -86,8 +86,8 @@ namespace TestProject.Business.Concrete
             }
             else
             {
-                employees.Success = getEmployeesResult.Success;
-                employees.Message = getEmployeesResult.Message;
+                employees.Success = getEmployees_Result.Success;
+                employees.Message = getEmployees_Result.Message;
                 return employees;
             }
             
