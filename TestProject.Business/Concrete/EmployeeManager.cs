@@ -9,53 +9,54 @@ using TestProject.DataAccess.ViewModels;
 using TestProject.DataAccess.Abstract;
 using TestProject.Entities.Concrete;
 using System.Linq.Expressions;
+using TestProject.DataAccess.Concrete.NHibernate;
 
 namespace TestProject.Business.Concrete
 {
     public class EmployeeManager : IEmployeeService
     {
-        private IEmployeeDal _employeeDal;
+        private NHEmployeeDal _NHemployeeDal;
 
-        public EmployeeManager(IEmployeeDal employeeDal)
+        public EmployeeManager(NHEmployeeDal nhEmployeeDal)
         {
-            _employeeDal = employeeDal;
+            _NHemployeeDal = nhEmployeeDal;
         }
 
          public async Task<Result> AddEmployee(Employee employee)
         {
-            var result = await _employeeDal.AddAsync(employee);
+            var result = await _NHemployeeDal.AddAsync(employee);
             return result;
         }
 
         public async Task<Result> DeleteEmployee(Employee employee)
         {
-            var result = await _employeeDal.DeleteAsync(employee);
+            var result = await _NHemployeeDal.DeleteAsync(employee);
             return result;
         }
 
         public async Task<Result<List<Region>>> GetAllRegion(Expression<Func<Region, bool>> filter = null)
         {
-            var result = await _employeeDal.GetAllRegion(filter);
+            var result = await _NHemployeeDal.GetAllRegion(filter);
             return result;
         }
 
         public async Task<Result<List<Territory>>> GetAllTerritories(Expression<Func<Territory, bool>> filter = null)
         {
-            var result = await _employeeDal.GetAllTerritories(filter);
+            var result = await _NHemployeeDal.GetAllTerritories(filter);
             return result;
 
         }
 
         public async Task<Result<Employee>> GetEmployee(Expression<Func<Employee, bool>> filter)
         {
-            var result = await _employeeDal.GetAsync(filter);
+            var result = await _NHemployeeDal.GetAsync(filter);
             return result;
         }
 
         public async Task<Result<List<EmployeeViewModel>>> GetEmployees(Expression<Func<Employee, bool>> filter = null)
         {
             Result<List<EmployeeViewModel>> employees = new Result<List<EmployeeViewModel>>();
-            var getEmployeesResult = await _employeeDal.GetAllAsync(filter);
+            var getEmployeesResult = await _NHemployeeDal.GetAllAsync(filter);
             if (getEmployeesResult.Success == true && getEmployeesResult.Data != null)
             {
                 var columns = getEmployeesResult.Data.Select(e => new EmployeeViewModel
@@ -94,7 +95,7 @@ namespace TestProject.Business.Concrete
 
         public async Task<Result> UpdateEmployee(Employee employee)
         {
-            var result = await _employeeDal.UpdateAsync(employee);
+            var result = await _NHemployeeDal.UpdateAsync(employee);
             return result;
         }
     }

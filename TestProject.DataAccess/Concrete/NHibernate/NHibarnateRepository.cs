@@ -38,7 +38,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             catch
             {
                 result.Success = false;
-                result.Message = "Hata oluştu";
+                result.Message = "Ekleme işlemi gerçekleşirken bir hata oluştu";
                 return result;
             }
 
@@ -62,7 +62,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             {
 
                 result.Success = false;
-                result.Message = "Hata oluştu";
+                result.Message = "Silme işlemi gerçekleşirken bir hata oluştu";
                 return result;
             }
         }
@@ -84,7 +84,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             catch (Exception)
             {
                 result.Success = false;
-                result.Message = "Hata oluştu";
+                result.Message = "Listeleme gerçekleşirken bir hata oluştu";
 
                 return result;
             }
@@ -105,10 +105,10 @@ namespace TestProject.DataAccess.Concrete.NHibernate
                     return result;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result.Success = false;
-                result.Message = "Hata oluştu";
+                result.Message = "Hata oluştu.";
 
                 return result;
             }
@@ -132,7 +132,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             catch (Exception)
             {
                 result.Success = false;
-                result.Message = "Hata oluştu";
+                result.Message = "Güncelleme işlemi gerçekleşirken bir hata oluştu.";
 
                 return result;
             }

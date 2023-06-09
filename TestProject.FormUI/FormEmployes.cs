@@ -14,14 +14,14 @@ using TestProject.FormUI.Utilities;
 
 namespace TestProject
 {
-    public partial class FormEmployess : Form
+    public partial class FormEmployes : Form
     {
 
         private IEmployeeService _employeeService;
-        
+
         private IConvertImageService _convertImageService;
         private IFormItemClearService _formItemClearService;
-        public FormEmployess()
+        public FormEmployes()
         {
             InitializeComponent();
             _employeeService = InstanceFactory.GetInstance<EmployeeManager>();
@@ -62,7 +62,7 @@ namespace TestProject
                     {
                         pictureBox.Image = imageResult.Data;
                     }
-                    
+
                     rtbNote.Text = employeeResult.Data.Notes;
                 }
                 else
@@ -84,7 +84,7 @@ namespace TestProject
         }
         private async void cbxRegion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //comboBox form ilk yüklemede object döndürdüğü bug type kontrolü ile çözüldü.
+            //comboBox form ilk yüklemede object döndürdüğü, bug type kontrolü ile çözüldü.
             if (cbxRegion.SelectedValue != null && cbxRegion.SelectedValue.GetType() == typeof(int))
             {
                 int regionID = Convert.ToInt32(cbxRegion.SelectedValue);
@@ -132,7 +132,7 @@ namespace TestProject
         }
         public async Task LoadRegion()
         {
-            var result = await _employeeService.GetAllRegion(null);
+            var result = await _employeeService.GetAllRegion();
             if (result.Success == true)
             {
                 cbxRegion.DataSource = result.Data;
@@ -144,10 +144,10 @@ namespace TestProject
         }
         public async Task LoadTerritories()
         {
-            var result = await _employeeService.GetAllTerritories(null);
+            var result = await _employeeService.GetAllTerritories();
             if (result.Success == true)
             {
-                cbxCity.DataSource= result.Data;
+                cbxCity.DataSource = result.Data;
                 cbxCity.DisplayMember = "TerritoryDescription";
                 cbxCity.ValueMember = "TerritoryID";
             }

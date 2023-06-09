@@ -17,7 +17,7 @@ namespace TestProject.Business.Abstract
         Task<Result> AddEmployee(Employee employee);
         Task<Result> DeleteEmployee(Employee employee);
         Task<Result> UpdateEmployee(Employee employee);
-        Task<Result<List<Region>>> GetAllRegion(Expression<Func<Region, bool>> filter);
+        Task<Result<List<Region>>> GetAllRegion(Expression<Func<Region, bool>> filter = null);
         Task<Result<List<Territory>>> GetAllTerritories(Expression<Func<Territory, bool>> filter = null);
     }
 }

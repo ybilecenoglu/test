@@ -26,7 +26,7 @@ namespace TestProject
 
         private void employeesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormEmployess formEmployess = new FormEmployess();
+            FormEmployes formEmployess = new FormEmployes();
             formEmployess.ShowDialog(this);
         }
 

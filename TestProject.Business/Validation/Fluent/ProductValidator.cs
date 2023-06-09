@@ -12,8 +12,16 @@ namespace TestProject.Business.Validation.Fluent
     {
         public ProductValidator()
         {
+            //Nullable validator
             RuleFor(p => p.ProductName).NotEmpty();
-            //RuleFor(p => p.UnitPrice).Must(m => int.TryParse(m.ToString(), out var value) && value > 0).WithMessage("Sadece rakam girilmedilir.");
+            RuleFor(p => p.UnitPrice).NotEmpty();
+            RuleFor(p => p.UnitsInStock).NotEmpty();
+            RuleFor(p => p.Discontinued).NotEmpty();
+            RuleFor(p => p.QuantityPerUnit).NotEmpty();
+
+            //Special validator
+           
+            
         }
     }
 }

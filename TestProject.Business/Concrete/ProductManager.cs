@@ -22,32 +22,30 @@ namespace TestProject.Business.Concrete
 
         //private IProductDal _productDal;
         private NHProductDal _nhProductDal;
+        private ProductValidator _productValidator;
         public ProductManager(NHProductDal NHProductDal)
         {
             _nhProductDal = NHProductDal;
+            _productValidator = new ProductValidator();
         }
         public async Task<Result> AddProduct(Product product)
         {
-            var result = new Result { Success = false };
-            result = await _nhProductDal.AddAsync(product);
-            return result;
+            var add_result = new Result { Success = false };
+            var validate_result = await _productValidator.ValidateAsync(product);
 
-            //ProductValidator validations = new ProductValidator();
-            //var erors_result = validations.Validate(product);
-            //if (erors_result.Errors.Count > 0)
-            //{
-            //    foreach (var error in erors_result.Errors)
-            //    {
-            //        result.Message += error.ErrorMessage + ", ";
-            //    }
+            if (validate_result.Errors.Count > 0)
+            {
+                foreach (var error in validate_result.Errors)
+                {
+                    add_result.Success = false;
+                    add_result.Message += error.ErrorMessage + Environment.NewLine;
+                }
 
-            //    return result;
-            //}
-            //else
-            //{
-            //    result = await _nhProductDal.AddAsync(product);
-            //    return result;
-            //}
+                return add_result;
+            }
+            else
+                add_result = await _nhProductDal.AddAsync(product);
+            return add_result;
         }
         public async Task<Result> DeleteProduct(Product product)
         {
@@ -78,6 +76,7 @@ namespace TestProject.Business.Concrete
 
             if (productResult.Success)
             {
+                
                 result.Data = productResult.Data.Select(p => new ProductViewModel
                 {
                     ProductId = p.ProductId,
@@ -88,8 +87,8 @@ namespace TestProject.Business.Concrete
                     UnitsOnOrder = p.UnitsOnOrder,
                     ReorderLevel = p.ReorderLevel,
                     Discontinued = p.Discontinued,
-                    CategoryName = _nhProductDal.GetCategory(x => x.CategoryId == p.CategoryId).Result.Data.CategoryName,
-                    CompanyName = _nhProductDal.GetSupplier(s => s.SupplierId == p.SupplierId).Result.Data.CompanyName
+                    CategoryName = GetCategoryName(p.CategoryId).Result,
+                    CompanyName = GetCompanyName(p.SupplierId).Result
                 })
                .OrderBy(x => x.ProductId)
                .ToList();
@@ -107,6 +106,28 @@ namespace TestProject.Business.Concrete
         {
             var result = await _nhProductDal.UpdateAsync(product);
             return result;
+        }
+
+        public async Task<string> GetCategoryName(int? categoryId)
+        {
+            var category_result = await _nhProductDal.GetCategory(x => x.CategoryId == categoryId);
+            if (category_result.Success == true && category_result.Data != null)
+            {
+                return category_result.Data.CategoryName;
+            }
+            else
+                return null;
+        }
+
+        public async Task<string> GetCompanyName(int? supplierId)
+        {
+            var supplier_result = await _nhProductDal.GetSupplier(x => x.SupplierId == supplierId);
+            if (supplier_result.Success == true && supplier_result.Data != null)
+            {
+                return supplier_result.Data.CompanyName;
+            }
+            else
+                return null;
         }
     }
 }
