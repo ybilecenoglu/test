@@ -18,7 +18,7 @@ namespace TestProject.Business.IoC.Ninject
             Bind<IOrderService>().To<OrderManager>().InSingletonScope();
             Bind<IEmployeeService>().To<EmployeeManager>().InSingletonScope();
             Bind<ISupplierService>().To<SupplierManager>().InSingletonScope();
-            //Bind<IExceptionHandlerService>().To<ExceptionHandlerManager>().InSingletonScope();
+            Bind<IExceptionHandlerService>().To<ExceptionHandlerManager>().InSingletonScope();
             Bind<IConvertImageService>().To<ConvertImageManager>().InSingletonScope();
             Bind<NHibarnateHelper>().To<SqlNhibarnateHelper>().InSingletonScope();
 

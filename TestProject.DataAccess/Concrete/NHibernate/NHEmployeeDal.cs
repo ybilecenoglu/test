@@ -47,7 +47,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             {
                 using (var session = _SqlNhibarnateHelper.OpenSession())
                 {
-                    result.Data = await session.Query<Territory>().ToListAsync();
+                    result.Data = filter != null ? await session.Query<Territory>().Where(filter).ToListAsync() : await session.Query<Territory>().ToListAsync();
                     result.Success = true;
                     result.Message = "Success";
 
