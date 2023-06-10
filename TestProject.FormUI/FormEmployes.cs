@@ -199,7 +199,8 @@ namespace TestProject
         }
         private async void btnAddOrUpdate_Click(object sender, EventArgs e)
         {
-            var result = await _exceptionHandlerService.ReturnException(async () => {
+            var result = await _exceptionHandlerService.ReturnException(async () =>
+            {
                 if (tbxEmployeeId.Text != string.Empty)
                 {
                     int employeeID = Convert.ToInt32(tbxEmployeeId.Text);

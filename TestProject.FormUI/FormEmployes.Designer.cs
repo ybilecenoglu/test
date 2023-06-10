@@ -214,7 +214,7 @@
             // 
             // btnChoose
             // 
-            btnChoose.Location = new System.Drawing.Point(1059, 221);
+            btnChoose.Location = new System.Drawing.Point(889, 431);
             btnChoose.Name = "btnChoose";
             btnChoose.Size = new System.Drawing.Size(93, 23);
             btnChoose.TabIndex = 2;
@@ -225,7 +225,7 @@
             // label
             // 
             label.AutoSize = true;
-            label.Location = new System.Drawing.Point(903, 19);
+            label.Location = new System.Drawing.Point(773, 28);
             label.Name = "label";
             label.Size = new System.Drawing.Size(39, 15);
             label.TabIndex = 5;
@@ -234,9 +234,9 @@
             // pictureBox
             // 
             pictureBox.Image = FormUI.Properties.Resources._1967356;
-            pictureBox.Location = new System.Drawing.Point(948, 19);
+            pictureBox.Location = new System.Drawing.Point(818, 31);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new System.Drawing.Size(204, 186);
+            pictureBox.Size = new System.Drawing.Size(334, 343);
             pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             pictureBox.TabIndex = 2;
             pictureBox.TabStop = false;
@@ -409,7 +409,7 @@
             // btnChooseClear
             // 
             btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
-            btnChooseClear.Location = new System.Drawing.Point(826, 267);
+            btnChooseClear.Location = new System.Drawing.Point(764, 434);
             btnChooseClear.Name = "btnChooseClear";
             btnChooseClear.Size = new System.Drawing.Size(91, 33);
             btnChooseClear.TabIndex = 20;
@@ -468,7 +468,7 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // FormEmployess
+            // FormEmployes
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -478,7 +478,7 @@
             Controls.Add(label3);
             Controls.Add(gdwEmployee);
             Controls.Add(groupBox1);
-            Name = "FormEmployess";
+            Name = "FormEmployes";
             Text = "FormEmployess";
             Load += FormEmployess_Load;
             ((System.ComponentModel.ISupportInitialize)gdwEmployee).EndInit();

@@ -32,7 +32,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate.Maps
             Map(e => e.Extension).Column("Extension");
             Map(e => e.Photo).Column("Photo").Length(int.MaxValue);
             Map(e => e.ReportsTo).Column("ReportsTo");
-            Map(e => e.PhotoPath).Column("PhotoPath");
+            //Map(e => e.PhotoPath).Column("PhotoPath");
 
         }
     }
