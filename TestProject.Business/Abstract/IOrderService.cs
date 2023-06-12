@@ -17,5 +17,8 @@ namespace TestProject.Business.Abstract
         Task<Result> DeleteOrder(Order order);
         Task<Result> UpdateOrder(Order order);
 
+        Task<Result<List<Customer>>> GetCustomers(Expression<Func<Customer, bool>> filter = null);
+        Task<Result<List<Employee>>> GetEmployees(Expression<Func<Employee, bool>> filter = null);
+
     }
 }

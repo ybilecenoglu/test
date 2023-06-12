@@ -7,44 +7,57 @@ using System.Threading.Tasks;
 using TestProject.Business.Abstract;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete;
+using TestProject.DataAccess.Concrete.NHibernate;
 using TestProject.Entities.Concrete;
 
 namespace TestProject.Business.Concrete
 {
     public class OrderManager : IOrderService
     {
-        private IOrderDal _orderDal;
-        public OrderManager(IOrderDal orderDal)
+        private NHOrderDal NHOrderDal;
+        public OrderManager(NHOrderDal orderDal)
         {
-            _orderDal = orderDal;
+            NHOrderDal = orderDal;
         }
         public async Task<Result> AddOrder(Order order)
         {
-            var result = await _orderDal.AddAsync(order);
+            var result = await NHOrderDal.AddAsync(order);
             return result;
         }
 
         public async Task<Result> DeleteOrder(Order order)
         {
-            var result = await _orderDal.DeleteAsync(order);
+            var result = await NHOrderDal.DeleteAsync(order);
             return result;
         }
 
         public async Task<Result<List<Order>>> GetAllOrder(Expression<Func<Order, bool>> filter = null)
         {
-            var result = await _orderDal.GetAllAsync(filter);
+            var order_result = await NHOrderDal.GetAllAsync(filter);
+            return order_result;
+        }
+
+        public async Task<Result<List<Customer>>> GetCustomers(Expression<Func<Customer, bool>> filter = null)
+        {
+            var result = await NHOrderDal.GetCustomers(filter);
+            return result;
+        }
+
+        public async Task<Result<List<Employee>>> GetEmployees(Expression<Func<Employee, bool>> filter = null)
+        {
+            var result = await NHOrderDal.GetEmployees(filter);
             return result;
         }
 
         public async Task<Result<Order>> GetOrder(Expression<Func<Order, bool>> filter)
         {
-            var result = await _orderDal.GetAsync(filter);
+            var result = await NHOrderDal.GetAsync(filter);
             return result;
         }
 
         public async Task<Result> UpdateOrder(Order order)
         {
-            var result = await _orderDal.UpdateAsync(order);
+            var result = await NHOrderDal.UpdateAsync(order);
             return result;
         }
     }
