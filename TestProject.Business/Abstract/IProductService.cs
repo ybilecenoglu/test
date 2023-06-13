@@ -13,9 +13,11 @@ namespace TestProject.Business.Abstract
 {
     public interface IProductService
     {
-        Task<Result<List<ProductViewModel>>> GetProducts(Expression<Func<Product, bool>> filter = null);
+        Task<Result<List<Product>>> GetProducts(Expression<Func<Product, bool>> filter = null);
         Task<Result<List<Category>>> GetCategories(Expression<Func<Category, bool>> filter = null);
         Task<Result<List<Supplier>>> GetSuppliers(Expression<Func<Supplier, bool>> filter = null);
+        Task<string> GetCategoryName(int? id);
+        Task<string> GetSupplierCompanyName(int? id);
         Task<Result<Product>> GetProduct(Expression<Func<Product, bool>> filter);
         Task<Result> DeleteProduct(Product product);
         Task<Result> AddProduct(Product product);

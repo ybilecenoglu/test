@@ -33,6 +33,7 @@
             tbxProductID = new System.Windows.Forms.TextBox();
             label12 = new System.Windows.Forms.Label();
             btnRemove = new System.Windows.Forms.Button();
+            btnChooseClear = new System.Windows.Forms.Button();
             rdbNotForSeal = new System.Windows.Forms.RadioButton();
             rdbOnSale = new System.Windows.Forms.RadioButton();
             label9 = new System.Windows.Forms.Label();
@@ -56,7 +57,9 @@
             gdwProduct = new System.Windows.Forms.DataGridView();
             textBoxSearch = new System.Windows.Forms.TextBox();
             label10 = new System.Windows.Forms.Label();
-            btnChooseClear = new System.Windows.Forms.Button();
+            lblPageNo = new System.Windows.Forms.Label();
+            btnPrevious = new System.Windows.Forms.Button();
+            btnNextPage = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gdwProduct).BeginInit();
             SuspendLayout();
@@ -75,6 +78,7 @@
             groupBox1.Controls.Add(tbxProductID);
             groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(btnRemove);
+            groupBox1.Controls.Add(btnChooseClear);
             groupBox1.Controls.Add(rdbNotForSeal);
             groupBox1.Controls.Add(rdbOnSale);
             groupBox1.Controls.Add(label9);
@@ -97,14 +101,14 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(249, 636);
+            groupBox1.Size = new System.Drawing.Size(708, 407);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Product Info";
             // 
             // tbxProductID
             // 
-            tbxProductID.Location = new System.Drawing.Point(6, 50);
+            tbxProductID.Location = new System.Drawing.Point(11, 37);
             tbxProductID.Name = "tbxProductID";
             tbxProductID.ReadOnly = true;
             tbxProductID.Size = new System.Drawing.Size(237, 23);
@@ -113,7 +117,7 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(6, 32);
+            label12.Location = new System.Drawing.Point(11, 19);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(63, 15);
             label12.TabIndex = 18;
@@ -122,18 +126,29 @@
             // btnRemove
             // 
             btnRemove.BackColor = System.Drawing.Color.Red;
-            btnRemove.Location = new System.Drawing.Point(168, 581);
+            btnRemove.Location = new System.Drawing.Point(586, 360);
             btnRemove.Name = "btnRemove";
-            btnRemove.Size = new System.Drawing.Size(75, 35);
+            btnRemove.Size = new System.Drawing.Size(116, 35);
             btnRemove.TabIndex = 16;
             btnRemove.Text = "Remove";
             btnRemove.UseVisualStyleBackColor = false;
             btnRemove.Click += btnRemove_Click;
             // 
+            // btnChooseClear
+            // 
+            btnChooseClear.BackColor = System.Drawing.Color.Orange;
+            btnChooseClear.Location = new System.Drawing.Point(586, 278);
+            btnChooseClear.Name = "btnChooseClear";
+            btnChooseClear.Size = new System.Drawing.Size(116, 35);
+            btnChooseClear.TabIndex = 20;
+            btnChooseClear.Text = "Choose Clear";
+            btnChooseClear.UseVisualStyleBackColor = false;
+            btnChooseClear.Click += btnChooseClear_Click;
+            // 
             // rdbNotForSeal
             // 
             rdbNotForSeal.AutoSize = true;
-            rdbNotForSeal.Location = new System.Drawing.Point(6, 547);
+            rdbNotForSeal.Location = new System.Drawing.Point(441, 208);
             rdbNotForSeal.Name = "rdbNotForSeal";
             rdbNotForSeal.Size = new System.Drawing.Size(89, 19);
             rdbNotForSeal.TabIndex = 7;
@@ -144,7 +159,7 @@
             // rdbOnSale
             // 
             rdbOnSale.AutoSize = true;
-            rdbOnSale.Location = new System.Drawing.Point(6, 522);
+            rdbOnSale.Location = new System.Drawing.Point(441, 183);
             rdbOnSale.Name = "rdbOnSale";
             rdbOnSale.Size = new System.Drawing.Size(65, 19);
             rdbOnSale.TabIndex = 6;
@@ -155,7 +170,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(6, 504);
+            label9.Location = new System.Drawing.Point(441, 165);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(77, 15);
             label9.TabIndex = 15;
@@ -163,7 +178,7 @@
             // 
             // tbxReorderLevel
             // 
-            tbxReorderLevel.Location = new System.Drawing.Point(6, 467);
+            tbxReorderLevel.Location = new System.Drawing.Point(441, 134);
             tbxReorderLevel.Name = "tbxReorderLevel";
             tbxReorderLevel.Size = new System.Drawing.Size(237, 23);
             tbxReorderLevel.TabIndex = 14;
@@ -171,7 +186,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(6, 449);
+            label8.Location = new System.Drawing.Point(441, 116);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(78, 15);
             label8.TabIndex = 13;
@@ -179,7 +194,7 @@
             // 
             // tbxUnitsOnOrder
             // 
-            tbxUnitsOnOrder.Location = new System.Drawing.Point(6, 410);
+            tbxUnitsOnOrder.Location = new System.Drawing.Point(441, 86);
             tbxUnitsOnOrder.Name = "tbxUnitsOnOrder";
             tbxUnitsOnOrder.Size = new System.Drawing.Size(237, 23);
             tbxUnitsOnOrder.TabIndex = 12;
@@ -187,7 +202,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(6, 392);
+            label7.Location = new System.Drawing.Point(441, 68);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(86, 15);
             label7.TabIndex = 11;
@@ -196,7 +211,7 @@
             // cbxSuppliers
             // 
             cbxSuppliers.FormattingEnabled = true;
-            cbxSuppliers.Location = new System.Drawing.Point(6, 196);
+            cbxSuppliers.Location = new System.Drawing.Point(11, 183);
             cbxSuppliers.Name = "cbxSuppliers";
             cbxSuppliers.Size = new System.Drawing.Size(237, 23);
             cbxSuppliers.TabIndex = 10;
@@ -204,7 +219,7 @@
             // cbxCategories
             // 
             cbxCategories.FormattingEnabled = true;
-            cbxCategories.Location = new System.Drawing.Point(6, 147);
+            cbxCategories.Location = new System.Drawing.Point(11, 134);
             cbxCategories.Name = "cbxCategories";
             cbxCategories.Size = new System.Drawing.Size(237, 23);
             cbxCategories.TabIndex = 9;
@@ -212,7 +227,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(6, 129);
+            label6.Location = new System.Drawing.Point(11, 116);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(63, 15);
             label6.TabIndex = 8;
@@ -221,7 +236,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(6, 178);
+            label5.Location = new System.Drawing.Point(11, 165);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(55, 15);
             label5.TabIndex = 7;
@@ -230,9 +245,9 @@
             // btnAddOrUpdate
             // 
             btnAddOrUpdate.BackColor = System.Drawing.Color.Chartreuse;
-            btnAddOrUpdate.Location = new System.Drawing.Point(75, 581);
+            btnAddOrUpdate.Location = new System.Drawing.Point(586, 319);
             btnAddOrUpdate.Name = "btnAddOrUpdate";
-            btnAddOrUpdate.Size = new System.Drawing.Size(87, 35);
+            btnAddOrUpdate.Size = new System.Drawing.Size(116, 35);
             btnAddOrUpdate.TabIndex = 6;
             btnAddOrUpdate.Text = "Add/Update";
             btnAddOrUpdate.UseVisualStyleBackColor = false;
@@ -240,7 +255,7 @@
             // 
             // tbxQuantityPerUnit
             // 
-            tbxQuantityPerUnit.Location = new System.Drawing.Point(6, 246);
+            tbxQuantityPerUnit.Location = new System.Drawing.Point(441, 37);
             tbxQuantityPerUnit.Name = "tbxQuantityPerUnit";
             tbxQuantityPerUnit.Size = new System.Drawing.Size(237, 23);
             tbxQuantityPerUnit.TabIndex = 3;
@@ -248,7 +263,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(6, 228);
+            label4.Location = new System.Drawing.Point(441, 19);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(98, 15);
             label4.TabIndex = 2;
@@ -256,7 +271,7 @@
             // 
             // tbxUnitInStock
             // 
-            tbxUnitInStock.Location = new System.Drawing.Point(6, 353);
+            tbxUnitInStock.Location = new System.Drawing.Point(11, 290);
             tbxUnitInStock.Name = "tbxUnitInStock";
             tbxUnitInStock.Size = new System.Drawing.Size(237, 23);
             tbxUnitInStock.TabIndex = 5;
@@ -264,7 +279,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(6, 335);
+            label3.Location = new System.Drawing.Point(11, 272);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(74, 15);
             label3.TabIndex = 4;
@@ -272,7 +287,7 @@
             // 
             // tbxUnitPrice
             // 
-            tbxUnitPrice.Location = new System.Drawing.Point(6, 299);
+            tbxUnitPrice.Location = new System.Drawing.Point(11, 236);
             tbxUnitPrice.Name = "tbxUnitPrice";
             tbxUnitPrice.Size = new System.Drawing.Size(237, 23);
             tbxUnitPrice.TabIndex = 3;
@@ -280,7 +295,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(6, 281);
+            label2.Location = new System.Drawing.Point(11, 218);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(55, 15);
             label2.TabIndex = 2;
@@ -288,7 +303,7 @@
             // 
             // tbxProductName
             // 
-            tbxProductName.Location = new System.Drawing.Point(6, 99);
+            tbxProductName.Location = new System.Drawing.Point(11, 86);
             tbxProductName.Name = "tbxProductName";
             tbxProductName.Size = new System.Drawing.Size(237, 23);
             tbxProductName.TabIndex = 1;
@@ -296,7 +311,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(6, 81);
+            label1.Location = new System.Drawing.Point(11, 68);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(84, 15);
             label1.TabIndex = 0;
@@ -304,19 +319,18 @@
             // 
             // gdwProduct
             // 
-            gdwProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             gdwProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gdwProduct.Location = new System.Drawing.Point(289, 62);
+            gdwProduct.Location = new System.Drawing.Point(12, 457);
             gdwProduct.MultiSelect = false;
             gdwProduct.Name = "gdwProduct";
             gdwProduct.RowTemplate.Height = 25;
-            gdwProduct.Size = new System.Drawing.Size(777, 586);
+            gdwProduct.Size = new System.Drawing.Size(708, 357);
             gdwProduct.TabIndex = 3;
             gdwProduct.CellClick += gdwProduct_CellClick;
             // 
             // textBoxSearch
             // 
-            textBoxSearch.Location = new System.Drawing.Point(944, 33);
+            textBoxSearch.Location = new System.Drawing.Point(598, 425);
             textBoxSearch.Name = "textBoxSearch";
             textBoxSearch.Size = new System.Drawing.Size(122, 23);
             textBoxSearch.TabIndex = 18;
@@ -325,29 +339,49 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(893, 36);
+            label10.Location = new System.Drawing.Point(547, 428);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(45, 15);
             label10.TabIndex = 17;
             label10.Text = "Search:";
             // 
-            // btnChooseClear
+            // lblPageNo
             // 
-            btnChooseClear.BackColor = System.Drawing.Color.Orange;
-            btnChooseClear.Location = new System.Drawing.Point(289, 24);
-            btnChooseClear.Name = "btnChooseClear";
-            btnChooseClear.Size = new System.Drawing.Size(87, 35);
-            btnChooseClear.TabIndex = 20;
-            btnChooseClear.Text = "Choose Clear";
-            btnChooseClear.UseVisualStyleBackColor = false;
-            btnChooseClear.Click += btnChooseClear_Click;
+            lblPageNo.AutoSize = true;
+            lblPageNo.Location = new System.Drawing.Point(128, 432);
+            lblPageNo.Name = "lblPageNo";
+            lblPageNo.Size = new System.Drawing.Size(44, 15);
+            lblPageNo.TabIndex = 23;
+            lblPageNo.Text = "Label 1";
+            // 
+            // btnPrevious
+            // 
+            btnPrevious.Location = new System.Drawing.Point(11, 427);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new System.Drawing.Size(75, 23);
+            btnPrevious.TabIndex = 22;
+            btnPrevious.Text = "<";
+            btnPrevious.UseVisualStyleBackColor = true;
+            btnPrevious.Click += btnPrevious_Click;
+            // 
+            // btnNextPage
+            // 
+            btnNextPage.Location = new System.Drawing.Point(212, 427);
+            btnNextPage.Name = "btnNextPage";
+            btnNextPage.Size = new System.Drawing.Size(75, 23);
+            btnNextPage.TabIndex = 21;
+            btnNextPage.Text = ">";
+            btnNextPage.UseVisualStyleBackColor = true;
+            btnNextPage.Click += btnNextPage_Click;
             // 
             // FormProduct
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1078, 795);
-            Controls.Add(btnChooseClear);
+            ClientSize = new System.Drawing.Size(732, 835);
+            Controls.Add(lblPageNo);
+            Controls.Add(btnPrevious);
+            Controls.Add(btnNextPage);
             Controls.Add(textBoxSearch);
             Controls.Add(label10);
             Controls.Add(buttonRemove);
@@ -395,5 +429,8 @@
         private System.Windows.Forms.TextBox tbxProductID;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnChooseClear;
+        private System.Windows.Forms.Label lblPageNo;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Button btnNextPage;
     }
 }

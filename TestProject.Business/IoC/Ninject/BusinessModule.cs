@@ -21,6 +21,7 @@ namespace TestProject.Business.IoC.Ninject
             Bind<IExceptionHandlerService>().To<ExceptionHandlerManager>().InSingletonScope();
             Bind<IConvertImageService>().To<ConvertImageManager>().InSingletonScope();
             Bind<NHibarnateHelper>().To<SqlNhibarnateHelper>().InSingletonScope();
+            Bind<IPagedListService>().To<PagedListManager>().InSingletonScope();
 
             Bind<ISupplierDal>().To<EFSupplierDal>().InSingletonScope();
             Bind<IProductDal>().To<EFProductDal>().InSingletonScope();

@@ -68,38 +68,10 @@ namespace TestProject.Business.Concrete
             return result;
 
         }
-        public async Task<Result<List<ProductViewModel>>> GetProducts(Expression<Func<Product, bool>> filter = null)
+        public async Task<Result<List<Product>>> GetProducts(Expression<Func<Product, bool>> filter = null)
         {
-            Result<List<ProductViewModel>> result = new Result<List<ProductViewModel>> { Success = false };
-
-            var productResult = filter != null ? await _nhProductDal.GetAllAsync(filter) : await _nhProductDal.GetAllAsync();
-
-            if (productResult.Success)
-            {
-                
-                result.Data = productResult.Data.Select(p => new ProductViewModel
-                {
-                    ProductId = p.ProductId,
-                    ProductName = p.ProductName,
-                    UnitPrice = p.UnitPrice,
-                    QuantityPerUnit = p.QuantityPerUnit,
-                    UnitsInStock = p.UnitsInStock,
-                    UnitsOnOrder = p.UnitsOnOrder,
-                    ReorderLevel = p.ReorderLevel,
-                    Discontinued = p.Discontinued,
-                    CategoryName = GetCategoryName(p.CategoryId).Result,
-                    CompanyName = GetCompanyName(p.SupplierId).Result
-                })
-               .OrderBy(x => x.ProductId)
-               .ToList();
-
-                result.Success = true;
-                result.Message = "Success";
-
-                return result;
-
-            }
-            else { return result; }
+            var result = await _nhProductDal.GetAllAsync(filter);
+            return result;
 
         }
         public async Task<Result> UpdateProduct(Product product)
@@ -119,7 +91,7 @@ namespace TestProject.Business.Concrete
                 return null;
         }
 
-        public async Task<string> GetCompanyName(int? supplierId)
+        public async Task<string> GetSupplierCompanyName(int? supplierId)
         {
             var supplier_result = await _nhProductDal.GetSupplier(x => x.SupplierId == supplierId);
             if (supplier_result.Success == true && supplier_result.Data != null)
@@ -129,5 +101,6 @@ namespace TestProject.Business.Concrete
             else
                 return null;
         }
+
     }
 }

@@ -6,12 +6,15 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
+using TestProject.Business.Utilities;
+using TestProject.DataAccess.Concrete;
 using TestProject.DataAccess.Concrete.EF;
 using TestProject.Entities.Concrete;
 
@@ -20,24 +23,18 @@ namespace TestProject.FormUI
     public partial class FormOrders : Form
     {
         private IOrderService _orderService;
-        IPagedList<Entities.Concrete.Order> OrderList = null;
+        private IPagedListService _pagedListService;
+        private IExceptionHandlerService ExceptionHandlerService;
+        
         int pageNumber = 1;
+        Result<List<Entities.Concrete.Order>> orderList;
+        IPagedList<Entities.Concrete.Order> orderPageList;
         public FormOrders()
         {
             InitializeComponent();
             _orderService = InstanceFactory.GetInstance<OrderManager>();
-        }
-
-        public async Task<IPagedList<Entities.Concrete.Order>> LoadOrders(int pageNumber = 1, int pageSize = 10)
-        {
-            var result = await _orderService.GetAllOrder();
-            if (result.Success == true)
-            {
-                return result.Data.OrderBy(x => x.OrderId).ToPagedList(pageNumber, pageSize);
-
-            }
-            else
-                return null;
+            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
+            ExceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
         }
         public async Task LoadCustomers()
         {
@@ -67,11 +64,7 @@ namespace TestProject.FormUI
 
         private async void FormOrders_Load(object sender, EventArgs e)
         {
-            OrderList = await LoadOrders();
-            btnNextPage.Enabled = OrderList.HasNextPage;
-            btnPrevious.Enabled = OrderList.HasPreviousPage;
-            dgwOrders.DataSource = OrderList.ToList();
-            lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, OrderList.Count);
+            await OrderListPaged();
             await LoadCustomers();
             await LoadEmployees();
         }
@@ -81,37 +74,70 @@ namespace TestProject.FormUI
             var startDate = dtpStart.Value;
             var endDate = dtpEnd.Value;
 
-            var result = await _orderService.GetAllOrder(o => o.OrderDate >= startDate && o.OrderDate <= endDate);
-            if (result.Success == true)
+
+            var exception_result = await ExceptionHandlerService.ReturnException(async () =>
             {
-                dgwOrders.DataSource = result.Data;
-            }
-            else
-                MessageBox.Show(result.Message);
+                await OrderListPaged(o => o.OrderDate >= startDate && o.OrderDate <= endDate);
+            });
+            if (exception_result.Success == false)
+                MessageBox.Show(exception_result.Message);
         }
 
         private async void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (OrderList.HasPreviousPage)
+            if (orderPageList.HasPreviousPage)
             {
-                OrderList = await LoadOrders(--pageNumber);
-                btnNextPage.Enabled = OrderList.HasNextPage;
-                btnPrevious.Enabled = OrderList.HasPreviousPage;
-                dgwOrders.DataSource = OrderList.ToList();
-                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, OrderList.Count);
+                orderPageList = await _pagedListService.GetPagedList(orderList.Data, --pageNumber);
+                int undivided = orderList.Data.Count % 10;
+                btnNextPage.Enabled = orderPageList.HasNextPage;
+                btnPrevious.Enabled = orderPageList.HasPreviousPage;
+                dgwOrders.DataSource = orderPageList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10 + 1);
+               
             }
         }
 
         private async void btnNextPage_Click(object sender, EventArgs e)
         {
-            if (OrderList.HasNextPage)
+            if (orderPageList.HasNextPage)
             {
-                OrderList = await LoadOrders(++pageNumber);
-                btnNextPage.Enabled = OrderList.HasNextPage;
-                btnPrevious.Enabled = OrderList.HasPreviousPage;
-                dgwOrders.DataSource = OrderList.ToList();
-                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, OrderList.Count);
+                orderPageList = await _pagedListService.GetPagedList(orderList.Data, ++pageNumber);
+                int undivided = orderList.Data.Count % 10;
+                btnNextPage.Enabled = orderPageList.HasNextPage;
+                btnPrevious.Enabled = orderPageList.HasPreviousPage;
+                dgwOrders.DataSource = orderPageList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10 + 1);
             }
+        }
+
+        private async void tbxSearch_TextChanged(object sender, EventArgs e)
+        {
+            await OrderListPaged(o => o.CustomerId.Contains(tbxSearch.Text.ToLower()));
+        }
+
+        public async Task OrderListPaged(Expression<Func<Entities.Concrete.Order, bool>> filter = null)
+        {
+            orderList = filter != null ? await _orderService.GetAllOrder(filter) : await _orderService.GetAllOrder();
+            int undivided = orderList.Data.Count % 10; // Son sayfa sayısı almak için kalan kontrolü
+            orderPageList = await _pagedListService.GetPagedList(orderList.Data, pageNumber);
+            dgwOrders.DataSource = orderPageList.ToList();
+            if (undivided == 0)
+            {
+                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10);
+            }
+            else
+                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, orderList.Data.Count / 10 + 1);
+
         }
     }
 }

@@ -42,6 +42,8 @@
             btnNextPage = new System.Windows.Forms.Button();
             btnPrevious = new System.Windows.Forms.Button();
             lblPageNo = new System.Windows.Forms.Label();
+            tbxSearch = new System.Windows.Forms.TextBox();
+            label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)dgwOrders).BeginInit();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -50,15 +52,15 @@
             // 
             dgwOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dgwOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgwOrders.Location = new System.Drawing.Point(12, 276);
+            dgwOrders.Location = new System.Drawing.Point(12, 350);
             dgwOrders.Name = "dgwOrders";
             dgwOrders.RowTemplate.Height = 25;
-            dgwOrders.Size = new System.Drawing.Size(1032, 471);
+            dgwOrders.Size = new System.Drawing.Size(1032, 391);
             dgwOrders.TabIndex = 0;
             // 
             // dtpStart
             // 
-            dtpStart.Location = new System.Drawing.Point(557, 247);
+            dtpStart.Location = new System.Drawing.Point(12, 321);
             dtpStart.Name = "dtpStart";
             dtpStart.Size = new System.Drawing.Size(164, 23);
             dtpStart.TabIndex = 1;
@@ -66,7 +68,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(555, 225);
+            label1.Location = new System.Drawing.Point(12, 286);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(31, 15);
             label1.TabIndex = 2;
@@ -75,7 +77,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(744, 225);
+            label2.Location = new System.Drawing.Point(201, 286);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(27, 15);
             label2.TabIndex = 4;
@@ -83,14 +85,14 @@
             // 
             // dtpEnd
             // 
-            dtpEnd.Location = new System.Drawing.Point(746, 247);
+            dtpEnd.Location = new System.Drawing.Point(201, 321);
             dtpEnd.Name = "dtpEnd";
             dtpEnd.Size = new System.Drawing.Size(164, 23);
             dtpEnd.TabIndex = 3;
             // 
             // btnGetList
             // 
-            btnGetList.Location = new System.Drawing.Point(926, 247);
+            btnGetList.Location = new System.Drawing.Point(381, 321);
             btnGetList.Name = "btnGetList";
             btnGetList.Size = new System.Drawing.Size(118, 23);
             btnGetList.TabIndex = 5;
@@ -106,7 +108,7 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(489, 258);
+            groupBox1.Size = new System.Drawing.Size(1032, 289);
             groupBox1.TabIndex = 6;
             groupBox1.TabStop = false;
             groupBox1.Text = "Order Details";
@@ -147,7 +149,7 @@
             // 
             // btnNextPage
             // 
-            btnNextPage.Location = new System.Drawing.Point(598, 770);
+            btnNextPage.Location = new System.Drawing.Point(587, 747);
             btnNextPage.Name = "btnNextPage";
             btnNextPage.Size = new System.Drawing.Size(75, 23);
             btnNextPage.TabIndex = 7;
@@ -157,7 +159,7 @@
             // 
             // btnPrevious
             // 
-            btnPrevious.Location = new System.Drawing.Point(397, 770);
+            btnPrevious.Location = new System.Drawing.Point(386, 747);
             btnPrevious.Name = "btnPrevious";
             btnPrevious.Size = new System.Drawing.Size(75, 23);
             btnPrevious.TabIndex = 8;
@@ -168,17 +170,36 @@
             // lblPageNo
             // 
             lblPageNo.AutoSize = true;
-            lblPageNo.Location = new System.Drawing.Point(514, 775);
+            lblPageNo.Location = new System.Drawing.Point(503, 752);
             lblPageNo.Name = "lblPageNo";
             lblPageNo.Size = new System.Drawing.Size(44, 15);
             lblPageNo.TabIndex = 9;
             lblPageNo.Text = "Label 1";
+            // 
+            // tbxSearch
+            // 
+            tbxSearch.Location = new System.Drawing.Point(909, 321);
+            tbxSearch.Name = "tbxSearch";
+            tbxSearch.Size = new System.Drawing.Size(135, 23);
+            tbxSearch.TabIndex = 10;
+            tbxSearch.TextChanged += tbxSearch_TextChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(858, 325);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(45, 15);
+            label5.TabIndex = 11;
+            label5.Text = "Search:";
             // 
             // FormOrders
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1056, 830);
+            Controls.Add(label5);
+            Controls.Add(tbxSearch);
             Controls.Add(lblPageNo);
             Controls.Add(btnPrevious);
             Controls.Add(btnNextPage);
@@ -215,5 +236,7 @@
         private System.Windows.Forms.Button btnNextPage;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Label lblPageNo;
+        private System.Windows.Forms.TextBox tbxSearch;
+        private System.Windows.Forms.Label label5;
     }
 }

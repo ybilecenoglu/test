@@ -1,4 +1,8 @@
-﻿using System;
+﻿using PagedList;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
@@ -6,6 +10,7 @@ using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
+using TestProject.DataAccess.Concrete;
 using TestProject.DataAccess.Concrete.EF;
 using TestProject.DataAccess.Concrete.NHibernate;
 using TestProject.FormUI.Utilities;
@@ -18,33 +23,27 @@ namespace TestProject.Product
         private IProductService _productService;
         private IFormItemClearService _formItemClearService;
         private IExceptionHandlerService _exceptionHandlerService;
+        private IPagedListService _pagedListService;
 
+        int pageNumber = 1;
+        Result<List<Entities.Concrete.Product>> result_productList;
+        IPagedList<Entities.Concrete.Product> productPageList;
         public FormProduct()
         {
             InitializeComponent();
             _productService = InstanceFactory.GetInstance<ProductManager>();
             //_exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
             _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
-            _exceptionHandlerService = new ExceptionHandlerManager();
+            _exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
+            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
         }
         private async void FormProduct_Load(object sender, EventArgs e)
         {
-            await LoadProduct();
+            await ProductListPaged();
             await LoadCategories();
             await LoadSuppliers();
         }
-        public async Task LoadProduct()
-        {
-            var result = await _productService.GetProducts();
-            if (result.Success == true)
-            {
-                gdwProduct.DataSource = result.Data;
-            }
-            else
-            {
-                MessageBox.Show(result.Message);
-            }
-        }
+
         public async Task LoadCategories()
         {
             var result = await _productService.GetCategories();
@@ -101,7 +100,7 @@ namespace TestProject.Product
                         if (update_result.Success == true)
                         {
                             MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
-                            await LoadProduct();
+                            await ProductListPaged();
                         }
                         else
                             MessageBox.Show(update_result.Message);
@@ -126,7 +125,7 @@ namespace TestProject.Product
                     if (add_result.Success == true)
                     {
                         MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
-                        await LoadProduct();
+                        await ProductListPaged();
                     }
                     else
                         MessageBox.Show(add_result.Message, "HATA !");
@@ -144,13 +143,16 @@ namespace TestProject.Product
                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
                 {
                     int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                    int supplierID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[2].Value);
+                    int categoryID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[3].Value);
+                    
                     var product = await GetProductById(productID);
                     if (product != null)
                     {
                         tbxProductID.Text = product.ProductId.ToString();
                         tbxProductName.Text = product.ProductName;
-                        cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(gdwProduct.CurrentRow.Cells[2].Value != null ? gdwProduct.CurrentRow.Cells[2].Value.ToString() : null);
-                        cbxCategories.SelectedIndex = cbxCategories.FindString(gdwProduct.CurrentRow.Cells[3].Value != null ? gdwProduct.CurrentRow.Cells[3].Value.ToString() : null);
+                        cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(await _productService.GetSupplierCompanyName(supplierID));
+                        cbxCategories.SelectedIndex = cbxCategories.FindString(await _productService.GetCategoryName(categoryID));
                         tbxQuantityPerUnit.Text = product.QuantityPerUnit;
                         tbxUnitPrice.Text = product.UnitPrice != null ? product.UnitPrice.ToString() : "";
                         tbxUnitInStock.Text = product.UnitsInStock != null ? product.UnitsInStock.ToString() : "";
@@ -177,35 +179,35 @@ namespace TestProject.Product
         }
         private async void btnRemove_Click(object sender, EventArgs e)
         {
-           var result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
-                {
-                    DialogResult dialogResult = new DialogResult();
-                    int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
-                    var product = await GetProductById(productID);
+            var result = await _exceptionHandlerService.ReturnException(async () =>
+             {
+                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+                 {
+                     DialogResult dialogResult = new DialogResult();
+                     int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                     var product = await GetProductById(productID);
 
-                    dialogResult = MessageBox.Show(String.Format("{0} silinsin mi ?", product.ProductName), "Ürün Silme", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        if (product != null)
-                        {
-                            var result = await _productService.DeleteProduct(product);
-                            if (result.Success == true)
-                            {
-                                MessageBox.Show("Ürün silme işlemi başarılı bir şekilde gerçekleşti.");
-                                await LoadProduct();
-                            }
-                            else
-                                MessageBox.Show(result.Message);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Kayıt bulunamadı.");
-                        }
-                    }
-                }
-            });
+                     dialogResult = MessageBox.Show(String.Format("{0} silinsin mi ?", product.ProductName), "Ürün Silme", MessageBoxButtons.YesNo);
+                     if (dialogResult == DialogResult.Yes)
+                     {
+                         if (product != null)
+                         {
+                             var result = await _productService.DeleteProduct(product);
+                             if (result.Success == true)
+                             {
+                                 MessageBox.Show("Ürün silme işlemi başarılı bir şekilde gerçekleşti.");
+                                 await ProductListPaged();
+                             }
+                             else
+                                 MessageBox.Show(result.Message);
+                         }
+                         else
+                         {
+                             MessageBox.Show("Kayıt bulunamadı.");
+                         }
+                     }
+                 }
+             });
             if (result.Success == false)
                 MessageBox.Show(result.Message);
         }
@@ -219,18 +221,13 @@ namespace TestProject.Product
         }
         private async void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            var result = await _exceptionHandlerService.ReturnException(async () =>
+            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
             {
-                var result = await _productService.GetProducts(x => x.ProductName.Contains(textBoxSearch.Text.ToLower()));
-                if (result.Success == true)
-                {
-                    gdwProduct.DataSource = result.Data;
-                }
-                else
-                    MessageBox.Show(result.Message);
+                await ProductListPaged(p => p.ProductName.Contains(textBoxSearch.Text.ToLower()));
+
             });
-            if (result.Success == false)
-                MessageBox.Show(result.Message);
+            if (exception_result.Success == false)
+                MessageBox.Show(exception_result.Message);
 
         }
         private void btnChooseClear_Click(object sender, EventArgs e)
@@ -244,11 +241,62 @@ namespace TestProject.Product
             tbxUnitPrice,
             tbxUnitsOnOrder
             );
-            
+
             _formItemClearService.RadioButtonClear(rdbOnSale, rdbNotForSeal);
             _formItemClearService.ComboBoxClear(cbxCategories, cbxSuppliers);
             gdwProduct.ClearSelection();
 
+
+        }
+
+        private async void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (productPageList.HasPreviousPage)
+            {
+                productPageList = await _pagedListService.GetPagedList(result_productList.Data, --pageNumber);
+                int undivided = result_productList.Data.Count % 10;
+                btnNextPage.Enabled = productPageList.HasNextPage;
+                btnPrevious.Enabled = productPageList.HasPreviousPage;
+                gdwProduct.DataSource = productPageList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10 + 1);
+            }
+        }
+
+        private async void btnNextPage_Click(object sender, EventArgs e)
+        {
+            if (productPageList.HasNextPage)
+            {
+                productPageList = await _pagedListService.GetPagedList(result_productList.Data, ++pageNumber);
+                int undivided = result_productList.Data.Count % 10;
+                btnNextPage.Enabled = productPageList.HasNextPage;
+                btnPrevious.Enabled = productPageList.HasPreviousPage;
+                gdwProduct.DataSource = productPageList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10 + 1);
+            }
+        }
+
+        public async Task ProductListPaged(Expression<Func<Entities.Concrete.Product, bool>> filter = null)
+        {
+            result_productList = filter != null ? await _productService.GetProducts(filter) : await _productService.GetProducts();
+            productPageList = await _pagedListService.GetPagedList(result_productList.Data, pageNumber);
+            int undivided = result_productList.Data.Count % 10;
+            gdwProduct.DataSource = productPageList.ToList();
+            if (undivided == 0)
+            {
+                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10);
+            }
+            else
+                lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10 + 1);
 
         }
     }
