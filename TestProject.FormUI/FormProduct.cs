@@ -140,26 +140,26 @@ namespace TestProject.Product
         {
             var result = await _exceptionHandlerService.ReturnException(async () =>
             {
-                if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+                if (gdwProduct.CurrentRow.Cells[0].Value != null)
                 {
                     int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
                     int supplierID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[2].Value);
                     int categoryID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[3].Value);
-                    
-                    var product = await GetProductById(productID);
-                    if (product != null)
+
+                    var product_result = await _productService.GetProduct(p => p.ProductId == productID);
+                    if (product_result.Success == true)
                     {
-                        tbxProductID.Text = product.ProductId.ToString();
-                        tbxProductName.Text = product.ProductName;
+                        tbxProductID.Text = product_result.Data.ProductId.ToString();
+                        tbxProductName.Text = product_result.Data.ProductName;
                         cbxSuppliers.SelectedIndex = cbxSuppliers.FindString(await _productService.GetSupplierCompanyName(supplierID));
                         cbxCategories.SelectedIndex = cbxCategories.FindString(await _productService.GetCategoryName(categoryID));
-                        tbxQuantityPerUnit.Text = product.QuantityPerUnit;
-                        tbxUnitPrice.Text = product.UnitPrice != null ? product.UnitPrice.ToString() : "";
-                        tbxUnitInStock.Text = product.UnitsInStock != null ? product.UnitsInStock.ToString() : "";
-                        tbxUnitsOnOrder.Text = product.UnitsOnOrder != null ? product.UnitsOnOrder.ToString() : "";
-                        tbxReorderLevel.Text = product.ReorderLevel != null ? product.ReorderLevel.ToString() : "";
+                        tbxQuantityPerUnit.Text = product_result.Data.QuantityPerUnit;
+                        tbxUnitPrice.Text = product_result.Data.UnitPrice != null ? product_result.Data.UnitPrice.ToString() : "";
+                        tbxUnitInStock.Text = product_result.Data.UnitsInStock != null ? product_result.Data.UnitsInStock.ToString() : "";
+                        tbxUnitsOnOrder.Text = product_result.Data.UnitsOnOrder != null ? product_result.Data.UnitsOnOrder.ToString() : "";
+                        tbxReorderLevel.Text = product_result.Data.ReorderLevel != null ? product_result.Data.ReorderLevel.ToString() : "";
 
-                        if (product.Discontinued == true)
+                        if (product_result.Data.Discontinued == true)
                         {
                             rdbOnSale.Checked = true;
 
@@ -181,18 +181,18 @@ namespace TestProject.Product
         {
             var result = await _exceptionHandlerService.ReturnException(async () =>
              {
-                 if (gdwProduct.CurrentRow.Cells[0].Value != null && !string.IsNullOrEmpty(gdwProduct.CurrentRow.Cells[0].Value.ToString()))
+                 if (tbxProductID.Text != string.Empty)
                  {
                      DialogResult dialogResult = new DialogResult();
                      int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
-                     var product = await GetProductById(productID);
+                     var product_result = await _productService.GetProduct(p => p.ProductId == productID);
 
-                     dialogResult = MessageBox.Show(String.Format("{0} silinsin mi ?", product.ProductName), "Ürün Silme", MessageBoxButtons.YesNo);
+                     dialogResult = MessageBox.Show(String.Format("{0} silinsin mi ?", product_result.Data.ProductName), "Ürün Silme", MessageBoxButtons.YesNo);
                      if (dialogResult == DialogResult.Yes)
                      {
-                         if (product != null)
+                         if (product_result.Success == true)
                          {
-                             var result = await _productService.DeleteProduct(product);
+                             var result = await _productService.DeleteProduct(product_result.Data);
                              if (result.Success == true)
                              {
                                  MessageBox.Show("Ürün silme işlemi başarılı bir şekilde gerçekleşti.");
@@ -210,14 +210,6 @@ namespace TestProject.Product
              });
             if (result.Success == false)
                 MessageBox.Show(result.Message);
-        }
-        public async Task<TestProject.Entities.Concrete.Product> GetProductById(int id)
-        {
-            var result_product = await _productService.GetProduct(p => p.ProductId == id);
-            if (result_product.Success == true)
-                return result_product.Data;
-            else
-                return null;
         }
         private async void textBoxSearch_TextChanged(object sender, EventArgs e)
         {

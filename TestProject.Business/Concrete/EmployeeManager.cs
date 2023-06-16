@@ -53,43 +53,11 @@ namespace TestProject.Business.Concrete
             return result;
         }
 
-        public async Task<Result<List<EmployeeViewModel>>> GetEmployees(Expression<Func<Employee, bool>> filter = null)
+        public async Task<Result<List<Employee>>> GetEmployees(Expression<Func<Employee, bool>> filter = null)
         {
-            Result<List<EmployeeViewModel>> employees = new Result<List<EmployeeViewModel>>();
-            var getEmployees_Result = await _NHemployeeDal.GetAllAsync(filter);
-            if (getEmployees_Result.Success == true && getEmployees_Result.Data != null)
-            {
-                var columns = getEmployees_Result.Data.Select(e => new EmployeeViewModel
-                {
-                    EmployeeId = e.EmployeeId,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    Address = e.Address,
-                    City = e.City,
-                    BirthDate = e.BirthDate,
-                    Country = e.Country,
-                    Extension = e.Extension,
-                    HireDate = e.HireDate,
-                    HomePhone = e.HomePhone,
-                    Notes = e.Notes,
-                    PostalCode = e.PostalCode,
-                    Region = e.Region,
-                    Title = e.Title,
-                    TitleOfCourtesy = e.TitleOfCourtesy
-                })
-                    .OrderBy(e => e.EmployeeId)
-                    .ToList();
-
-                employees.Success = true;
-                employees.Data = columns;
-                return employees;
-            }
-            else
-            {
-                employees.Success = getEmployees_Result.Success;
-                employees.Message = getEmployees_Result.Message;
-                return employees;
-            }
+           
+            var employees_result = await _NHemployeeDal.GetAllAsync(filter);
+            return employees_result;
             
         }
 

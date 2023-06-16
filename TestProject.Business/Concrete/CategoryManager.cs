@@ -38,29 +38,11 @@ namespace TestProject.Business.Concrete
             var result = await _nhCategoryDal.DeleteAsync(category);
             return result;
         }
-        public async Task<Result<List<CategoryViewModel>>> GetCategories(Expression<Func<Category, bool>> filter)
+        public async Task<Result<List<Category>>> GetCategories(Expression<Func<Category, bool>> filter)
         {
-            Result<List<CategoryViewModel>> result = new Result<List<CategoryViewModel>> { Success = false };
             var categoryResult = filter != null ? await _nhCategoryDal.GetAllAsync(filter) : await _nhCategoryDal.GetAllAsync();
+            return categoryResult;
             
-            if (categoryResult.Success == true)
-            {
-                result.Data = categoryResult.Data.Select(x => new CategoryViewModel
-                {
-                    CategoryId = x.CategoryId,
-                    CategoryName = x.CategoryName,
-                    Description = x.Description,
-                    Picture = x.Picture
-
-                })
-                .OrderBy(x => x.CategoryId)
-                .ToList();
-                result.Success = true;
-                result.Message = "Success";
-                return result;
-            }
-            else
-                return result;
         }
         public async Task<Result<Category>> GetCategory(Expression<Func<Category, bool>> filter)
         {

@@ -10,7 +10,6 @@ namespace TestProject.Business.IoC.Ninject
 {
     public class InstanceFactory
     {
-        
         public static T GetInstance<T>()
         {
             var kernel = new StandardKernel(new BusinessModule());

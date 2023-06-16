@@ -12,7 +12,7 @@ namespace TestProject.Business.Abstract
 {
     public interface IEmployeeService
     {
-        Task<Result<List<EmployeeViewModel>>> GetEmployees(Expression<Func<Employee, bool>> filter = null);
+        Task<Result<List<Employee>>> GetEmployees(Expression<Func<Employee, bool>> filter = null);
         Task<Result<Employee>> GetEmployee(Expression<Func<Employee, bool>> filter);
         Task<Result> AddEmployee(Employee employee);
         Task<Result> DeleteEmployee(Employee employee);

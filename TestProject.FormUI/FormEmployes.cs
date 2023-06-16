@@ -1,6 +1,10 @@
-﻿using System;
+﻿using PagedList;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business;
@@ -9,6 +13,7 @@ using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Abstract;
+using TestProject.DataAccess.Concrete;
 using TestProject.Entities.Concrete;
 using TestProject.FormUI.Utilities;
 
@@ -21,6 +26,11 @@ namespace TestProject
         private IExceptionHandlerService _exceptionHandlerService;
         private IConvertImageService _convertImageService;
         private IFormItemClearService _formItemClearService;
+        private IPagedListService _pagedListService;
+
+        int pageNumber = 1;
+        Result<List<Employee>> result_employeeList;
+        IPagedList<Employee> pagedEmployeeList;
         public FormEmployes()
         {
             InitializeComponent();
@@ -28,10 +38,11 @@ namespace TestProject
             _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
             _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
             _exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
+            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
         }
         private async void FormEmployess_Load(object sender, EventArgs e)
         {
-            await LoadEmployee();
+            await EmployeeListPaged();
             await LoadRegion();
             await LoadTerritories();
         }
@@ -118,7 +129,7 @@ namespace TestProject
                         if (deleteResult.Success == true)
                         {
                             MessageBox.Show("Çalışan silme işlemi başarıyla gerçekleşti");
-                            await LoadEmployee();
+                            await EmployeeListPaged();
                         }
                         else
                             MessageBox.Show(deleteResult.Message);
@@ -126,23 +137,6 @@ namespace TestProject
                 }
                 else
                     MessageBox.Show("Kayıt bulunamadı...");
-            });
-            if (exception_result.Success == false)
-                MessageBox.Show(exception_result.Message);
-        }
-        public async Task LoadEmployee()
-        {
-            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                var result = await _employeeService.GetEmployees();
-                if (result.Success == true)
-                {
-                    gdwEmployee.DataSource = result.Data;
-                }
-                else
-                {
-                    MessageBox.Show(result.Message);
-                }
             });
             if (exception_result.Success == false)
                 MessageBox.Show(exception_result.Message);
@@ -183,18 +177,7 @@ namespace TestProject
         }
         private async void tbxSearch_TextChanged(object sender, EventArgs e)
         {
-            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                var result = await _employeeService.GetEmployees(e => e.FirstName.Contains(tbxSearch.Text.ToLower()));
-                if (result.Success == true)
-                {
-                    gdwEmployee.DataSource = result.Data;
-                }
-                else
-                    MessageBox.Show(result.Message);
-            });
-            if (exception_result.Success == false)
-                MessageBox.Show(exception_result.Message);
+            await EmployeeListPaged(e => e.FirstName.Contains(tbxSearch.Text.ToLower()));
 
         }
         private async void btnAddOrUpdate_Click(object sender, EventArgs e)
@@ -231,7 +214,7 @@ namespace TestProject
                         if (updateResult.Success == true)
                         {
                             MessageBox.Show("Çalışan güncelleme başarıyla tamamlandı.");
-                            await LoadEmployee();
+                            await EmployeeListPaged();
                         }
                         else
                             MessageBox.Show(updateResult.Message);
@@ -265,7 +248,7 @@ namespace TestProject
                     if (addResult.Success == true)
                     {
                         MessageBox.Show("Çalışan kaydı ekleme başarıyla gerçekleşti.");
-                        await LoadEmployee();
+                        await EmployeeListPaged();
                     }
                     else
                         MessageBox.Show(addResult.Message);
@@ -280,6 +263,62 @@ namespace TestProject
             _formItemClearService.RichTextBoxClear(rtbNote);
             _formItemClearService.PictureBoxClear(pictureBox);
             gdwEmployee.ClearSelection();
+        }
+
+        private async void btnNextPage_Click(object sender, EventArgs e)
+        {
+            if (pagedEmployeeList.HasPreviousPage)
+            {
+                pagedEmployeeList = await _pagedListService.GetPagedList(result_employeeList.Data, ++pageNumber);
+                int undivided = result_employeeList.Data.Count % 10;
+                btnNextPage.Enabled = pagedEmployeeList.HasNextPage;
+                btnPrevious.Enabled = pagedEmployeeList.HasPreviousPage;
+                gdwEmployee.DataSource = pagedEmployeeList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10 + 1);
+            }
+        }
+
+        private async void btnPrevious_Click(object sender, EventArgs e)
+        {
+            if (pagedEmployeeList.HasPreviousPage)
+            {
+                pagedEmployeeList = await _pagedListService.GetPagedList(result_employeeList.Data, --pageNumber);
+                int undivided = result_employeeList.Data.Count % 10;
+                btnNextPage.Enabled = pagedEmployeeList.HasNextPage;
+                btnPrevious.Enabled = pagedEmployeeList.HasPreviousPage;
+                gdwEmployee.DataSource = pagedEmployeeList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10 + 1);
+            }
+        }
+
+        public async Task EmployeeListPaged(Expression<Func<Entities.Concrete.Employee, bool>> filter = null)
+        {
+            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
+            {
+                result_employeeList = filter != null ? await _employeeService.GetEmployees(filter) : await _employeeService.GetEmployees();
+                pagedEmployeeList = await _pagedListService.GetPagedList(result_employeeList.Data, pageNumber);
+                int undivided = result_employeeList.Data.Count % 10;
+                gdwEmployee.DataSource = pagedEmployeeList.ToList();
+                if (undivided == 0)
+                {
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10);
+                }
+                else
+                    lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_employeeList.Data.Count / 10 + 1);
+            });
+            if (exception_result.Success == false)
+                MessageBox.Show(exception_result.Message);
+
         }
     }
 }

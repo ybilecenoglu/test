@@ -14,7 +14,7 @@ namespace TestProject.Business.Abstract
 {
     public interface ICategoryService
     {
-        Task<Result<List<CategoryViewModel>>> GetCategories(Expression<Func<Category, bool>> filter = null);
+        Task<Result<List<Category>>> GetCategories(Expression<Func<Category, bool>> filter = null);
         Task<Result<Category>> GetCategory(Expression<Func<Category, bool>> filter);
         Task<Result> AddCategory(Category category);
         Task<Result> DeleteCategory(Category category);

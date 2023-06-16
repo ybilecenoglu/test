@@ -30,6 +30,7 @@
         {
             groupBox1 = new System.Windows.Forms.GroupBox();
             tbxCategoryID = new System.Windows.Forms.TextBox();
+            btnChooseClear = new System.Windows.Forms.Button();
             label5 = new System.Windows.Forms.Label();
             tbxDescripton = new System.Windows.Forms.TextBox();
             btnRemove = new System.Windows.Forms.Button();
@@ -40,12 +41,14 @@
             label2 = new System.Windows.Forms.Label();
             tbxCategoryName = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
-            btnChooseClear = new System.Windows.Forms.Button();
             gdwCategories = new System.Windows.Forms.DataGridView();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             tbxSearch = new System.Windows.Forms.TextBox();
             label3 = new System.Windows.Forms.Label();
             label4 = new System.Windows.Forms.Label();
+            lblPageNo = new System.Windows.Forms.Label();
+            btnPrevious = new System.Windows.Forms.Button();
+            btnNextPage = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gdwCategories).BeginInit();
@@ -54,6 +57,7 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(tbxCategoryID);
+            groupBox1.Controls.Add(btnChooseClear);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(tbxDescripton);
             groupBox1.Controls.Add(btnRemove);
@@ -66,7 +70,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(250, 441);
+            groupBox1.Size = new System.Drawing.Size(526, 310);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Categori Info";
@@ -78,6 +82,17 @@
             tbxCategoryID.ReadOnly = true;
             tbxCategoryID.Size = new System.Drawing.Size(235, 23);
             tbxCategoryID.TabIndex = 23;
+            // 
+            // btnChooseClear
+            // 
+            btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
+            btnChooseClear.Location = new System.Drawing.Point(394, 247);
+            btnChooseClear.Name = "btnChooseClear";
+            btnChooseClear.Size = new System.Drawing.Size(91, 35);
+            btnChooseClear.TabIndex = 20;
+            btnChooseClear.Text = "Choose Clear";
+            btnChooseClear.UseVisualStyleBackColor = false;
+            btnChooseClear.Click += btnChooseClear_Click;
             // 
             // label5
             // 
@@ -98,7 +113,7 @@
             // btnRemove
             // 
             btnRemove.BackColor = System.Drawing.Color.Red;
-            btnRemove.Location = new System.Drawing.Point(166, 376);
+            btnRemove.Location = new System.Drawing.Point(433, 206);
             btnRemove.Name = "btnRemove";
             btnRemove.Size = new System.Drawing.Size(75, 35);
             btnRemove.TabIndex = 19;
@@ -108,7 +123,7 @@
             // 
             // btnChoose
             // 
-            btnChoose.Location = new System.Drawing.Point(148, 338);
+            btnChoose.Location = new System.Drawing.Point(415, 158);
             btnChoose.Name = "btnChoose";
             btnChoose.Size = new System.Drawing.Size(93, 23);
             btnChoose.TabIndex = 2;
@@ -119,7 +134,7 @@
             // buttonAddOrUpdate
             // 
             buttonAddOrUpdate.BackColor = System.Drawing.Color.Chartreuse;
-            buttonAddOrUpdate.Location = new System.Drawing.Point(76, 376);
+            buttonAddOrUpdate.Location = new System.Drawing.Point(343, 206);
             buttonAddOrUpdate.Name = "buttonAddOrUpdate";
             buttonAddOrUpdate.Size = new System.Drawing.Size(84, 35);
             buttonAddOrUpdate.TabIndex = 18;
@@ -130,7 +145,7 @@
             // pictureBox
             // 
             pictureBox.Image = FormUI.Properties.Resources._1967356;
-            pictureBox.Location = new System.Drawing.Point(76, 202);
+            pictureBox.Location = new System.Drawing.Point(343, 22);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new System.Drawing.Size(165, 121);
             pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -140,7 +155,7 @@
             // label
             // 
             label.AutoSize = true;
-            label.Location = new System.Drawing.Point(6, 211);
+            label.Location = new System.Drawing.Point(273, 31);
             label.Name = "label";
             label.Size = new System.Drawing.Size(44, 15);
             label.TabIndex = 5;
@@ -171,25 +186,14 @@
             label1.TabIndex = 2;
             label1.Text = "Category Name";
             // 
-            // btnChooseClear
-            // 
-            btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
-            btnChooseClear.Location = new System.Drawing.Point(288, 28);
-            btnChooseClear.Name = "btnChooseClear";
-            btnChooseClear.Size = new System.Drawing.Size(91, 35);
-            btnChooseClear.TabIndex = 20;
-            btnChooseClear.Text = "Choose Clear";
-            btnChooseClear.UseVisualStyleBackColor = false;
-            btnChooseClear.Click += btnChooseClear_Click;
-            // 
             // gdwCategories
             // 
             gdwCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             gdwCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gdwCategories.Location = new System.Drawing.Point(288, 69);
+            gdwCategories.Location = new System.Drawing.Point(12, 357);
             gdwCategories.Name = "gdwCategories";
             gdwCategories.RowTemplate.Height = 25;
-            gdwCategories.Size = new System.Drawing.Size(623, 416);
+            gdwCategories.Size = new System.Drawing.Size(526, 216);
             gdwCategories.TabIndex = 1;
             gdwCategories.CellClick += gdwCategories_CellClick;
             // 
@@ -199,7 +203,7 @@
             // 
             // tbxSearch
             // 
-            tbxSearch.Location = new System.Drawing.Point(779, 40);
+            tbxSearch.Location = new System.Drawing.Point(406, 328);
             tbxSearch.Name = "tbxSearch";
             tbxSearch.Size = new System.Drawing.Size(132, 23);
             tbxSearch.TabIndex = 22;
@@ -216,19 +220,50 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(728, 43);
+            label4.Location = new System.Drawing.Point(355, 331);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(45, 15);
             label4.TabIndex = 21;
             label4.Text = "Search:";
             // 
+            // lblPageNo
+            // 
+            lblPageNo.AutoSize = true;
+            lblPageNo.Location = new System.Drawing.Point(241, 584);
+            lblPageNo.Name = "lblPageNo";
+            lblPageNo.Size = new System.Drawing.Size(44, 15);
+            lblPageNo.TabIndex = 26;
+            lblPageNo.Text = "Label 1";
+            // 
+            // btnPrevious
+            // 
+            btnPrevious.Location = new System.Drawing.Point(124, 579);
+            btnPrevious.Name = "btnPrevious";
+            btnPrevious.Size = new System.Drawing.Size(75, 23);
+            btnPrevious.TabIndex = 25;
+            btnPrevious.Text = "<";
+            btnPrevious.UseVisualStyleBackColor = true;
+            btnPrevious.Click += btnPrevious_Click;
+            // 
+            // btnNextPage
+            // 
+            btnNextPage.Location = new System.Drawing.Point(325, 579);
+            btnNextPage.Name = "btnNextPage";
+            btnNextPage.Size = new System.Drawing.Size(75, 23);
+            btnNextPage.TabIndex = 24;
+            btnNextPage.Text = ">";
+            btnNextPage.UseVisualStyleBackColor = true;
+            btnNextPage.Click += btnNextPage_Click;
+            // 
             // FormCategories
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(923, 497);
+            ClientSize = new System.Drawing.Size(555, 622);
+            Controls.Add(lblPageNo);
+            Controls.Add(btnPrevious);
+            Controls.Add(btnNextPage);
             Controls.Add(label4);
-            Controls.Add(btnChooseClear);
             Controls.Add(tbxSearch);
             Controls.Add(label3);
             Controls.Add(gdwCategories);
@@ -265,5 +300,8 @@
         private System.Windows.Forms.TextBox tbxDescripton;
         private System.Windows.Forms.TextBox tbxCategoryID;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblPageNo;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.Button btnNextPage;
     }
 }
