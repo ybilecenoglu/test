@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,8 +44,6 @@ namespace TestProject
         private async void FormEmployess_Load(object sender, EventArgs e)
         {
             await EmployeeListPaged();
-            await LoadRegion();
-            await LoadTerritories();
         }
         private async void gdwEmployee_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -64,10 +63,10 @@ namespace TestProject
                         dtpBirthDate.Value = employeeResult.Data.BirthDate != null ? employeeResult.Data.BirthDate.Value : DateTime.Now;
                         dtpHireDate.Value = employeeResult.Data.HireDate != null ? employeeResult.Data.HireDate.Value : DateTime.Now;
                         tbxAdress.Text = employeeResult.Data.Address;
-                        cbxCity.SelectedIndex = cbxCity.FindString(employeeResult.Data.City);
-                        cbxRegion.SelectedIndex = cbxRegion.FindString(employeeResult.Data.Region);
+                        tbxCity.Text = employeeResult.Data.City;
+                        tbxRegion.Text = employeeResult.Data.Region;
                         tbxPostalCode.Text = employeeResult.Data.PostalCode;
-                        cbxCountry.SelectedIndex = cbxCountry.FindString(employeeResult.Data.Country != null ? employeeResult.Data.Country : "");
+                        tbxCountry.Text = employeeResult.Data.Country;
                         tbxPhone.Text = employeeResult.Data.HomePhone;
                         tbxExtension.Text = employeeResult.Data.Extension;
                         var imageResult = _convertImageService.ByteToImage(employeeResult.Data.Photo);
@@ -96,25 +95,7 @@ namespace TestProject
                 pictureBox.Image = Image.FromFile(filePath);
             }
         }
-        private async void cbxRegion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                if (cbxRegion.SelectedValue != null && cbxRegion.SelectedValue.GetType() == typeof(int))
-                {
-                    int regionID = Convert.ToInt32(cbxRegion.SelectedValue);
-                    var result = await _employeeService.GetAllTerritories(t => t.RegionId == regionID);
-                    if (result.Success == true)
-                    {
-                        cbxCity.DataSource = result.Data;
-                    }
-                    else
-                        MessageBox.Show(result.Message);
-                }
-            });
-            if (exception_result.Success == false)
-                MessageBox.Show(exception_result.Message);
-        }
+        
         private async void btnRemove_Click(object sender, EventArgs e)
         {
             var exception_result = await _exceptionHandlerService.ReturnException(async () =>
@@ -141,43 +122,9 @@ namespace TestProject
             if (exception_result.Success == false)
                 MessageBox.Show(exception_result.Message);
         }
-        public async Task LoadRegion()
-        {
-            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                var result = await _employeeService.GetAllRegion();
-                if (result.Success == true)
-                {
-                    cbxRegion.DataSource = result.Data;
-                    cbxRegion.DisplayMember = "RegionDescription";
-                    cbxRegion.ValueMember = "RegionID";
-                }
-                else
-                    MessageBox.Show(result.Message);
-            });
-            if (exception_result.Success == false)
-                MessageBox.Show(exception_result.Message);
-        }
-        public async Task LoadTerritories()
-        {
-            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
-            {
-                var result = await _employeeService.GetAllTerritories();
-                if (result.Success == true)
-                {
-                    cbxCity.DataSource = result.Data;
-                    cbxCity.DisplayMember = "TerritoryDescription";
-                    cbxCity.ValueMember = "TerritoryID";
-                }
-                else
-                    MessageBox.Show(result.Message);
-            });
-            if (exception_result.Success == false)
-                MessageBox.Show(exception_result.Message);
-        }
         private async void tbxSearch_TextChanged(object sender, EventArgs e)
         {
-            await EmployeeListPaged(e => e.FirstName.Contains(tbxSearch.Text.ToLower()));
+            await EmployeeListPaged(e => e.LastName.Contains(tbxSearch.Text.ToLower()));
 
         }
         private async void btnAddOrUpdate_Click(object sender, EventArgs e)
@@ -198,9 +145,9 @@ namespace TestProject
                         employeeResult.Data.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
                         employeeResult.Data.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
                         employeeResult.Data.HireDate = Convert.ToDateTime(dtpHireDate.Text);
-                        employeeResult.Data.Region = cbxRegion.Text;
-                        employeeResult.Data.City = cbxCity.Text;
-                        employeeResult.Data.Country = cbxCountry.Text;
+                        employeeResult.Data.Region = tbxRegion.Text;
+                        employeeResult.Data.City = tbxCity.Text;
+                        employeeResult.Data.Country = tbxCountry.Text;
                         employeeResult.Data.PostalCode = tbxPostalCode.Text;
                         employeeResult.Data.HomePhone = tbxPhone.Text;
                         employeeResult.Data.Extension = tbxExtension.Text;
@@ -232,9 +179,9 @@ namespace TestProject
                     employee.TitleOfCourtesy = tbxTitleOfCourtesy.Text;
                     employee.BirthDate = Convert.ToDateTime(dtpBirthDate.Text);
                     employee.HireDate = Convert.ToDateTime(dtpHireDate.Text);
-                    employee.Region = cbxRegion.Text;
-                    employee.City = cbxCity.Text;
-                    employee.Country = cbxCountry.Text;
+                    employee.Region = tbxRegion.Text;
+                    employee.City = tbxCity.Text;
+                    employee.Country = tbxCountry.Text;
                     employee.PostalCode = tbxPostalCode.Text;
                     employee.HomePhone = tbxPhone.Text;
                     employee.Extension = tbxExtension.Text;

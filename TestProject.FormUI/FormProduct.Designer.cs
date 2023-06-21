@@ -78,7 +78,6 @@
             groupBox1.Controls.Add(tbxProductID);
             groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(btnRemove);
-            groupBox1.Controls.Add(btnChooseClear);
             groupBox1.Controls.Add(rdbNotForSeal);
             groupBox1.Controls.Add(rdbOnSale);
             groupBox1.Controls.Add(label9);
@@ -101,7 +100,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(688, 390);
+            groupBox1.Size = new System.Drawing.Size(688, 342);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Product Info";
@@ -137,9 +136,9 @@
             // btnChooseClear
             // 
             btnChooseClear.BackColor = System.Drawing.Color.Orange;
-            btnChooseClear.Location = new System.Drawing.Point(545, 340);
+            btnChooseClear.Location = new System.Drawing.Point(12, 360);
             btnChooseClear.Name = "btnChooseClear";
-            btnChooseClear.Size = new System.Drawing.Size(87, 35);
+            btnChooseClear.Size = new System.Drawing.Size(87, 28);
             btnChooseClear.TabIndex = 20;
             btnChooseClear.Text = "Choose Clear";
             btnChooseClear.UseVisualStyleBackColor = false;
@@ -320,7 +319,7 @@
             // gdwProduct
             // 
             gdwProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gdwProduct.Location = new System.Drawing.Point(12, 438);
+            gdwProduct.Location = new System.Drawing.Point(12, 394);
             gdwProduct.MultiSelect = false;
             gdwProduct.Name = "gdwProduct";
             gdwProduct.RowTemplate.Height = 25;
@@ -330,7 +329,7 @@
             // 
             // textBoxSearch
             // 
-            textBoxSearch.Location = new System.Drawing.Point(578, 408);
+            textBoxSearch.Location = new System.Drawing.Point(578, 365);
             textBoxSearch.Name = "textBoxSearch";
             textBoxSearch.Size = new System.Drawing.Size(122, 23);
             textBoxSearch.TabIndex = 18;
@@ -339,7 +338,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(527, 411);
+            label10.Location = new System.Drawing.Point(527, 368);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(45, 15);
             label10.TabIndex = 17;
@@ -348,7 +347,7 @@
             // lblPageNo
             // 
             lblPageNo.AutoSize = true;
-            lblPageNo.Location = new System.Drawing.Point(319, 717);
+            lblPageNo.Location = new System.Drawing.Point(318, 673);
             lblPageNo.Name = "lblPageNo";
             lblPageNo.Size = new System.Drawing.Size(44, 15);
             lblPageNo.TabIndex = 23;
@@ -356,7 +355,7 @@
             // 
             // btnPrevious
             // 
-            btnPrevious.Location = new System.Drawing.Point(229, 713);
+            btnPrevious.Location = new System.Drawing.Point(228, 669);
             btnPrevious.Name = "btnPrevious";
             btnPrevious.Size = new System.Drawing.Size(75, 23);
             btnPrevious.TabIndex = 22;
@@ -366,7 +365,7 @@
             // 
             // btnNextPage
             // 
-            btnNextPage.Location = new System.Drawing.Point(379, 712);
+            btnNextPage.Location = new System.Drawing.Point(378, 668);
             btnNextPage.Name = "btnNextPage";
             btnNextPage.Size = new System.Drawing.Size(75, 23);
             btnNextPage.TabIndex = 21;
@@ -378,15 +377,19 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(732, 757);
+            ClientSize = new System.Drawing.Size(732, 700);
             Controls.Add(lblPageNo);
             Controls.Add(btnPrevious);
             Controls.Add(btnNextPage);
+            Controls.Add(btnChooseClear);
             Controls.Add(textBoxSearch);
             Controls.Add(label10);
             Controls.Add(buttonRemove);
             Controls.Add(groupBox1);
             Controls.Add(gdwProduct);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FormProduct";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "FormProduct";

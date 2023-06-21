@@ -24,10 +24,4 @@
     <ProjectReference Include="..\TestProject.Entities\TestProject.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="TestProject.Business">
-      <HintPath>..\TestProject.Business\bin\Debug\netcoreapp6.0\TestProject.Business.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

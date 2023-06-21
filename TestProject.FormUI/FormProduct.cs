@@ -1,18 +1,15 @@
-﻿using PagedList;
+﻿using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TestProject.Business;
 using TestProject.Business.Abstract;
 using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
 using TestProject.DataAccess.Concrete;
-using TestProject.DataAccess.Concrete.EF;
-using TestProject.DataAccess.Concrete.NHibernate;
 using TestProject.FormUI.Utilities;
 
 namespace TestProject.Product
@@ -43,7 +40,6 @@ namespace TestProject.Product
             await LoadCategories();
             await LoadSuppliers();
         }
-
         public async Task LoadCategories()
         {
             var result = await _productService.GetCategories();
@@ -240,7 +236,6 @@ namespace TestProject.Product
 
 
         }
-
         private async void btnPrevious_Click(object sender, EventArgs e)
         {
             if (productPageList.HasPreviousPage)
@@ -258,7 +253,6 @@ namespace TestProject.Product
                     lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10 + 1);
             }
         }
-
         private async void btnNextPage_Click(object sender, EventArgs e)
         {
             if (productPageList.HasNextPage)
@@ -276,7 +270,6 @@ namespace TestProject.Product
                     lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10 + 1);
             }
         }
-
         public async Task ProductListPaged(Expression<Func<Entities.Concrete.Product, bool>> filter = null)
         {
             result_productList = filter != null ? await _productService.GetProducts(filter) : await _productService.GetProducts();

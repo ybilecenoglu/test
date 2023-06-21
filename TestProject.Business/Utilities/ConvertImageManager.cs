@@ -14,15 +14,14 @@ namespace TestProject.Business
             var result = new Result<Image>() { Success = false };
             try
             {
-                using (MemoryStream ms = new MemoryStream(bytes, 0, bytes.Length))
-                {
-                    Image image = Image.FromStream(ms, true);
+                    ImageConverter converter= new ImageConverter();
+                    Image image = (Image)converter.ConvertFrom(bytes);
                     result.Success = true;
                     result.Message = "Success";
                     result.Data = image;
 
                     return result;
-                }
+                
             }
             catch (Exception ex)
             {

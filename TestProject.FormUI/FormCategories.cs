@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using PagedList.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -57,19 +58,13 @@ namespace TestProject
                     var result = await _categoryService.GetCategory(c => c.CategoryId == categoryID);
                     if (result.Success == true)
                     {
-                        if (result.Data != null && result.Data != null)
+                        tbxCategoryID.Text = result.Data.CategoryId.ToString();
+                        tbxCategoryName.Text = result.Data.CategoryName;
+                        tbxDescripton.Text = result.Data.Description;
+                        var imageResult = _convertImageService.ByteToImage(result.Data.Picture);
+                        if (imageResult.Success == true)
                         {
-                            tbxCategoryID.Text = result.Data.CategoryId.ToString();
-                            tbxCategoryName.Text = result.Data.CategoryName;
-                            tbxDescripton.Text = result.Data.Description;
-                            var imageResult = _convertImageService.ByteToImage(result.Data.Picture);
-                            if (imageResult.Success == true)
-                            {
-                                pictureBox.Image = imageResult.Data;
-                            }
-                            else
-                                MessageBox.Show(imageResult.Message);
-
+                            pictureBox.Image = imageResult.Data;
                         }
                     }
                     else

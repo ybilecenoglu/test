@@ -57,7 +57,6 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(tbxCategoryID);
-            groupBox1.Controls.Add(btnChooseClear);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(tbxDescripton);
             groupBox1.Controls.Add(btnRemove);
@@ -70,7 +69,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(526, 310);
+            groupBox1.Size = new System.Drawing.Size(526, 251);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Categori Info";
@@ -86,9 +85,9 @@
             // btnChooseClear
             // 
             btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
-            btnChooseClear.Location = new System.Drawing.Point(394, 247);
+            btnChooseClear.Location = new System.Drawing.Point(12, 269);
             btnChooseClear.Name = "btnChooseClear";
-            btnChooseClear.Size = new System.Drawing.Size(91, 35);
+            btnChooseClear.Size = new System.Drawing.Size(91, 28);
             btnChooseClear.TabIndex = 20;
             btnChooseClear.Text = "Choose Clear";
             btnChooseClear.UseVisualStyleBackColor = false;
@@ -190,7 +189,7 @@
             // 
             gdwCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             gdwCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gdwCategories.Location = new System.Drawing.Point(12, 357);
+            gdwCategories.Location = new System.Drawing.Point(12, 303);
             gdwCategories.Name = "gdwCategories";
             gdwCategories.RowTemplate.Height = 25;
             gdwCategories.Size = new System.Drawing.Size(526, 216);
@@ -203,7 +202,7 @@
             // 
             // tbxSearch
             // 
-            tbxSearch.Location = new System.Drawing.Point(406, 328);
+            tbxSearch.Location = new System.Drawing.Point(406, 273);
             tbxSearch.Name = "tbxSearch";
             tbxSearch.Size = new System.Drawing.Size(132, 23);
             tbxSearch.TabIndex = 22;
@@ -220,7 +219,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(355, 331);
+            label4.Location = new System.Drawing.Point(355, 276);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(45, 15);
             label4.TabIndex = 21;
@@ -229,7 +228,7 @@
             // lblPageNo
             // 
             lblPageNo.AutoSize = true;
-            lblPageNo.Location = new System.Drawing.Point(241, 584);
+            lblPageNo.Location = new System.Drawing.Point(241, 530);
             lblPageNo.Name = "lblPageNo";
             lblPageNo.Size = new System.Drawing.Size(44, 15);
             lblPageNo.TabIndex = 26;
@@ -237,7 +236,7 @@
             // 
             // btnPrevious
             // 
-            btnPrevious.Location = new System.Drawing.Point(124, 579);
+            btnPrevious.Location = new System.Drawing.Point(124, 525);
             btnPrevious.Name = "btnPrevious";
             btnPrevious.Size = new System.Drawing.Size(75, 23);
             btnPrevious.TabIndex = 25;
@@ -247,7 +246,7 @@
             // 
             // btnNextPage
             // 
-            btnNextPage.Location = new System.Drawing.Point(325, 579);
+            btnNextPage.Location = new System.Drawing.Point(325, 525);
             btnNextPage.Name = "btnNextPage";
             btnNextPage.Size = new System.Drawing.Size(75, 23);
             btnNextPage.TabIndex = 24;
@@ -259,8 +258,9 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(555, 622);
+            ClientSize = new System.Drawing.Size(555, 557);
             Controls.Add(lblPageNo);
+            Controls.Add(btnChooseClear);
             Controls.Add(btnPrevious);
             Controls.Add(btnNextPage);
             Controls.Add(label4);
@@ -268,6 +268,9 @@
             Controls.Add(label3);
             Controls.Add(gdwCategories);
             Controls.Add(groupBox1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FormCategories";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "FormCategories";

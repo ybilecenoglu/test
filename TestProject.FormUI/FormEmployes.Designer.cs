@@ -44,13 +44,10 @@
             label = new System.Windows.Forms.Label();
             pictureBox = new System.Windows.Forms.PictureBox();
             label14 = new System.Windows.Forms.Label();
-            cbxCountry = new System.Windows.Forms.ComboBox();
             label13 = new System.Windows.Forms.Label();
             tbxPostalCode = new System.Windows.Forms.TextBox();
             label12 = new System.Windows.Forms.Label();
-            cbxRegion = new System.Windows.Forms.ComboBox();
             label11 = new System.Windows.Forms.Label();
-            cbxCity = new System.Windows.Forms.ComboBox();
             label10 = new System.Windows.Forms.Label();
             tbxAdress = new System.Windows.Forms.TextBox();
             label9 = new System.Windows.Forms.Label();
@@ -63,16 +60,19 @@
             tbxTitle = new System.Windows.Forms.TextBox();
             label5 = new System.Windows.Forms.Label();
             tbxFirstName = new System.Windows.Forms.TextBox();
-            btnChooseClear = new System.Windows.Forms.Button();
             btnRemove = new System.Windows.Forms.Button();
             btnAddOrUpdate = new System.Windows.Forms.Button();
             label2 = new System.Windows.Forms.Label();
             tbxLastName = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
+            btnChooseClear = new System.Windows.Forms.Button();
             openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             lblPageNo = new System.Windows.Forms.Label();
             btnPrevious = new System.Windows.Forms.Button();
             btnNextPage = new System.Windows.Forms.Button();
+            tbxCity = new System.Windows.Forms.TextBox();
+            tbxRegion = new System.Windows.Forms.TextBox();
+            tbxCountry = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)gdwEmployee).BeginInit();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
@@ -115,6 +115,9 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(tbxCountry);
+            groupBox1.Controls.Add(tbxRegion);
+            groupBox1.Controls.Add(tbxCity);
             groupBox1.Controls.Add(tbxEmployeeId);
             groupBox1.Controls.Add(label17);
             groupBox1.Controls.Add(rtbNote);
@@ -126,13 +129,10 @@
             groupBox1.Controls.Add(label);
             groupBox1.Controls.Add(pictureBox);
             groupBox1.Controls.Add(label14);
-            groupBox1.Controls.Add(cbxCountry);
             groupBox1.Controls.Add(label13);
             groupBox1.Controls.Add(tbxPostalCode);
             groupBox1.Controls.Add(label12);
-            groupBox1.Controls.Add(cbxRegion);
             groupBox1.Controls.Add(label11);
-            groupBox1.Controls.Add(cbxCity);
             groupBox1.Controls.Add(label10);
             groupBox1.Controls.Add(tbxAdress);
             groupBox1.Controls.Add(label9);
@@ -145,7 +145,6 @@
             groupBox1.Controls.Add(tbxTitle);
             groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(tbxFirstName);
-            groupBox1.Controls.Add(btnChooseClear);
             groupBox1.Controls.Add(btnRemove);
             groupBox1.Controls.Add(btnAddOrUpdate);
             groupBox1.Controls.Add(label2);
@@ -160,7 +159,7 @@
             // 
             // tbxEmployeeId
             // 
-            tbxEmployeeId.Location = new System.Drawing.Point(293, 46);
+            tbxEmployeeId.Location = new System.Drawing.Point(6, 46);
             tbxEmployeeId.Name = "tbxEmployeeId";
             tbxEmployeeId.ReadOnly = true;
             tbxEmployeeId.Size = new System.Drawing.Size(249, 23);
@@ -194,15 +193,15 @@
             // 
             // tbxExtension
             // 
-            tbxExtension.Location = new System.Drawing.Point(294, 341);
+            tbxExtension.Location = new System.Drawing.Point(287, 361);
             tbxExtension.Name = "tbxExtension";
-            tbxExtension.Size = new System.Drawing.Size(249, 23);
+            tbxExtension.Size = new System.Drawing.Size(252, 23);
             tbxExtension.TabIndex = 43;
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new System.Drawing.Point(293, 323);
+            label15.Location = new System.Drawing.Point(288, 343);
             label15.Name = "label15";
             label15.Size = new System.Drawing.Size(58, 15);
             label15.TabIndex = 42;
@@ -210,9 +209,9 @@
             // 
             // tbxPhone
             // 
-            tbxPhone.Location = new System.Drawing.Point(292, 237);
+            tbxPhone.Location = new System.Drawing.Point(287, 256);
             tbxPhone.Name = "tbxPhone";
-            tbxPhone.Size = new System.Drawing.Size(251, 23);
+            tbxPhone.Size = new System.Drawing.Size(253, 23);
             tbxPhone.TabIndex = 41;
             // 
             // btnChoose
@@ -247,25 +246,16 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new System.Drawing.Point(291, 219);
+            label14.Location = new System.Drawing.Point(288, 238);
             label14.Name = "label14";
             label14.Size = new System.Drawing.Size(41, 15);
             label14.TabIndex = 40;
             label14.Text = "Phone";
             // 
-            // cbxCountry
-            // 
-            cbxCountry.FormattingEnabled = true;
-            cbxCountry.Items.AddRange(new object[] { "USA" });
-            cbxCountry.Location = new System.Drawing.Point(291, 186);
-            cbxCountry.Name = "cbxCountry";
-            cbxCountry.Size = new System.Drawing.Size(252, 23);
-            cbxCountry.TabIndex = 39;
-            // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new System.Drawing.Point(291, 168);
+            label13.Location = new System.Drawing.Point(288, 187);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(50, 15);
             label13.TabIndex = 38;
@@ -273,7 +263,7 @@
             // 
             // tbxPostalCode
             // 
-            tbxPostalCode.Location = new System.Drawing.Point(291, 139);
+            tbxPostalCode.Location = new System.Drawing.Point(288, 153);
             tbxPostalCode.Name = "tbxPostalCode";
             tbxPostalCode.Size = new System.Drawing.Size(251, 23);
             tbxPostalCode.TabIndex = 37;
@@ -281,42 +271,25 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new System.Drawing.Point(291, 121);
+            label12.Location = new System.Drawing.Point(288, 135);
             label12.Name = "label12";
             label12.Size = new System.Drawing.Size(70, 15);
             label12.TabIndex = 36;
             label12.Text = "Postal Code";
             // 
-            // cbxRegion
-            // 
-            cbxRegion.FormattingEnabled = true;
-            cbxRegion.Location = new System.Drawing.Point(6, 46);
-            cbxRegion.Name = "cbxRegion";
-            cbxRegion.Size = new System.Drawing.Size(249, 23);
-            cbxRegion.TabIndex = 35;
-            cbxRegion.SelectedIndexChanged += cbxRegion_SelectedIndexChanged;
-            // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new System.Drawing.Point(290, 28);
+            label11.Location = new System.Drawing.Point(288, 80);
             label11.Name = "label11";
             label11.Size = new System.Drawing.Size(44, 15);
             label11.TabIndex = 34;
             label11.Text = "Region";
             // 
-            // cbxCity
-            // 
-            cbxCity.FormattingEnabled = true;
-            cbxCity.Location = new System.Drawing.Point(290, 94);
-            cbxCity.Name = "cbxCity";
-            cbxCity.Size = new System.Drawing.Size(252, 23);
-            cbxCity.TabIndex = 33;
-            // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(290, 76);
+            label10.Location = new System.Drawing.Point(288, 28);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(28, 15);
             label10.TabIndex = 32;
@@ -324,15 +297,15 @@
             // 
             // tbxAdress
             // 
-            tbxAdress.Location = new System.Drawing.Point(293, 289);
+            tbxAdress.Location = new System.Drawing.Point(287, 305);
             tbxAdress.Name = "tbxAdress";
-            tbxAdress.Size = new System.Drawing.Size(249, 23);
+            tbxAdress.Size = new System.Drawing.Size(252, 23);
             tbxAdress.TabIndex = 31;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(293, 271);
+            label9.Location = new System.Drawing.Point(288, 287);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(49, 15);
             label9.TabIndex = 30;
@@ -341,7 +314,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(5, 321);
+            label8.Location = new System.Drawing.Point(5, 343);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(53, 15);
             label8.TabIndex = 29;
@@ -349,7 +322,7 @@
             // 
             // dtpHireDate
             // 
-            dtpHireDate.Location = new System.Drawing.Point(6, 339);
+            dtpHireDate.Location = new System.Drawing.Point(6, 361);
             dtpHireDate.Name = "dtpHireDate";
             dtpHireDate.Size = new System.Drawing.Size(249, 23);
             dtpHireDate.TabIndex = 28;
@@ -357,7 +330,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(5, 271);
+            label7.Location = new System.Drawing.Point(5, 287);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(56, 15);
             label7.TabIndex = 27;
@@ -365,14 +338,14 @@
             // 
             // dtpBirthDate
             // 
-            dtpBirthDate.Location = new System.Drawing.Point(5, 289);
+            dtpBirthDate.Location = new System.Drawing.Point(6, 305);
             dtpBirthDate.Name = "dtpBirthDate";
             dtpBirthDate.Size = new System.Drawing.Size(249, 23);
             dtpBirthDate.TabIndex = 26;
             // 
             // tbxTitleOfCourtesy
             // 
-            tbxTitleOfCourtesy.Location = new System.Drawing.Point(5, 239);
+            tbxTitleOfCourtesy.Location = new System.Drawing.Point(6, 256);
             tbxTitleOfCourtesy.Name = "tbxTitleOfCourtesy";
             tbxTitleOfCourtesy.Size = new System.Drawing.Size(249, 23);
             tbxTitleOfCourtesy.TabIndex = 25;
@@ -380,7 +353,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(5, 221);
+            label6.Location = new System.Drawing.Point(5, 238);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(89, 15);
             label6.TabIndex = 24;
@@ -388,7 +361,7 @@
             // 
             // tbxTitle
             // 
-            tbxTitle.Location = new System.Drawing.Point(5, 189);
+            tbxTitle.Location = new System.Drawing.Point(6, 205);
             tbxTitle.Name = "tbxTitle";
             tbxTitle.Size = new System.Drawing.Size(249, 23);
             tbxTitle.TabIndex = 23;
@@ -396,7 +369,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(5, 171);
+            label5.Location = new System.Drawing.Point(5, 187);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(29, 15);
             label5.TabIndex = 22;
@@ -404,21 +377,10 @@
             // 
             // tbxFirstName
             // 
-            tbxFirstName.Location = new System.Drawing.Point(5, 143);
+            tbxFirstName.Location = new System.Drawing.Point(6, 153);
             tbxFirstName.Name = "tbxFirstName";
             tbxFirstName.Size = new System.Drawing.Size(249, 23);
             tbxFirstName.TabIndex = 21;
-            // 
-            // btnChooseClear
-            // 
-            btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
-            btnChooseClear.Location = new System.Drawing.Point(523, 376);
-            btnChooseClear.Name = "btnChooseClear";
-            btnChooseClear.Size = new System.Drawing.Size(86, 33);
-            btnChooseClear.TabIndex = 20;
-            btnChooseClear.Text = "Choose Clear";
-            btnChooseClear.UseVisualStyleBackColor = false;
-            btnChooseClear.Click += btnChooseClear_Click;
             // 
             // btnRemove
             // 
@@ -445,7 +407,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(5, 125);
+            label2.Location = new System.Drawing.Point(5, 135);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(64, 15);
             label2.TabIndex = 4;
@@ -453,7 +415,7 @@
             // 
             // tbxLastName
             // 
-            tbxLastName.Location = new System.Drawing.Point(5, 95);
+            tbxLastName.Location = new System.Drawing.Point(6, 98);
             tbxLastName.Name = "tbxLastName";
             tbxLastName.Size = new System.Drawing.Size(249, 23);
             tbxLastName.TabIndex = 3;
@@ -461,11 +423,22 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(5, 77);
+            label1.Location = new System.Drawing.Point(5, 80);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(63, 15);
             label1.TabIndex = 2;
             label1.Text = "Last Name";
+            // 
+            // btnChooseClear
+            // 
+            btnChooseClear.BackColor = System.Drawing.Color.DarkOrange;
+            btnChooseClear.Location = new System.Drawing.Point(12, 429);
+            btnChooseClear.Name = "btnChooseClear";
+            btnChooseClear.Size = new System.Drawing.Size(86, 29);
+            btnChooseClear.TabIndex = 20;
+            btnChooseClear.Text = "Choose Clear";
+            btnChooseClear.UseVisualStyleBackColor = false;
+            btnChooseClear.Click += btnChooseClear_Click;
             // 
             // openFileDialog1
             // 
@@ -500,6 +473,27 @@
             btnNextPage.UseVisualStyleBackColor = true;
             btnNextPage.Click += btnNextPage_Click;
             // 
+            // tbxCity
+            // 
+            tbxCity.Location = new System.Drawing.Point(287, 46);
+            tbxCity.Name = "tbxCity";
+            tbxCity.Size = new System.Drawing.Size(252, 23);
+            tbxCity.TabIndex = 48;
+            // 
+            // tbxRegion
+            // 
+            tbxRegion.Location = new System.Drawing.Point(287, 98);
+            tbxRegion.Name = "tbxRegion";
+            tbxRegion.Size = new System.Drawing.Size(252, 23);
+            tbxRegion.TabIndex = 49;
+            // 
+            // tbxCountry
+            // 
+            tbxCountry.Location = new System.Drawing.Point(287, 205);
+            tbxCountry.Name = "tbxCountry";
+            tbxCountry.Size = new System.Drawing.Size(252, 23);
+            tbxCountry.TabIndex = 50;
+            // 
             // FormEmployes
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -513,7 +507,12 @@
             Controls.Add(label3);
             Controls.Add(gdwEmployee);
             Controls.Add(groupBox1);
+            Controls.Add(btnChooseClear);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FormEmployes";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "FormEmployess";
             Load += FormEmployess_Load;
             ((System.ComponentModel.ISupportInitialize)gdwEmployee).EndInit();
@@ -544,9 +543,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox tbxPostalCode;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox cbxRegion;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cbxCity;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tbxAdress;
         private System.Windows.Forms.Label label9;
@@ -571,5 +568,8 @@
         private System.Windows.Forms.Label lblPageNo;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNextPage;
+        private System.Windows.Forms.TextBox tbxCountry;
+        private System.Windows.Forms.TextBox tbxRegion;
+        private System.Windows.Forms.TextBox tbxCity;
     }
 }

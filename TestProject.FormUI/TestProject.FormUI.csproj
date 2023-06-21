@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Ninject" Version="3.3.6" />
-    <PackageReference Include="PagedList" Version="1.17.0" />
+    <PackageReference Include="PagedList.Core" Version="1.17.4" />
   </ItemGroup>
 
   <ItemGroup>

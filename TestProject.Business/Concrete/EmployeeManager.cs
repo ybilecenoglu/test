@@ -34,19 +34,6 @@ namespace TestProject.Business.Concrete
             return result;
         }
 
-        public async Task<Result<List<Region>>> GetAllRegion(Expression<Func<Region, bool>> filter = null)
-        {
-            var result = await _NHemployeeDal.GetAllRegion(filter);
-            return result;
-        }
-
-        public async Task<Result<List<Territory>>> GetAllTerritories(Expression<Func<Territory, bool>> filter = null)
-        {
-            var result = await _NHemployeeDal.GetAllTerritories(filter);
-            return result;
-
-        }
-
         public async Task<Result<Employee>> GetEmployee(Expression<Func<Employee, bool>> filter)
         {
             var result = await _NHemployeeDal.GetAsync(filter);

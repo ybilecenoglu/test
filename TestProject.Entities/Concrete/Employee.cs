@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TestProject.Entities.Abstract;
 
 namespace TestProject.Entities.Concrete
@@ -38,17 +39,17 @@ namespace TestProject.Entities.Concrete
         public virtual byte[] Photo { get; set; }
 
         public virtual string Notes { get; set; }
-
+        [Browsable(false)]
         public virtual int? ReportsTo { get; set; }
-
+        [Browsable(false)]
         public virtual string PhotoPath { get; set; }
-
+        [Browsable(false)]
         public virtual ICollection<Employee> InverseReportsToNavigation { get; set; } = new List<Employee>();
-
+        [Browsable(false)]
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
+        [Browsable(false)]
         public virtual Employee ReportsToNavigation { get; set; }
-
+        [Browsable(false)]
         public virtual ICollection<Territory> Territories { get; set; } = new List<Territory>();
     }
 }
