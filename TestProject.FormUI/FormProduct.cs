@@ -69,44 +69,18 @@ namespace TestProject.Product
         }
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            var result = await _exceptionHandlerService.ReturnException(async () =>
+            if (tbxProductID.Text != string.Empty)
             {
-                if (tbxProductID.Text != string.Empty)
-                {
-                    int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
-                    var product = await _productService.GetProduct(p => p.ProductId == productID);
+                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                var product = await _productService.GetProduct(p => p.ProductId == productID);
 
-                    bool kontrol = tbxUnitPrice.Text.Equals(typeof(int));
-                    if (product.Success == true)
-                    {
-                        var update_result = await _productService.UpdateProduct(new Entities.Concrete.Product
-                        {
-
-                            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
-                            ProductName = tbxProductName.Text,
-                            SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
-                            CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
-                            UnitPrice = tbxUnitPrice.Text != string.Empty ? Convert.ToDecimal(tbxUnitPrice.Text) : null,
-                            UnitsInStock = tbxUnitInStock.Text != string.Empty ? Convert.ToInt16(tbxUnitInStock.Text) : null,
-                            UnitsOnOrder = tbxUnitsOnOrder.Text != string.Empty ? Convert.ToInt16(tbxUnitsOnOrder.Text) : null,
-                            QuantityPerUnit = tbxQuantityPerUnit.Text,
-                            Discontinued = rdbOnSale.Checked == true ? true : false,
-                            ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
-                        });
-                        if (update_result.Success == true)
-                        {
-                            MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
-                            await ProductListPaged();
-                        }
-                        else
-                            MessageBox.Show(update_result.Message);
-                    }
-                }
-                else
+                bool kontrol = tbxUnitPrice.Text.Equals(typeof(int));
+                if (product.Success == true)
                 {
-                    bool kontrol = tbxUnitPrice.Text.Equals(typeof(decimal));
-                    var add_result = await _productService.AddProduct(new Entities.Concrete.Product
+                    var update_result = await _productService.UpdateProduct(new Entities.Concrete.Product
                     {
+
+                        ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
                         ProductName = tbxProductName.Text,
                         SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
                         CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
@@ -117,20 +91,39 @@ namespace TestProject.Product
                         Discontinued = rdbOnSale.Checked == true ? true : false,
                         ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
                     });
-
-                    if (add_result.Success == true)
+                    if (update_result.Success == true)
                     {
-                        MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                        MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
                         await ProductListPaged();
                     }
                     else
-                        MessageBox.Show(add_result.Message, "HATA !");
+                        MessageBox.Show(update_result.Message);
                 }
-            });
+            }
+            else
+            {
+                bool kontrol = tbxUnitPrice.Text.Equals(typeof(decimal));
+                var add_result = await _productService.AddProduct(new Entities.Concrete.Product
+                {
+                    ProductName = tbxProductName.Text,
+                    SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
+                    CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
+                    UnitPrice = tbxUnitPrice.Text != string.Empty ? Convert.ToDecimal(tbxUnitPrice.Text) : null,
+                    UnitsInStock = tbxUnitInStock.Text != string.Empty ? Convert.ToInt16(tbxUnitInStock.Text) : null,
+                    UnitsOnOrder = tbxUnitsOnOrder.Text != string.Empty ? Convert.ToInt16(tbxUnitsOnOrder.Text) : null,
+                    QuantityPerUnit = tbxQuantityPerUnit.Text,
+                    Discontinued = rdbOnSale.Checked == true ? true : false,
+                    ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
+                });
 
-            if (result.Success == false)
-                MessageBox.Show(result.Message);
-
+                if (add_result.Success == true)
+                {
+                    MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
+                    await ProductListPaged();
+                }
+                else
+                    MessageBox.Show(add_result.Message, "HATA !");
+            }
         }
         private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {

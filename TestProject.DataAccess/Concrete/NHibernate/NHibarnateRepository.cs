@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete.NHibernate.Helper;
 using TestProject.Entities.Abstract;
+using TestProject.Entities.Concrete;
 
 namespace TestProject.DataAccess.Concrete.NHibernate
 {
@@ -20,6 +21,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
             //_exceptionHandlerService = new ExceptionHandlerManager();
         }
 
+        
         public async Task<Result> AddAsync(TEntity entity)
         {
             var result = new Result { Success = false };

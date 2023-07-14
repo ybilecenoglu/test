@@ -1,50 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestProject.Business.Abstract;
+using TestProject.Business.Aspect.Postsharp;
 using TestProject.Business.Validation.Fluent;
-using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete;
-using TestProject.DataAccess.Concrete.EF;
 using TestProject.DataAccess.Concrete.NHibernate;
-using TestProject.DataAccess.ViewModels;
 using TestProject.Entities.Concrete;
 
 namespace TestProject.Business.Concrete
 {
     public class ProductManager : IProductService
     {
-
         //private IProductDal _productDal;
         private NHProductDal _nhProductDal;
-        private ProductValidator _productValidator;
         public ProductManager(NHProductDal NHProductDal)
         {
             _nhProductDal = NHProductDal;
-            _productValidator = new ProductValidator();
+
         }
+
+        [FluentValidationAspect(typeof(Product))]
         public async Task<Result> AddProduct(Product product)
         {
             var add_result = new Result { Success = false };
-            var validate_result = await _productValidator.ValidateAsync(product);
-
-            if (validate_result.Errors.Count > 0)
-            {
-                foreach (var error in validate_result.Errors)
-                {
-                    add_result.Success = false;
-                    add_result.Message += error.ErrorMessage + Environment.NewLine;
-                }
-
-                return add_result;
-            }
-            else
-                add_result = await _nhProductDal.AddAsync(product);
+            add_result = await _nhProductDal.AddAsync(product);
             return add_result;
         }
         public async Task<Result> DeleteProduct(Product product)
