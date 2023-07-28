@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using TestProject.DataAccess.Concrete;
 
 namespace TestProject.Business.Validation.Fluent
 {
@@ -7,10 +8,11 @@ namespace TestProject.Business.Validation.Fluent
         public static void FluentValidation(IValidator validator, object entity)
         {
             var context = new ValidationContext<object>(entity);
-            var result = validator.Validate(context);
-            if (!result.IsValid)
+            var validateResult = validator.Validate(context);
+            if (!validateResult.IsValid)
             {
-                throw new ValidationException(result.Errors);
+                throw new ValidationException(validateResult.Errors);
+                
             }
         }
     }

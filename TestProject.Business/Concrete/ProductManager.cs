@@ -21,7 +21,7 @@ namespace TestProject.Business.Concrete
 
         }
 
-        [FluentValidationAspect(typeof(Product))]
+        [FluentValidationAspect(typeof(ProductValidator))]
         public async Task<Result> AddProduct(Product product)
         {
             var add_result = new Result { Success = false };
@@ -55,12 +55,12 @@ namespace TestProject.Business.Concrete
             return result;
 
         }
+        [FluentValidationAspect(typeof(ProductValidator))]
         public async Task<Result> UpdateProduct(Product product)
         {
             var result = await _nhProductDal.UpdateAsync(product);
             return result;
         }
-
         public async Task<string> GetCategoryName(int? categoryId)
         {
             var category_result = await _nhProductDal.GetCategory(x => x.CategoryId == categoryId);
@@ -71,7 +71,6 @@ namespace TestProject.Business.Concrete
             else
                 return null;
         }
-
         public async Task<string> GetSupplierCompanyName(int? supplierId)
         {
             var supplier_result = await _nhProductDal.GetSupplier(x => x.SupplierId == supplierId);

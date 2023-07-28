@@ -6,9 +6,11 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestProject.Business.Abstract;
+using TestProject.Business.Aspect.Postsharp;
 using TestProject.Business.Concrete;
 using TestProject.Business.IoC.Ninject;
 using TestProject.Business.Utilities;
+using TestProject.Business.Validation.Fluent;
 using TestProject.DataAccess.Concrete;
 using TestProject.FormUI.Utilities;
 
@@ -67,6 +69,7 @@ namespace TestProject.Product
             else MessageBox.Show(result.Message);
 
         }
+        
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
             if (tbxProductID.Text != string.Empty)
