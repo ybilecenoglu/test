@@ -12,12 +12,11 @@ namespace TestProject.Business.Validation.Fluent
             RuleFor(p => p.ProductName).NotEmpty();
             RuleFor(p => p.UnitPrice).NotEmpty().GreaterThan(0);
             RuleFor(p => p.UnitsInStock).NotEmpty();
-            RuleFor(p => p.Discontinued).NotEmpty();
             RuleFor(p => p.QuantityPerUnit).NotEmpty();
             RuleFor(p => p.CategoryId).NotEmpty();
 
             //Special validator
-            RuleFor(p => p.ProductName).Must(p => p.StartsWith("A")).WithMessage("Ürün adı 'A' ile başlamalıdır.");
+            //RuleFor(p => p.ProductName).Must(p => p.StartsWith("A")).WithMessage("Ürün adı 'A' ile başlamalıdır.");
         }
     }
 }

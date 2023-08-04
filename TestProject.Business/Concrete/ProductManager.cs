@@ -18,7 +18,6 @@ namespace TestProject.Business.Concrete
         public ProductManager(NHProductDal NHProductDal)
         {
             _nhProductDal = NHProductDal;
-
         }
 
         [FluentValidationAspect(typeof(ProductValidator))]

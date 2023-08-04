@@ -24,8 +24,8 @@ namespace TestProject.FormUI
     public partial class FormOrders : Form
     {
         private IOrderService _orderService;
-        private IPagedListService _pagedListService;
-        private IExceptionHandlerService ExceptionHandlerService;
+        private PagedListManager _pagedListService;
+        private ExceptionHandlerManager _exceptionHandlerService;
         
         int pageNumber = 1;
         Result<List<Entities.Concrete.Order>> orderList;
@@ -34,8 +34,8 @@ namespace TestProject.FormUI
         {
             InitializeComponent();
             _orderService = InstanceFactory.GetInstance<OrderManager>();
-            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
-            ExceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
+            _pagedListService = PagedListManager.CreateInstance();
+            _exceptionHandlerService = ExceptionHandlerManager.CreateInstance();
         }
         public async Task LoadCustomers()
         {
@@ -76,7 +76,7 @@ namespace TestProject.FormUI
             var endDate = dtpEnd.Value;
 
 
-            var exception_result = await ExceptionHandlerService.ReturnException(async () =>
+            var exception_result = await _exceptionHandlerService.ReturnException(async () =>
             {
                 await OrderListPaged(o => o.OrderDate >= startDate && o.OrderDate <= endDate);
             });

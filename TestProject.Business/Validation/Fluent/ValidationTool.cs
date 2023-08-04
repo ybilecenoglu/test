@@ -7,12 +7,13 @@ namespace TestProject.Business.Validation.Fluent
     {
         public static void FluentValidation(IValidator validator, object entity)
         {
+            var result = new Result { Success = false };
+
             var context = new ValidationContext<object>(entity);
             var validateResult = validator.Validate(context);
             if (!validateResult.IsValid)
             {
                 throw new ValidationException(validateResult.Errors);
-                
             }
         }
     }

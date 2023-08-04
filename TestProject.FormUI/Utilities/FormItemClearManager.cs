@@ -8,20 +8,20 @@ using TestProject.Business.Utilities;
 
 namespace TestProject.FormUI.Utilities
 {
-    public class FormItemClearManager : IFormItemClearService
+    public class FormItemClearManager
     {
 
-        private static FormItemClearManager _FormItemClearManager;
-        private IExceptionHandlerService _ExceptionHandlerService;
+        private static FormItemClearManager instance;
+        
         private FormItemClearManager()
         {
-            _ExceptionHandlerService = new ExceptionHandlerManager();
+           
         }
 
         //Create singleton method
-        public static FormItemClearManager CreateAsFormItemClearManager()
+        public static FormItemClearManager CreateInstance()
         {
-            return _FormItemClearManager ?? (_FormItemClearManager = new FormItemClearManager());
+            return instance ?? (instance = new FormItemClearManager());
         }
         public void ComboBoxClear(params ComboBox[] comboBoxes)
         {

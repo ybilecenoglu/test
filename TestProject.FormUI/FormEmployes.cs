@@ -24,10 +24,10 @@ namespace TestProject
     {
 
         private IEmployeeService _employeeService;
-        private IExceptionHandlerService _exceptionHandlerService;
-        private IConvertImageService _convertImageService;
-        private IFormItemClearService _formItemClearService;
-        private IPagedListService _pagedListService;
+        private ExceptionHandlerManager _exceptionHandlerService;
+        private ConvertImageManager _convertImageService;
+        private FormItemClearManager _formItemClearService;
+        private PagedListManager _pagedListService;
 
         int pageNumber = 1;
         Result<List<Employee>> result_employeeList;
@@ -36,10 +36,10 @@ namespace TestProject
         {
             InitializeComponent();
             _employeeService = InstanceFactory.GetInstance<EmployeeManager>();
-            _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
-            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
-            _exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
-            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
+            _convertImageService = ConvertImageManager.CreateInstance();
+            _formItemClearService = FormItemClearManager.CreateInstance(); //Singleton implement
+            _exceptionHandlerService = ExceptionHandlerManager.CreateInstance();
+            _pagedListService = PagedListManager.CreateInstance();
         }
         private async void FormEmployess_Load(object sender, EventArgs e)
         {

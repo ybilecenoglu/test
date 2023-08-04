@@ -23,10 +23,10 @@ namespace TestProject
     {
 
         private ICategoryService _categoryService;
-        private IConvertImageService _convertImageService;
-        private IFormItemClearService _formItemClearService;
-        private IExceptionHandlerService _exceptionHandlerService;
-        private IPagedListService _pagedListService;
+        private ConvertImageManager _convertImageService;
+        private FormItemClearManager _formItemClearService;
+        private ExceptionHandlerManager _exceptionHandlerService;
+        private PagedListManager _pagedListService;
 
         private string filePath;
         int pageNumber = 1;
@@ -36,10 +36,10 @@ namespace TestProject
         {
             InitializeComponent();
             _categoryService = InstanceFactory.GetInstance<CategoryManager>();
-            _convertImageService = InstanceFactory.GetInstance<ConvertImageManager>();
-            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager();//Singleton implement
-            _exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
-            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
+            _convertImageService = ConvertImageManager.CreateInstance();
+            _formItemClearService = FormItemClearManager.CreateInstance();//Singleton implement
+            _exceptionHandlerService = ExceptionHandlerManager.CreateInstance();
+            _pagedListService = PagedListManager.CreateInstance();
         }
 
         private async void FormCategories_Load(object sender, EventArgs e)

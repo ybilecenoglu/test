@@ -20,21 +20,21 @@ namespace TestProject.Product
     {
 
         private IProductService _productService;
-        private IFormItemClearService _formItemClearService;
-        private IExceptionHandlerService _exceptionHandlerService;
-        private IPagedListService _pagedListService;
+        private FormItemClearManager _formItemClearService;
+        private ExceptionHandlerManager _exceptionHandlerService;
+        private PagedListManager _pagedListService;
 
         int pageNumber = 1;
         Result<List<Entities.Concrete.Product>> result_productList;
         IPagedList<Entities.Concrete.Product> productPageList;
+        
         public FormProduct()
         {
             InitializeComponent();
             _productService = InstanceFactory.GetInstance<ProductManager>();
-            //_exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
-            _formItemClearService = FormItemClearManager.CreateAsFormItemClearManager(); //Singleton implement
-            _exceptionHandlerService = InstanceFactory.GetInstance<ExceptionHandlerManager>();
-            _pagedListService = InstanceFactory.GetInstance<PagedListManager>();
+            _formItemClearService = FormItemClearManager.CreateInstance(); //Singleton implement
+            _exceptionHandlerService = ExceptionHandlerManager.CreateInstance();
+            _pagedListService = PagedListManager.CreateInstance();
         }
         private async void FormProduct_Load(object sender, EventArgs e)
         {
@@ -72,18 +72,44 @@ namespace TestProject.Product
         
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            if (tbxProductID.Text != string.Empty)
+            var exceptionResult = await _exceptionHandlerService.ReturnException(async () =>
             {
-                int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
-                var product = await _productService.GetProduct(p => p.ProductId == productID);
-
-                bool kontrol = tbxUnitPrice.Text.Equals(typeof(int));
-                if (product.Success == true)
+                if (tbxProductID.Text != string.Empty)
                 {
-                    var update_result = await _productService.UpdateProduct(new Entities.Concrete.Product
-                    {
+                    int productID = Convert.ToInt32(gdwProduct.CurrentRow.Cells[0].Value);
+                    var product = await _productService.GetProduct(p => p.ProductId == productID);
 
-                        ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                    bool kontrol = tbxUnitPrice.Text.Equals(typeof(int));
+                    if (product.Success == true)
+                    {
+                        var update_result = await _productService.UpdateProduct(new Entities.Concrete.Product
+                        {
+
+                            ProductId = Convert.ToInt16(gdwProduct.CurrentRow.Cells[0].Value.ToString()),
+                            ProductName = tbxProductName.Text,
+                            SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
+                            CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
+                            UnitPrice = tbxUnitPrice.Text != string.Empty ? Convert.ToDecimal(tbxUnitPrice.Text) : null,
+                            UnitsInStock = tbxUnitInStock.Text != string.Empty ? Convert.ToInt16(tbxUnitInStock.Text) : null,
+                            UnitsOnOrder = tbxUnitsOnOrder.Text != string.Empty ? Convert.ToInt16(tbxUnitsOnOrder.Text) : null,
+                            QuantityPerUnit = tbxQuantityPerUnit.Text,
+                            Discontinued = rdbOnSale.Checked == true ? true : false,
+                            ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
+                        });
+                        if (update_result.Success == true)
+                        {
+                            MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                            await ProductListPaged();
+                        }
+                        else
+                            MessageBox.Show(update_result.Message);
+                    }
+                }
+                else
+                {
+                    bool kontrol = tbxUnitPrice.Text.Equals(typeof(decimal));
+                    var add_result = await _productService.AddProduct(new Entities.Concrete.Product
+                    {
                         ProductName = tbxProductName.Text,
                         SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
                         CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
@@ -94,39 +120,18 @@ namespace TestProject.Product
                         Discontinued = rdbOnSale.Checked == true ? true : false,
                         ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
                     });
-                    if (update_result.Success == true)
+
+                    if (add_result.Success == true)
                     {
-                        MessageBox.Show("Ürün güncelleme işlemi başarılı bir şekilde gerçekleşti.");
+                        MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
                         await ProductListPaged();
                     }
                     else
-                        MessageBox.Show(update_result.Message);
+                        MessageBox.Show(add_result.Message, "HATA !");
                 }
-            }
-            else
-            {
-                bool kontrol = tbxUnitPrice.Text.Equals(typeof(decimal));
-                var add_result = await _productService.AddProduct(new Entities.Concrete.Product
-                {
-                    ProductName = tbxProductName.Text,
-                    SupplierId = cbxSuppliers.SelectedValue != null ? Convert.ToInt16(cbxSuppliers.SelectedValue) : null,
-                    CategoryId = cbxCategories.SelectedValue != null ? Convert.ToInt16(cbxCategories.SelectedValue) : null,
-                    UnitPrice = tbxUnitPrice.Text != string.Empty ? Convert.ToDecimal(tbxUnitPrice.Text) : null,
-                    UnitsInStock = tbxUnitInStock.Text != string.Empty ? Convert.ToInt16(tbxUnitInStock.Text) : null,
-                    UnitsOnOrder = tbxUnitsOnOrder.Text != string.Empty ? Convert.ToInt16(tbxUnitsOnOrder.Text) : null,
-                    QuantityPerUnit = tbxQuantityPerUnit.Text,
-                    Discontinued = rdbOnSale.Checked == true ? true : false,
-                    ReorderLevel = tbxReorderLevel.Text != string.Empty ? Convert.ToInt16(tbxReorderLevel.Text) : null
-                });
-
-                if (add_result.Success == true)
-                {
-                    MessageBox.Show("Ürün ekleme işlemi başarılı bir şekilde gerçekleşti.");
-                    await ProductListPaged();
-                }
-                else
-                    MessageBox.Show(add_result.Message, "HATA !");
-            }
+            });
+            if (exceptionResult.Success == false)
+                MessageBox.Show(exceptionResult.Message, "HATA!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private async void gdwProduct_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -270,9 +275,9 @@ namespace TestProject.Product
         {
             result_productList = filter != null ? await _productService.GetProducts(filter) : await _productService.GetProducts();
             productPageList = await _pagedListService.GetPagedList(result_productList.Data, pageNumber);
-            int undivided = result_productList.Data.Count % 10;
+            int product_mod = result_productList.Data.Count % 10;
             gdwProduct.DataSource = productPageList.ToList();
-            if (undivided == 0)
+            if (product_mod == 0)
             {
                 lblPageNo.Text = string.Format("Page {0}/{1}", pageNumber, result_productList.Data.Count / 10);
             }

@@ -7,8 +7,14 @@ using TestProject.DataAccess.Concrete;
 
 namespace TestProject.Business
 {
-    public class ConvertImageManager : IConvertImageService
+    public class ConvertImageManager
     {
+        private static ConvertImageManager instance;
+
+        public static ConvertImageManager CreateInstance()
+        {
+            return instance ?? (instance = new ConvertImageManager());
+        }
         public Result<Image> ByteToImage(byte[] bytes)
         {
             var result = new Result<Image>() { Success = false };

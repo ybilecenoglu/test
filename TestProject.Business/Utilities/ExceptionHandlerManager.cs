@@ -7,8 +7,15 @@ using TestProject.DataAccess.Concrete;
 
 namespace TestProject.Business.Utilities
 {
-    public class ExceptionHandlerManager : IExceptionHandlerService
+    public class ExceptionHandlerManager
     {
+        private static ExceptionHandlerManager instance;
+
+        public static ExceptionHandlerManager CreateInstance()
+        {
+            return instance ?? (instance = new ExceptionHandlerManager());
+        }
+
         public async Task<Result> ReturnException(Func<Task> action)
         {
             var result = new Result { Success = false };

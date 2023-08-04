@@ -8,6 +8,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TestProject.Business.Abstract;
+using TestProject.Business.Aspect.Postsharp;
+using TestProject.Business.Validation.Fluent;
 using TestProject.DataAccess.Abstract;
 using TestProject.DataAccess.Concrete;
 using TestProject.DataAccess.Concrete.NHibernate;
@@ -22,6 +24,8 @@ namespace TestProject.Business.Concrete
         public CategoryManager(NHCategoryDal nHCategoryDal) {
             _nhCategoryDal = nHCategoryDal;
         }
+        
+        [FluentValidationAspect(typeof(CategoryValidator))]
         public async Task<Result> AddCategory(Category category)
         {
             var result = await _nhCategoryDal.AddAsync(category);

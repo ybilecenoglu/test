@@ -1,18 +1,13 @@
 ﻿using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
-using NHibernate.Dialect;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TestProject.DataAccess.Concrete.NHibernate.Helper;
 
 namespace TestProject.DataAccess.ORM
 {
+    //SQL bağlantısı için kullanılan helper nesnesi
     public class SqlNhibarnateHelper : NHibarnateHelper
     {
         protected override ISessionFactory InitializeFactory()

@@ -9,7 +9,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate.Helper
 {
     public abstract class NHibarnateHelper : IDisposable
     {
-        //Entitiy freamwork context benzeri kullanıcı hangi veritabanıyla geldiğini anlamak için aldığımız değişken
+        //Entitiy freamwork context benzeri kullanıcı hangi veritabanıyla geldiğini anlamak için aldığımız sesion değişkeni
         private static ISessionFactory _sessionFactory;
 
         //Dipendency Injection yönetmi ile SessionFactory aldık.

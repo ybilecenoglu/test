@@ -16,6 +16,7 @@ namespace TestProject.DataAccess.Concrete.NHibernate
     {
         public NHEmployeeDal(SqlNhibarnateHelper sqlNhibarnateHelper) : base(sqlNhibarnateHelper)
         {
+
         }
     }
 }
