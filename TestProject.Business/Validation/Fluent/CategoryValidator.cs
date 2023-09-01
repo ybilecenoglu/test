@@ -18,10 +18,10 @@ namespace TestProject.Business.Validation.Fluent
 
             RuleFor(x => x.CategoryName).NotEmpty();
 
-            RuleFor(x => x.CategoryName).MustAsync(async (p, token) =>
-            {
+            //RuleFor(x => x.CategoryName).MustAsync(async (p, token) =>
+            //{
 
-            }
+            //});
         }
 
         public async Task<bool> EqualsCategoryName(string categoryName)

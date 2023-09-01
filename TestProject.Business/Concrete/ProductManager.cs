@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TestProject.Business.Abstract;
@@ -51,6 +52,7 @@ namespace TestProject.Business.Concrete
         public async Task<Result<List<Product>>> GetProducts(Expression<Func<Product, bool>> filter = null)
         {
             var result = await _nhProductDal.GetAllAsync(filter);
+
             return result;
 
         }

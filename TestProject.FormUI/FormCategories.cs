@@ -1,4 +1,5 @@
-﻿using PagedList;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using PagedList;
 using PagedList.Core;
 using System;
 using System.Collections.Generic;
@@ -95,7 +96,7 @@ namespace TestProject
 
         private async void buttonAddOrUpdate_Click(object sender, EventArgs e)
         {
-            var result = await _exceptionHandlerService.ReturnException(async () =>
+            var exceptionResult = await _exceptionHandlerService.ReturnException(async () =>
             {
 
                 if (tbxCategoryID.Text != string.Empty)
@@ -153,8 +154,8 @@ namespace TestProject
                     }
                 }
             });
-            if (result.Success == false)
-                MessageBox.Show(result.Message);
+            if (exceptionResult.Success == false)
+                MessageBox.Show(exceptionResult.Message, "HATA!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private async void btnRemove_Click(object sender, EventArgs e)
